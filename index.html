@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXT GEN CYBER TALENT - Future-Ready Cybersecurity Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="#home">NEXT GEN CYBER TALENT</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programme">Programme</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#learner-pathway">Learner Pathway</a></li>
+                <li><a href="#partners">Partners</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#apply" class="btn btn-primary">Apply</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero-container">
+            <div class="hero-badge">
+                <span class="badge-icon"><i class="fa-solid fa-lock"></i></span>
+                <span>Industry-Leading Cybersecurity Education</span>
+            </div>
+            <h1 class="hero-title">
+                Future-Focused <span class="gradient-text">Cybersecurity</span> Training
+            </h1>
+            <p class="hero-subtitle">
+                Master the skills that matter. Build a career-ready foundation in cybersecurity 
+                with hands-on labs, real-world projects, and mentorship from industry experts. 
+                Transform your potential into a thriving career.
+            </p>
+            <div class="hero-cta">
+                <button class="btn btn-primary btn-large" onclick="openApplyModal()">
+                    <span>Apply Now</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <a href="#programme" class="btn btn-secondary btn-large">View Programme</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Graduates Hired</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Job Placement Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12 Weeks</div>
+                    <div class="stat-label">Intensive Training</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-decoration">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+    </section>
+
+    <!-- Problem Section (Inspired by Worktella) -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-badge">The Challenge</div>
+            <h2 class="section-title">Breaking Into Cybersecurity?<br>You're Not Alone</h2>
+            <p class="section-subtitle">Thousands face the same challenges every day. We're here to change that.</p>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon" style="background: #FFF3E0;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#FF9800" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Theory Over Practice</h3>
+                    <p>You've watched countless tutorials and earned certificates, but when it's time to apply for jobs, you realize you lack real, hands-on experience that employers demand.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon" style="background: #E3F2FD;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#2196F3" stroke-width="2"/>
+                            <path d="M9 9L15 15M15 9L9 15" stroke="#2196F3" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Generic Training</h3>
+                    <p>One-size-fits-all courses don't account for your unique background, learning pace, or career goals. You need personalized guidance and mentorship, not just video lectures.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon" style="background: #F3E5F5;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="7" width="18" height="13" rx="2" stroke="#9C27B0" stroke-width="2"/>
+                            <rect x="8" y="4" width="8" height="4" rx="1" stroke="#9C27B0" stroke-width="2"/>
+                            <path d="M16 7V6C16 5.44772 15.5523 5 15 5H9C8.44772 5 8 5.44772 8 6V7" stroke="#9C27B0" stroke-width="2"/>
+                            <path d="M3 12H21" stroke="#9C27B0" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Job Market Disconnect</h3>
+                    <p>Traditional programs teach outdated skills or ignore what employers actually need. You graduate without the practical experience or portfolio to land your first role.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme Section -->
+    <section id="programme" class="programme-section">
+        <div class="container">
+            <div class="section-badge">The Solution</div>
+            <h2 class="section-title">Your Personal <span class="gradient-text">Cybersecurity Engine</span></h2>
+            <p class="section-subtitle">We've designed a comprehensive program that addresses real industry needs and gets you job-ready, fast.</p>
+            
+            <div class="programme-content">
+                <div class="programme-main">
+                    <div class="programme-hero-card">
+                        <div class="programme-tag">What You'll Master</div>
+                        <h3>A Complete Cybersecurity Skill Set</h3>
+                        <p>Our curriculum covers everything from network security fundamentals to advanced threat detection, penetration testing, incident response, and security operations.</p>
+                        
+                        <div class="skill-tags">
+                            <span class="skill-tag">Network Security</span>
+                            <span class="skill-tag">Ethical Hacking</span>
+                            <span class="skill-tag">Threat Intelligence</span>
+                            <span class="skill-tag">Security Operations</span>
+                            <span class="skill-tag">Incident Response</span>
+                            <span class="skill-tag">Cloud Security</span>
+                            <span class="skill-tag">Python Scripting</span>
+                            <span class="skill-tag">Security Auditing</span>
+                        </div>
+                    </div>
+
+                    <div class="programme-features">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                    <path d="M16 4L4 10L16 16L28 10L16 4Z" stroke="#0FB9C6" stroke-width="2.5" stroke-linejoin="round"/>
+                                    <path d="M4 22L16 28L28 22" stroke="#0FB9C6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4 16L16 22L28 16" stroke="#0FB9C6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h4>100% Practical Training</h4>
+                                <p>Learn by doing with real-world attack scenarios, live lab environments, and hands-on projects that mirror actual security challenges.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                    <path d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z" stroke="#0FB9C6" stroke-width="2.5"/>
+                                    <path d="M16 10V16L20 20" stroke="#0FB9C6" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Expert Mentorship</h4>
+                                <p>Get personalized guidance from seasoned cybersecurity professionals who work at top companies and understand the industry inside out.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                    <rect x="6" y="10" width="20" height="16" rx="2" stroke="#0FB9C6" stroke-width="2.5"/>
+                                    <path d="M12 10V8C12 5.79086 13.7909 4 16 4C18.2091 4 20 5.79086 20 8V10" stroke="#0FB9C6" stroke-width="2.5" stroke-linecap="round"/>
+                                    <circle cx="16" cy="18" r="2" fill="#0FB9C6"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Career Support</h4>
+                                <p>Resume building, interview prep, portfolio development, and job placement assistance. We're with you until you land your dream role.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="programme-sidebar">
+                    <div class="info-card">
+                        <div class="info-item">
+                            <div class="info-label">Duration</div>
+                            <div class="info-value">12 Weeks</div>
+                            <div class="info-desc">Intensive, full-time training</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Format</div>
+                            <div class="info-value">Hybrid</div>
+                            <div class="info-desc">Online + Live lab sessions</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Commitment</div>
+                            <div class="info-value">40 hrs/week</div>
+                            <div class="info-desc">Treat it like a real job</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Class Size</div>
+                            <div class="info-value">Max 20</div>
+                            <div class="info-desc">Small cohorts, focused attention</div>
+                        </div>
+                    </div>
+
+                    <div class="ideal-for-card">
+                        <h4>Ideal For</h4>
+                        <ul>
+                            <li>Career changers seeking tech stability</li>
+                            <li>IT professionals moving into security</li>
+                            <li>Recent grads wanting practical skills</li>
+                            <li>Self-taught learners ready to go pro</li>
+                            <li>Military veterans transitioning to tech</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="container">
+            <div class="section-badge">How It Works</div>
+            <h2 class="section-title">From Application to <span class="gradient-text">Career Launch</span></h2>
+            <p class="section-subtitle">A clear, structured path from day one to your first cybersecurity role</p>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-step="01">
+                    <div class="timeline-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <path d="M14 24C19.5228 24 24 19.5228 24 14C24 8.47715 19.5228 4 14 4C8.47715 4 4 8.47715 4 14C4 19.5228 8.47715 24 14 24Z" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M14 10V14L17 17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Step 1</div>
+                        <h3>Apply & Connect</h3>
+                        <p>Submit your application and tell us about your goals. We review every application personally and schedule a call to understand your background and aspirations.</p>
+                        <div class="timeline-meta">Takes less than 5 minutes</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-step="02">
+                    <div class="timeline-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <rect x="4" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M4 13L14 19L24 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Step 2</div>
+                        <h3>Get Reviewed & Accepted</h3>
+                        <p>Our admissions team evaluates your fit for the program. We look for motivation and commitment, not prior experience. You'll receive a decision within 48 hours.</p>
+                        <div class="timeline-meta">No technical background required</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-step="03">
+                    <div class="timeline-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <rect x="4" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                            <rect x="9" y="20" width="10" height="2" rx="1" fill="currentColor"/>
+                            <circle cx="14" cy="19" r="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Step 3</div>
+                        <h3>Start Learning</h3>
+                        <p>Join your cohort and dive into the fundamentals. Access our learning platform, meet your mentor, and set up your lab environment. Week 1 starts with the basics.</p>
+                        <div class="timeline-meta">Cohorts start every month</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-step="04">
+                    <div class="timeline-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <rect x="4" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                            <polyline points="9,14 12,12 9,10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="14" y="15" width="6" height="2" rx="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Step 4</div>
+                        <h3>Build Real-World Skills</h3>
+                        <p>Weeks 2–10: Master core concepts through hands-on labs, simulated attacks, threat hunting exercises, and live security challenges. Build a professional portfolio.</p>
+                        <div class="timeline-meta">10+ portfolio-ready projects</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-step="05">
+                    <div class="timeline-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                            <!-- Certificate body -->
+                            <rect x="5" y="7" width="18" height="14" rx="3" stroke="currentColor" stroke-width="2.2" fill="none"/>
+                            <!-- Ribbon left -->
+                            <path d="M9 21.5l1.5-2l1 2l1-2l1.5 2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                            <!-- Ribbon right -->
+                            <path d="M19 21.5l-1.5-2l-1 2l-1-2l-1.5 2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                            <!-- Medal circle (seal) -->
+                            <circle cx="14" cy="14" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="14" cy="14" r="1.2" fill="currentColor"/>
+                            <!-- Star in the center -->
+                            <path d="M14 12.2l.6 1.3 1.4.1-1.1.9.4 1.4-1.3-.8-1.3.8.4-1.4-1.1-.9 1.4-.1.6-1.3z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-label">Step 5</div>
+                        <h3>Graduate Job-Ready</h3>
+                        <p>Weeks 11–12: Finalize your capstone, polish your resume, practice interviews, and connect with our hiring partners. Graduate with confidence and career support.</p>
+                        <div class="timeline-meta">Lifetime alumni network access</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <h3>Ready to Begin Your Journey?</h3>
+                <p>Join hundreds of successful graduates who've transformed their careers</p>
+                <button class="btn btn-primary btn-large" onclick="openApplyModal()">Start Your Application</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learner Pathway Section -->
+    <section id="learner-pathway" class="learner-pathway-section">
+        <div class="container">
+            <div class="section-badge">Learner Pathway</div>
+            <h2 class="section-title">Your Roadmap to <span class="gradient-text">Cybersecurity Mastery</span></h2>
+            <p class="section-subtitle">A carefully designed progression from beginner to job-ready professional</p>
+            
+            <div class="pathway">
+                <div class="pathway-stage">
+                    <div class="stage-header">
+                        <div class="stage-number">Phase 1</div>
+                        <h3>Foundation Building</h3>
+                        <div class="stage-duration">Weeks 1-2</div>
+                    </div>
+                    <div class="stage-content">
+                        <p class="stage-description">Start with the fundamentals. No prior knowledge required, we'll build your foundation from the ground up.</p>
+                        <ul class="stage-topics">
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Networking Fundamentals</strong>
+                                    <p>TCP/IP, OSI model, protocols, packet analysis</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Linux Essentials</strong>
+                                    <p>Command line, file systems, permissions, scripting basics</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Security Principles</strong>
+                                    <p>CIA triad, authentication, authorization, encryption basics</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Python Programming</strong>
+                                    <p>Syntax, data structures, automation scripts</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pathway-stage">
+                    <div class="stage-header">
+                        <div class="stage-number">Phase 2</div>
+                        <h3>Core Cybersecurity Skills</h3>
+                        <div class="stage-duration">Weeks 3-6</div>
+                    </div>
+                    <div class="stage-content">
+                        <p class="stage-description">Dive into offensive and defensive security techniques used by professionals every day.</p>
+                        <ul class="stage-topics">
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Ethical Hacking & Penetration Testing</strong>
+                                    <p>Reconnaissance, exploitation, privilege escalation, reporting</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Web Application Security</strong>
+                                    <p>OWASP Top 10, SQL injection, XSS, CSRF, secure coding</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Network Security & Monitoring</strong>
+                                    <p>Firewalls, IDS/IPS, VPNs, traffic analysis, Wireshark</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Threat Intelligence & Analysis</strong>
+                                    <p>Threat actors, IOCs, MITRE ATT&CK, threat hunting</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pathway-stage">
+                    <div class="stage-header">
+                        <div class="stage-number">Phase 3</div>
+                        <h3>Hands-On Labs & Scenarios</h3>
+                        <div class="stage-duration">Weeks 7-9</div>
+                    </div>
+                    <div class="stage-content">
+                        <p class="stage-description">Apply everything you've learned in realistic environments that simulate actual security challenges.</p>
+                        <ul class="stage-topics">
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Live Capture the Flag (CTF) Challenges</strong>
+                                    <p>Solve real-world security puzzles and exploits</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Incident Response Simulations</strong>
+                                    <p>Detect, analyze, and respond to security breaches</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Security Operations Center (SOC) Labs</strong>
+                                    <p>Monitor systems, triage alerts, investigate threats</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Cloud Security Practicals</strong>
+                                    <p>Secure AWS/Azure environments, identity management</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pathway-stage">
+                    <div class="stage-header">
+                        <div class="stage-number">Phase 4</div>
+                        <h3>Capstone Projects</h3>
+                        <div class="stage-duration">Weeks 10-11</div>
+                    </div>
+                    <div class="stage-content">
+                        <p class="stage-description">Complete comprehensive projects that demonstrate your skills to potential employers.</p>
+                        <ul class="stage-topics">
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Full Security Assessment</strong>
+                                    <p>Conduct end-to-end security audit of a simulated company</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Custom Security Tool Development</strong>
+                                    <p>Build your own security automation or scanning tool</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Threat Detection Platform</strong>
+                                    <p>Design and implement a mini-SIEM solution</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Professional Portfolio Website</strong>
+                                    <p>Showcase your projects and writeups like a pro</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pathway-stage highlight">
+                    <div class="stage-header">
+                        <div class="stage-number">Phase 5</div>
+                        <h3>Career Readiness</h3>
+                        <div class="stage-duration">Week 12</div>
+                    </div>
+                    <div class="stage-content">
+                        <p class="stage-description">Prepare to launch your career with professional polish and industry connections.</p>
+                        <ul class="stage-topics">
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Resume & LinkedIn Optimization</strong>
+                                    <p>Craft compelling narratives that get recruiter attention</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Interview Preparation</strong>
+                                    <p>Technical interviews, behavioral questions, salary negotiation</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Industry Certifications Guidance</strong>
+                                    <p>Roadmap for Security+, CEH, CISSP and more</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="topic-icon">✓</span>
+                                <div>
+                                    <strong>Hiring Partner Introductions</strong>
+                                    <p>Direct connections to companies actively hiring</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section id="partners" class="partners-section">
+        <div class="container">
+            <div class="section-badge">Trusted Partners</div>
+            <h2 class="section-title">Recognized by Industry Leaders</h2>
+            <p class="section-subtitle">Our graduates work at the world's most respected companies and organizations</p>
+            
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo" style="height:40px;" loading="lazy">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo" style="height:40px;" loading="lazy">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS Logo" style="height:40px;" loading="lazy">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://logos-world.net/wp-content/uploads/2021/08/Cisco-Logo.png" alt="Cisco Logo" style="height:40px;" loading="lazy">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Logo" style="height:40px;" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="section-badge">Get In Touch</div>
+                    <h2>Have Questions?<br>We're Here to Help</h2>
+                    <p>Whether you're unsure if this program is right for you, need clarification on the curriculum, or want to discuss payment options, reach out. Our team responds within 24 hours.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3 8L10.89 13.26C11.54 13.67 12.46 13.67 13.11 13.26L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="#0FB9C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <strong>Email Us</strong>
+                                <p>hello@email.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="#0FB9C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <strong>Call Us</strong>
+                                <p>+44-123-456-7890</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M17.6569 16.6569C16.7202 17.5935 14.7616 19.5521 13.4138 20.8999C12.6327 21.681 11.3677 21.6814 10.5866 20.9003C9.26234 19.576 7.34159 17.6553 6.34315 16.6569C3.21895 13.5327 3.21895 8.46734 6.34315 5.34315C9.46734 2.21895 14.5327 2.21895 17.6569 5.34315C20.781 8.46734 20.781 13.5327 17.6569 16.6569Z" stroke="#0FB9C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="11" r="3" stroke="#0FB9C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <strong>Visit Us</strong>
+                                <p>123 Main Street, Anytown, UK</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Full Name</label>
+                            <input type="text" id="contactName" name="name" required placeholder="John Doe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" name="email" required placeholder="john@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" name="message" rows="5" required placeholder="Tell us how we can help..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apply Section (CTA) -->
+    <section id="apply" class="apply-cta-section">
+        <div class="container">
+            <div class="apply-cta-content">
+                <h2>Your Cybersecurity Career Starts Here</h2>
+                <p>Stop wondering what if. Start building your future today. Applications are open for our next cohort.</p>
+                <button class="btn btn-primary btn-large" onclick="openApplyModal()">
+                    <span>Apply Now - It's Free</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <p class="apply-note">No credit card required • Reviewed within 48 hours</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">NEXT GEN CYBER TALENT</div>
+                    <p>Your personal AI-powered cybersecurity career engine. Master the skills that matter.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
+                                <path d="M196.3 512L103.4 512L103.4 212.9L196.3 212.9L196.3 512zM149.8 172.1C120.1 172.1 96 147.5 96 117.8C96 103.5 101.7 89.9 111.8 79.8C121.9 69.7 135.6 64 149.8 64C164 64 177.7 69.7 187.8 79.8C197.9 89.9 203.6 103.6 203.6 117.8C203.6 147.5 179.5 172.1 149.8 172.1zM543.9 512L451.2 512L451.2 366.4C451.2 331.7 450.5 287.2 402.9 287.2C354.6 287.2 347.2 324.9 347.2 363.9L347.2 512L254.4 512L254.4 212.9L343.5 212.9L343.5 253.7L344.8 253.7C357.2 230.2 387.5 205.4 432.7 205.4C526.7 205.4 544 267.3 544 347.7L544 512L543.9 512z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="X (Twitter)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
+                                <path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
+                                <path d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
+                                <path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="#programme">Programme</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#learner-pathway">Learner Pathway</a></li>
+                            <li><a href="#partners">Partners</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#careers">Careers</a></li>
+                            <li><a href="#blog">Blog</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#privacy">Privacy Policy</a></li>
+                            <li><a href="#terms">Terms of Service</a></li>
+                            <li><a href="#cookies">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Next Gen Cyber Talent. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Apply Modal -->
+    <div class="modal" id="applyModal">
+        <div class="modal-overlay" onclick="closeApplyModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeApplyModal()" aria-label="Close modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6L18 18"/>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2>Start Your Journey</h2>
+                <p>Tell us about yourself and take the first step toward a cybersecurity career</p>
+            </div>
+
+            <form class="apply-form" id="applyForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Current Experience Level *</label>
+                    <select id="experience" name="experience" required>
+                        <option value="">Select your experience level</option>
+                        <option value="no-experience">No technical experience</option>
+                        <option value="beginner">Some IT knowledge (self-taught)</option>
+                        <option value="intermediate">IT professional (1-3 years)</option>
+                        <option value="experienced">IT professional (3+ years)</option>
+                        <option value="career-changer">Career changer from another field</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="motivation">Why do you want to join this program? *</label>
+                    <textarea id="motivation" name="motivation" rows="5" required placeholder="Tell us about your goals, what you hope to achieve, and why cybersecurity interests you..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="availability">When can you start? *</label>
+                    <select id="availability" name="availability" required>
+                        <option value="">Select your availability</option>
+                        <option value="immediately">Immediately</option>
+                        <option value="1-month">Within 1 month</option>
+                        <option value="2-months">Within 2 months</option>
+                        <option value="3-months">Within 3 months</option>
+                    </select>
+                </div>
+
+                <div class="form-checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to receive communications about the program and understand the commitment required *</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large btn-full">Submit Application</button>
+                
+                <p class="form-note">Your information is secure and will never be shared. We'll review your application and get back to you within 48 hours.</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
