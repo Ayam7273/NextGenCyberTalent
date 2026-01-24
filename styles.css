@@ -258,7 +258,18 @@ p {
 }
 
 .badge-icon {
-    font-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.badge-icon svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
 
 .hero-title {
