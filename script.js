@@ -15,18 +15,31 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Mobile menu toggle
-mobileMenuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    mobileMenuToggle.classList.toggle('active');
-});
+// Mobile menu toggle with body scroll lock
+function toggleMobileMenu() {
+    const isOpen = navLinks.classList.toggle('active');
+    mobileMenuToggle.classList.toggle('active', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+mobileMenuToggle.addEventListener('click', toggleMobileMenu);
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
         mobileMenuToggle.classList.remove('active');
+        document.body.style.overflow = '';
     });
+});
+
+// Close mobile menu on ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 });
 
 // ===========================
@@ -514,6 +527,82 @@ console.log('%c🔐 NEXT GEN CYBER TALENT', 'color: #0FB9C6; font-size: 24px; fo
 console.log('%cWelcome, future cybersecurity professional!', 'color: #0A1624; font-size: 14px;');
 console.log('%cInterested in how this site works? That\'s the spirit we\'re looking for.', 'color: #1E2933; font-size: 12px;');
 console.log('%cApply now: Scroll up and click the Apply button!', 'color: #0FB9C6; font-size: 12px; font-weight: bold;');
+
+// ===========================
+// Programme Chatbot
+// ===========================
+
+const chatbotWidget = document.getElementById('chatbotWidget');
+const chatbotToggle = document.getElementById('chatbotToggle');
+const chatbotClose = document.getElementById('chatbotClose');
+const chatbotPanel = document.getElementById('chatbotPanel');
+const chatbotMessages = document.getElementById('chatbotMessages');
+const chatbotInput = document.getElementById('chatbotInput');
+const chatbotSend = document.getElementById('chatbotSend');
+
+// Programme Q&A knowledge base
+const chatbotKnowledge = [
+    { keywords: ['apply', 'application', 'how to apply', 'join'], response: 'To apply for the Global Cyber Talent Initiative, click the "Apply" button in the navigation or the "Apply Now" button in the hero section. You\'ll fill out a short form with your name, email, experience level, and why you want to join. Applications are reviewed within 48 hours.' },
+    { keywords: ['duration', 'how long', '12 month', 'weeks', 'length'], response: 'The programme runs for 12 months. It\'s an industry-aligned development programme with structured learning, hands-on labs, and real-world projects. Each phase includes checkpoints and performance review.' },
+    { keywords: ['cost', 'price', 'fee', 'free', 'pay'], response: 'For specific pricing and funding options, please contact us through the Contact section. We offer various options to make the programme accessible.' },
+    { keywords: ['prerequisite', 'requirement', 'experience', 'background', 'qualify'], response: 'No prior technical experience is required. We look for motivation and commitment. The programme starts with foundation-building and progresses through applied skills, projects, and professional readiness.' },
+    { keywords: ['learn', 'curriculum', 'course', 'teach', 'skills'], response: 'You\'ll learn core cybersecurity concepts, hands-on labs, threat intelligence, incident response, ethical hacking, and security operations. The 12-month journey includes Foundation Phase, Applied Skills Phase, Project & Collaboration Phase, and Professional Readiness Phase.' },
+    { keywords: ['pathway', 'phases', 'stages', 'journey'], response: 'The learner pathway has 4 phases: 1) Foundation Phase - core concepts and professional expectations, 2) Applied Skills Phase - hands-on labs and scenarios, 3) Project & Collaboration Phase - team projects and incident response, 4) Professional Readiness Phase - workplace behaviours and employer-facing delivery.' },
+    { keywords: ['performance', 'platinum', 'gold', 'silver', 'bronze', 'tier'], response: 'Learners are ranked in a performance framework: Platinum (high performers, ready for complex tasks), Gold (capable, minimal supervision), Silver (solid foundation, growing confidence), and Bronze (early-stage learners). This helps employers engage talent at the right level.' },
+    { keywords: ['employer', 'job', 'hire', 'placement', 'career'], response: 'The programme prepares you for real organisational roles. Employers can access ranked talent, offer placements, and observe performance before hiring. We focus on work-ready skills, not just certifications.' },
+    { keywords: ['contact', 'email', 'reach', 'support'], response: 'You can reach us through the Contact section on this page. Fill out the form with your name, email, and message. We respond within 24 hours.' },
+    { keywords: ['partners', 'companies', 'industry'], response: 'Our graduates work at leading tech and cybersecurity companies. The programme is recognised by industry leaders. Check the Partners section for more details.' }
+];
+
+const defaultResponse = 'I can help with questions about the programme, how to apply, duration, curriculum, performance tiers, or career outcomes. Try asking something like "How do I apply?" or "What will I learn?"';
+
+function getChatbotResponse(userMessage) {
+    const lower = userMessage.toLowerCase().trim();
+    for (const item of chatbotKnowledge) {
+        if (item.keywords.some(kw => lower.includes(kw))) {
+            return item.response;
+        }
+    }
+    return defaultResponse;
+}
+
+function addChatMessage(text, isUser) {
+    const div = document.createElement('div');
+    div.className = `chatbot-message ${isUser ? 'user' : 'bot'}`;
+    const p = document.createElement('p');
+    p.textContent = text;
+    div.appendChild(p);
+    chatbotMessages.appendChild(div);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+function sendChatMessage() {
+    const text = chatbotInput.value.trim();
+    if (!text) return;
+    
+    addChatMessage(text, true);
+    chatbotInput.value = '';
+    
+    setTimeout(() => {
+        const response = getChatbotResponse(text);
+        addChatMessage(response, false);
+    }, 500);
+}
+
+if (chatbotToggle) {
+    chatbotToggle.addEventListener('click', () => chatbotWidget.classList.add('open'));
+}
+if (chatbotClose) {
+    chatbotClose.addEventListener('click', () => chatbotWidget.classList.remove('open'));
+}
+if (chatbotSend) {
+    chatbotSend.addEventListener('click', sendChatMessage);
+}
+if (chatbotInput) {
+    chatbotInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChatMessage();
+    });
+}
 
 // ===========================
 // Initialize All Features
