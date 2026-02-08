@@ -43,6 +43,42 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ===========================
+// Hero rotating "Future-*" text (slide in/out horizontally)
+// ===========================
+
+const heroRotatingWord = document.getElementById('heroRotatingWord');
+if (heroRotatingWord) {
+    const words = ['Future-Focused', 'Future-Driven', 'Future-Established'];
+    let index = 0;
+    const duration = 400;
+    const pause = 2800;
+
+    function cycleWord() {
+        heroRotatingWord.classList.add('slide-out');
+        heroRotatingWord.classList.remove('slide-in', 'ready');
+
+        setTimeout(() => {
+            index = (index + 1) % words.length;
+            heroRotatingWord.textContent = words[index];
+            heroRotatingWord.classList.remove('slide-out');
+            heroRotatingWord.classList.add('slide-in');
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    heroRotatingWord.classList.add('ready');
+                });
+            });
+
+            setTimeout(() => {
+                heroRotatingWord.classList.remove('slide-in', 'ready');
+            }, duration);
+        }, duration);
+    }
+
+    let cycleTimer = setInterval(cycleWord, pause + duration * 2);
+}
+
+// ===========================
 // Smooth Scrolling
 // ===========================
 

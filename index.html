@@ -6,9 +6,10 @@
     <title>GCTI - Future-Ready Cybersecurity Training</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 </head>
@@ -17,7 +18,9 @@
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <div class="logo">
-                <a href="#home">GLOBAL CYBER <br>TALENT INITIATIVE</a>
+                <a href="#home">
+                    <img src="img/logo2.png" alt="Global Cyber Talent Initiative Logo">
+                </a>
             </div>
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                 <span></span>
@@ -44,14 +47,14 @@
             <div class="hero-grid">
                 <div class="hero-visual">
                     <img 
-                        src="img/Hero section Image.png" 
+                        src="img/hero-section-image-white.png" 
                         alt="Student testimonials - The course was great and intuitive, I enjoyed the cybersecurity course, Absolutely amazing training"
                         class="hero-testimonial-img"
                     >
                 </div>
                 <div class="hero-content">
                     <h1 class="hero-title">
-                        Future-Focused <span class="hero-title-underline">Cybersecurity</span> Training
+                        <span class="hero-title-rotating-wrap"><span class="hero-title-rotating" id="heroRotatingWord" aria-live="polite">Future-Focused</span></span> <span class="hero-title-underline">Cybersecurity</span> Training
                     </h1>
                     <p class="hero-subtitle">
                         Master the skills that matter. Build a career-ready foundation in cybersecurity 
@@ -184,19 +187,19 @@
                         <h4 class="framework-title">Performance Tiers</h4>
                         <div class="framework-tier tier-platinum">
                             <span class="tier-name">Platinum</span>
-                            <span class="tier-desc">Cyber Teal — Consistently high performers. Ready for complex responsibilities.</span>
+                            <span class="tier-desc">Consistently high performers. Strong technical execution, dependable delivery, and clear professional judgement. Ready for complex responsibilities.</span>
                         </div>
                         <div class="framework-tier tier-gold">
                             <span class="tier-name">Gold</span>
-                            <span class="tier-desc">Cyber Teal + Electric Blue — Highly capable, performs strongly with minimal supervision.</span>
+                            <span class="tier-desc">Highly capable and reliable. Performs strongly across most domains with minimal supervision.</span>
                         </div>
                         <div class="framework-tier tier-silver">
                             <span class="tier-name">Silver</span>
-                            <span class="tier-desc">Muted Electric Blue — Solid foundational capability, growing confidence.</span>
+                            <span class="tier-desc">Solid foundational capability. Demonstrates growing confidence and benefits from guided exposure.</span>
                         </div>
                         <div class="framework-tier tier-bronze">
                             <span class="tier-name">Bronze</span>
-                            <span class="tier-desc">Soft Neutral Grey‑Blue — Early‑stage learners developing core skills in a structured environment.</span>
+                            <span class="tier-desc">Early‑stage learners. Actively developing core skills within a structured, supervised environment.</span>
                         </div>
                     </div>
                 </div>
@@ -333,7 +336,7 @@
                         <p class="stage-description">Team projects, incident response, and documentation practice.</p>
                     </div>
                 </div>
-                <div class="pathway-stage highlight">
+                <div class="pathway-stage">
                     <div class="stage-header">
                         <div class="stage-number">Phase 4</div>
                         <h3>Professional Readiness Phase</h3>
@@ -440,7 +443,7 @@
                             <textarea id="contactMessage" name="message" rows="5" required placeholder="Tell us how we can help..."></textarea>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                        <button type="submit" class="btn btn-primary btn-large" >Send Message</button>
                     </form>
                 </div>
             </div>
@@ -454,8 +457,8 @@
                 <h2>Your Cybersecurity Career Starts Here</h2>
                 <p>Stop wondering what if. Start building your future today. Applications are open for our next cohort.</p>
                 <button class="btn btn-primary btn-large" onclick="openApplyModal()">
-                    <span>Apply Now - It's Free</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <span style="color: #000;">Apply Now - It's Free</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" color="#000">
                         <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
