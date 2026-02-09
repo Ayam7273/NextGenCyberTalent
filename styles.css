@@ -411,7 +411,7 @@ p {
     display: inline-block;
     overflow: hidden;
     vertical-align: bottom;
-    min-width: 19ch; /* fits "Future-Established" */
+    /* min-width: 19ch;  */
 }
 
 .hero-title-rotating {
@@ -1580,7 +1580,7 @@ section {
     
     .hero-testimonial-img {
         max-width: 400px;
-        margin: 0 auto;
+        margin: 30px auto;
     }
     
     .programme-content {
@@ -1821,7 +1821,7 @@ section {
     }
     
     .btn-hero-cta {
-        width: 100%;
+        /* width: 100%; */
     }
 }
 
