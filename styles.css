@@ -1641,7 +1641,7 @@ section {
         display: block;
         padding: 16px 0;
         font-size: 1.0625rem;
-        color: var(--text);
+        color: var(--white);
     }
     
     .nav-links a:hover {
@@ -1653,6 +1653,7 @@ section {
         justify-content: center;
         background: none !important;
         border: none !important;
+        color: #fff;
     }
     
     .nav-links a.btn:hover {

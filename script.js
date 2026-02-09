@@ -48,7 +48,7 @@ document.addEventListener('keydown', (e) => {
 
 const heroRotatingWord = document.getElementById('heroRotatingWord');
 if (heroRotatingWord) {
-    const words = ['Future-Focused', 'Future-Driven', 'Future-Established'];
+    const words = ['Future-Focused', 'Future-Driven', 'Future-Intense'];
     let index = 0;
     const duration = 400;
     const pause = 2800;
