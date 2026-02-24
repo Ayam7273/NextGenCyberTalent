@@ -1149,6 +1149,22 @@ section {
     color: var(--primary);
 }
 
+.how-highlights strong.tier-platinum {
+    color: #888888;
+}
+
+.how-highlights strong.tier-gold {
+    color: #FFD700;
+}
+
+.how-highlights strong.tier-silver {
+    color: #C0C0C0;
+}
+
+.how-highlights strong.tier-bronze {
+    color: #CD7F32;
+}
+
 .framework-card {
     padding: 24px;
 }
