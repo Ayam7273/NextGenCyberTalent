@@ -115,6 +115,7 @@ const applyModal = document.getElementById('applyModal');
 function openApplyModal() {
     applyModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    clearApplyFormMessage();
 }
 
 function closeApplyModal() {
@@ -135,6 +136,285 @@ document.addEventListener('keydown', (e) => {
 
 const contactForm = document.getElementById('contactForm');
 const applyForm = document.getElementById('applyForm');
+
+// Progressive apply form elements
+const applySteps = document.querySelectorAll('.apply-step');
+const applyProgressBarFill = document.getElementById('applyProgressBarFill');
+const applyProgressLabel = document.getElementById('applyProgressLabel');
+const applyProgressDots = document.querySelectorAll('.apply-progress-dot');
+
+let currentApplyStep = 0;
+
+function getApplyStepTitle(index) {
+    const step = applySteps[index];
+    if (!step) return '';
+    return step.getAttribute('data-step-title') || '';
+}
+
+function updateApplyProgress() {
+    const totalSteps = applySteps.length || 1;
+    const current = currentApplyStep + 1;
+    const segments = Math.max(1, totalSteps - 1);
+    const linePercent = totalSteps > 1 ? (currentApplyStep / segments) * 100 : 0;
+
+    if (applyProgressBarFill) {
+        applyProgressBarFill.style.width = `${linePercent}%`;
+    }
+    if (applyProgressLabel) {
+        applyProgressLabel.textContent = `Step ${current} of ${totalSteps} — ${getApplyStepTitle(currentApplyStep)}`;
+    }
+    if (applyProgressDots && applyProgressDots.length) {
+        applyProgressDots.forEach((dot, idx) => {
+            dot.classList.toggle('completed', idx < currentApplyStep);
+            dot.classList.toggle('active', idx === currentApplyStep);
+        });
+    }
+}
+
+function showApplyStep(index) {
+    if (!applySteps.length) return;
+    const clampedIndex = Math.max(0, Math.min(index, applySteps.length - 1));
+    applySteps.forEach((step, idx) => {
+        step.classList.toggle('active', idx === clampedIndex);
+    });
+    currentApplyStep = clampedIndex;
+    updateApplyProgress();
+}
+
+function validateApplyStep(stepIndex) {
+    if (!applyForm) return true;
+    const formData = new FormData(applyForm);
+    const data = Object.fromEntries(formData);
+
+    const trim = (value) => (value || '').toString().trim();
+
+    if (stepIndex === 0) {
+        if (!trim(data.fullName)) {
+            showApplyFormMessage('Please enter your full name.', 'error');
+            return false;
+        }
+        if (!trim(data.email)) {
+            showApplyFormMessage('Please enter your email address.', 'error');
+            return false;
+        }
+        if (!isValidEmail(data.email)) {
+            showApplyFormMessage('Please enter a valid email address.', 'error');
+            return false;
+        }
+    }
+
+    if (stepIndex === 1) {
+        if (!data.experienceLevel) {
+            showApplyFormMessage('Please select your current experience level.', 'error');
+            return false;
+        }
+        const motivation = trim(data.motivation);
+        if (!motivation || motivation.length < 50) {
+            showApplyFormMessage('Please provide a motivation statement of at least 50 characters.', 'error');
+            return false;
+        }
+        if (!data.startTimeframe) {
+            showApplyFormMessage('Please tell us when you can start.', 'error');
+            return false;
+        }
+        if (data.startTimeframe === 'specific-date' && !trim(data.startDateSpecific)) {
+            showApplyFormMessage('Please specify your preferred start date.', 'error');
+            return false;
+        }
+    }
+
+    if (stepIndex === 2) {
+        if (!data.fundingStatus) {
+            showApplyFormMessage('Please select your funding status.', 'error');
+            return false;
+        }
+        const requiresSponsorshipDetails =
+            data.fundingStatus === 'employer-sponsored' || data.fundingStatus === 'other-sponsored';
+        if (requiresSponsorshipDetails) {
+            if (!trim(data.sponsorshipDetails)) {
+                showApplyFormMessage('Please provide sponsorship details including organisation name and contact (if known).', 'error');
+                return false;
+            }
+        }
+
+        const sponsorshipFileInput = document.getElementById('sponsorshipFile');
+        if (sponsorshipFileInput && sponsorshipFileInput.files.length > 0) {
+            const file = sponsorshipFileInput.files[0];
+            const fileName = file.name || '';
+            const ext = fileName.split('.').pop().toLowerCase();
+            const allowedExt = ['pdf', 'docx'];
+            if (!allowedExt.includes(ext)) {
+                showApplyFormMessage('Please upload a PDF or DOCX file for sponsorship documentation.', 'error');
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function populateApplicationReview() {
+    if (!applyForm) return;
+    const formData = new FormData(applyForm);
+    const data = Object.fromEntries(formData);
+    const trim = (value) => (value || '').toString().trim();
+
+    const experienceMap = {
+        'beginner': 'Beginner (0–1 year)',
+        'intermediate': 'Intermediate (1–3 years)',
+        'advanced': 'Advanced (3+ years)',
+        'career-changer': 'Career‑changer (no prior experience but motivated)'
+    };
+
+    const startMap = {
+        'immediately': 'Immediately',
+        '1-month': 'Within 1 month',
+        '3-months': 'Within 3 months',
+        'specific-date': 'On a specific date'
+    };
+
+    const fundingMap = {
+        'self-funded': 'Self‑funded',
+        'employer-sponsored': 'Employer‑sponsored',
+        'other-sponsored': 'Sponsored by another organisation',
+        'not-confirmed': 'Not yet confirmed (exploring options)'
+    };
+
+    const reviewFullName = document.getElementById('reviewFullName');
+    const reviewEmail = document.getElementById('reviewEmail');
+    const reviewPhone = document.getElementById('reviewPhone');
+    const reviewExperience = document.getElementById('reviewExperience');
+    const reviewStart = document.getElementById('reviewStart');
+    const reviewFunding = document.getElementById('reviewFunding');
+    const reviewAffordability = document.getElementById('reviewAffordability');
+    const reviewSponsorship = document.getElementById('reviewSponsorship');
+    const reviewMotivation = document.getElementById('reviewMotivation');
+
+    if (reviewFullName) reviewFullName.textContent = trim(data.fullName) || 'Not provided';
+    if (reviewEmail) reviewEmail.textContent = trim(data.email) || 'Not provided';
+    if (reviewPhone) reviewPhone.textContent = trim(data.phone) || 'Not provided';
+    if (reviewExperience) reviewExperience.textContent = experienceMap[data.experienceLevel] || 'Not specified';
+
+    let startText = startMap[data.startTimeframe] || 'Not specified';
+    if (data.startTimeframe === 'specific-date' && data.startDateSpecific) {
+        startText = `Specific date: ${data.startDateSpecific}`;
+    }
+    if (reviewStart) reviewStart.textContent = startText;
+
+    if (reviewFunding) reviewFunding.textContent = fundingMap[data.fundingStatus] || 'Not specified';
+
+    const affordabilitySelections = Array.from(
+        applyForm.querySelectorAll('input[name="affordability"]:checked')
+    ).map((input) => input.dataset.label || input.value);
+    if (reviewAffordability) {
+        reviewAffordability.textContent = affordabilitySelections.length
+            ? affordabilitySelections.join(', ')
+            : 'Not specified';
+    }
+
+    let sponsorshipSummary = 'No sponsorship information provided.';
+    if (data.fundingStatus === 'self-funded') {
+        sponsorshipSummary = 'Self‑funded.';
+    } else if (data.fundingStatus === 'employer-sponsored' || data.fundingStatus === 'other-sponsored') {
+        sponsorshipSummary = trim(data.sponsorshipDetails) || 'Sponsored (details to be confirmed).';
+    } else if (data.fundingStatus === 'not-confirmed') {
+        sponsorshipSummary = 'Funding not yet confirmed.';
+    }
+
+    const sponsorshipFileInput = document.getElementById('sponsorshipFile');
+    if (sponsorshipFileInput && sponsorshipFileInput.files.length > 0) {
+        const file = sponsorshipFileInput.files[0];
+        sponsorshipSummary += ` Document: ${file.name}`;
+    }
+
+    if (reviewSponsorship) reviewSponsorship.textContent = sponsorshipSummary;
+
+    if (reviewMotivation) reviewMotivation.textContent = trim(data.motivation) || 'No motivation statement provided.';
+}
+
+// Step navigation buttons
+if (applySteps.length) {
+    showApplyStep(0);
+
+    document.querySelectorAll('.apply-next').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            btn.style.color = 'black';
+            const step = parseInt(btn.getAttribute('data-step'), 10) || 0;
+            if (validateApplyStep(step)) {
+                clearApplyFormMessage();
+                const nextIndex = step + 1;
+                if (nextIndex === applySteps.length - 1) {
+                    populateApplicationReview();
+                }
+                showApplyStep(nextIndex);
+            }
+        });
+    });
+
+    document.querySelectorAll('.apply-back').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            clearApplyFormMessage();
+            const step = parseInt(btn.getAttribute('data-step'), 10) || 0;
+            const prevIndex = Math.max(0, step - 1);
+            showApplyStep(prevIndex);
+        });
+    });
+}
+
+// Conditional fields: start date & sponsorship details
+const startTimeframeSelect = document.getElementById('startTimeframe');
+const startDateRow = document.getElementById('startDateRow');
+function updateStartDateVisibility() {
+    if (!startTimeframeSelect || !startDateRow) return;
+    const show = startTimeframeSelect.value === 'specific-date';
+    startDateRow.classList.toggle('hidden', !show);
+}
+if (startTimeframeSelect) {
+    startTimeframeSelect.addEventListener('change', updateStartDateVisibility);
+    updateStartDateVisibility();
+}
+
+const fundingStatusSelect = document.getElementById('fundingStatus');
+const sponsorshipDetailsRow = document.getElementById('sponsorshipDetailsRow');
+function updateSponsorshipVisibility() {
+    if (!fundingStatusSelect || !sponsorshipDetailsRow) return;
+    const value = fundingStatusSelect.value;
+    const show = value === 'employer-sponsored' || value === 'other-sponsored';
+    sponsorshipDetailsRow.classList.toggle('hidden', !show);
+}
+if (fundingStatusSelect) {
+    fundingStatusSelect.addEventListener('change', updateSponsorshipVisibility);
+    updateSponsorshipVisibility();
+}
+
+// Affordability selection rules:
+// - "No concerns" and "Prefer not to say" are mutually exclusive with everything else (and with each other)
+const affordabilityInputs = applyForm
+    ? Array.from(applyForm.querySelectorAll('input[name="affordability"]'))
+    : [];
+
+function enforceAffordabilityRules(changedInput) {
+    if (!changedInput || !changedInput.checked) return;
+
+    const exclusive = new Set(['no-concerns', 'prefer-not-to-say']);
+    const changedValue = changedInput.value;
+
+    if (exclusive.has(changedValue)) {
+        affordabilityInputs.forEach((input) => {
+            if (input !== changedInput) input.checked = false;
+        });
+        return;
+    }
+
+    // If selecting any non-exclusive option, clear exclusive options
+    affordabilityInputs.forEach((input) => {
+        if (exclusive.has(input.value)) input.checked = false;
+    });
+}
+
+affordabilityInputs.forEach((input) => {
+    input.addEventListener('change', () => enforceAffordabilityRules(input));
+});
 
 // Contact Form Submission
 contactForm.addEventListener('submit', (e) => {
@@ -167,39 +447,72 @@ applyForm.addEventListener('submit', (e) => {
     
     const formData = new FormData(applyForm);
     const data = Object.fromEntries(formData);
+    const trim = (value) => (value || '').toString().trim();
     
-    // Frontend validation
-    if (!data.fullName || !data.email || !data.experience || !data.motivation || !data.availability) {
-        showNotification('Please fill in all required fields', 'error');
+    // Validate all steps before final submit
+    if (!validateApplyStep(0) || !validateApplyStep(1) || !validateApplyStep(2)) {
         return;
     }
-    
-    if (!isValidEmail(data.email)) {
-        showNotification('Please enter a valid email address', 'error');
+
+    if (!data.consent) {
+        showApplyFormMessage('Please confirm your consent before submitting.', 'error');
         return;
     }
-    
-    if (!data.terms) {
-        showNotification('Please agree to the terms', 'error');
+
+    if (!data.declaration) {
+        showApplyFormMessage('Please confirm the declaration before submitting.', 'error');
         return;
     }
     
     // Simulate form submission
     console.log('Application Form Data:', data);
     
-    showNotification('Application submitted successfully! We\'ll review it within 48 hours.', 'success');
+    showApplyFormMessage('Application submitted successfully! We\'ll review it within 48 hours.', 'success');
     applyForm.reset();
+
+    // Reset wizard state after submit
+    showApplyStep(0);
+    clearApplyFormMessage();
+    updateStartDateVisibility();
+    updateSponsorshipVisibility();
     
     // Close modal after short delay
     setTimeout(() => {
         closeApplyModal();
-    }, 2000);
+    }, 2500);
 });
 
 // Email validation helper
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+}
+
+// ===========================
+// Application form in-form message (centred inside modal)
+// ===========================
+
+function showApplyFormMessage(message, type = 'error') {
+    const el = document.getElementById('applyFormMessage');
+    if (!el) return;
+    el.textContent = message;
+    el.removeAttribute('hidden');
+    el.className = 'apply-form-message ' + (type === 'success' ? 'success' : 'error');
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (type === 'success') {
+        setTimeout(() => {
+            el.setAttribute('hidden', '');
+            el.textContent = '';
+        }, 4000);
+    }
+}
+
+function clearApplyFormMessage() {
+    const el = document.getElementById('applyFormMessage');
+    if (el) {
+        el.setAttribute('hidden', '');
+        el.textContent = '';
+    }
 }
 
 // ===========================

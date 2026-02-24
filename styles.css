@@ -1673,6 +1673,392 @@ section {
     margin-top: 20px;
 }
 
+/* Progressive Application Form */
+
+.apply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.apply-progress {
+    padding: 0 4px 8px;
+}
+
+.apply-progress-track {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+}
+
+/* Thin connecting line behind circles */
+.apply-progress-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    border-radius: 999px;
+    background: var(--border);
+}
+
+.apply-progress-line-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), #0891A6);
+    transition: width 0.4s ease;
+}
+
+.apply-progress-steps {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.apply-progress-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--border);
+    color: #9CA3AF;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.apply-progress-num {
+    line-height: 1;
+}
+
+/* Completed: filled with accent, white number */
+.apply-progress-dot.completed {
+    background: linear-gradient(135deg, var(--accent), #0891A6);
+    border-color: var(--accent);
+    color: var(--white);
+}
+
+/* Current: accent outline, white interior, accent number */
+.apply-progress-dot.active {
+    background: var(--white);
+    border-color: var(--accent);
+    border-width: 2px;
+    color: var(--accent);
+}
+
+/* Pending stays default (grey border + grey number) */
+
+.apply-progress-label {
+    margin: 12px 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-align: center;
+}
+
+.apply-form-message {
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    margin: 0 0 8px;
+    transition: opacity 0.25s ease;
+}
+
+.apply-form-message[hidden],
+.apply-form-message:empty {
+    display: none !important;
+}
+
+.apply-form-message.error {
+    background: rgba(239, 68, 68, 0.12);
+    color: #B91C1C;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.apply-form-message.success {
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.apply-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.apply-step {
+    display: none;
+    animation: fadeInStep 0.3s ease-out;
+}
+
+.apply-step.active {
+    display: block;
+}
+
+.apply-step-header {
+    margin-bottom: 16px;
+}
+
+.apply-step-header h3 {
+    margin-bottom: 8px;
+}
+
+.apply-step-header p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+.apply-step-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(15,185,198,0.08);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+
+.apply-step-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px 24px;
+    margin-top: 8px;
+}
+
+.field-help {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: #6B7280;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-inline {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.checkbox-inline input[type="checkbox"] {
+    margin-top: 3px;
+}
+
+/* Affordability option cards */
+.affordability-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.affordability-option {
+    display: block;
+    cursor: pointer;
+    user-select: none;
+}
+
+.affordability-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    pointer-events: none;
+}
+
+.affordability-card {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 14px;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    transition: transform 0.2s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.affordability-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(15, 185, 198, 0.35);
+    box-shadow: 0 10px 22px rgba(10, 22, 36, 0.08);
+}
+
+.affordability-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 185, 198, 0.12);
+    color: var(--accent);
+    flex: 0 0 auto;
+    margin-top: 2px;
+}
+
+.affordability-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.affordability-title {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+}
+
+.affordability-desc {
+    font-size: 0.875rem;
+    color: var(--text);
+    opacity: 0.8;
+    line-height: 1.35;
+}
+
+/* Selected state */
+.affordability-option input[type="checkbox"]:checked + .affordability-card {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(15,185,198,0.10), rgba(8,145,166,0.06));
+    box-shadow: 0 14px 28px rgba(15, 185, 198, 0.12);
+}
+
+.affordability-option input[type="checkbox"]:checked + .affordability-card .affordability-icon {
+    background: linear-gradient(135deg, var(--accent), #0891A6);
+    color: var(--white);
+}
+
+.affordability-option input[type="checkbox"]:checked + .affordability-card::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.85rem;
+}
+
+/* Keyboard focus */
+.affordability-option input[type="checkbox"]:focus-visible + .affordability-card {
+    outline: 3px solid rgba(15, 185, 198, 0.35);
+    outline-offset: 2px;
+}
+
+.apply-step-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.apply-step-actions .btn-secondary {
+    padding-inline: 20px;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.apply-step-actions .btn-primary {
+    padding-inline: 28px;
+    color: #000 !important;
+    border: 1px solid #000;
+}
+
+.apply-review-card {
+    margin-top: 8px;
+    padding: 20px 20px 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(15,185,198,0.04), rgba(8,145,166,0.02));
+}
+
+.apply-review-card h4 {
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+.apply-review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px 20px;
+    margin-bottom: 16px;
+}
+
+.review-label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6B7280;
+    margin-bottom: 2px;
+}
+
+.review-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+.apply-review-motivation {
+    border-top: 1px dashed rgba(148,163,184,0.6);
+    padding-top: 10px;
+}
+
+.apply-review-motivation p {
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes fadeInStep {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ===========================
    Apply CTA Section
    =========================== */

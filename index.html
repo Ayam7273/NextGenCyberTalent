@@ -558,62 +558,278 @@
             </button>
             
             <div class="modal-header">
-                <h2>Start Your Journey</h2>
-                <p>Tell us about yourself and take the first step toward a cybersecurity career</p>
+                <h2>Global Cyber Talent Application Form</h2>
+                <p>Complete this short application so we can understand your readiness, motivation, and fit for the programme.</p>
             </div>
 
             <form class="apply-form" id="applyForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name *</label>
-                    <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+                <!-- Progress bar: numbered circles + connecting line -->
+                <div class="apply-progress">
+                    <div class="apply-progress-track">
+                        <div class="apply-progress-line" aria-hidden="true">
+                            <div class="apply-progress-line-fill" id="applyProgressBarFill"></div>
+                        </div>
+                        <div class="apply-progress-steps">
+                            <span class="apply-progress-dot" data-step="0"><span class="apply-progress-num">1</span></span>
+                            <span class="apply-progress-dot" data-step="1"><span class="apply-progress-num">2</span></span>
+                            <span class="apply-progress-dot" data-step="2"><span class="apply-progress-num">3</span></span>
+                            <span class="apply-progress-dot" data-step="3"><span class="apply-progress-num">4</span></span>
+                        </div>
+                    </div>
+                    <p class="apply-progress-label" id="applyProgressLabel" aria-live="polite">Step 1 of 4 — Introduction</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="email" required placeholder="john@example.com">
-                </div>
+                <div class="apply-form-message" id="applyFormMessage" role="alert" aria-live="assertive" hidden></div>
 
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
-                </div>
+                <div class="apply-steps">
+                    <!-- STEP 1: Introduction & Personal Information -->
+                    <div class="apply-step" data-step-index="0" data-step-title="Programme Introduction & Personal Details">
+                        <div class="apply-step-header">
+                            <span class="apply-step-pill">Step 1</span>
+                            <h3>Programme Introduction</h3>
+                            <p>The Global Cyber Talent Initiative is a high‑quality skills programme designed to develop a diverse, industry‑ready pipeline of future cybersecurity professionals. Please complete all required fields accurately.</p>
+                        </div>
 
-                <div class="form-group">
-                    <label for="experience">Current Experience Level *</label>
-                    <select id="experience" name="experience" required>
-                        <option value="">Select your experience level</option>
-                        <option value="no-experience">No technical experience</option>
-                        <option value="beginner">Some IT knowledge (self-taught)</option>
-                        <option value="intermediate">IT professional (1-3 years)</option>
-                        <option value="experienced">IT professional (3+ years)</option>
-                        <option value="career-changer">Career changer from another field</option>
-                    </select>
-                </div>
+                        <div class="apply-step-grid">
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+                            </div>
 
-                <div class="form-group">
-                    <label for="motivation">Why do you want to join this program? *</label>
-                    <textarea id="motivation" name="motivation" rows="5" required placeholder="Tell us about your goals, what you hope to achieve, and why cybersecurity interests you..."></textarea>
-                </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required placeholder="john@example.com">
+                            </div>
 
-                <div class="form-group">
-                    <label for="availability">When can you start? *</label>
-                    <select id="availability" name="availability" required>
-                        <option value="">Select your availability</option>
-                        <option value="immediately">Immediately</option>
-                        <option value="1-month">Within 1 month</option>
-                        <option value="2-months">Within 2 months</option>
-                        <option value="3-months">Within 3 months</option>
-                    </select>
-                </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number (Optional)</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+44 7123 456 789">
+                                <small class="field-help">Include country code if outside the UK.</small>
+                            </div>
+                        </div>
 
-                <div class="form-checkbox">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">I agree to receive communications about the program and understand the commitment required *</label>
-                </div>
+                        <div class="apply-step-actions">
+                            <button type="button" class="btn btn-secondary apply-back" data-step="0" disabled>Back</button>
+                            <button type="button" class="btn btn-primary apply-next" data-step="0">Next</button>
+                        </div>
+                    </div>
 
-                <button type="submit" class="btn btn-primary btn-large btn-full">Submit Application</button>
-                
-                <p class="form-note">Your information is secure and will never be shared. We'll review your application and get back to you within 48 hours.</p>
+                    <!-- STEP 2: Experience & Motivation -->
+                    <div class="apply-step" data-step-index="1" data-step-title="Experience & Motivation">
+                        <div class="apply-step-header">
+                            <span class="apply-step-pill">Step 2</span>
+                            <h3>Experience & Motivation</h3>
+                            <p>Tell us where you are today and why this programme is the right next step for you.</p>
+                        </div>
+
+                        <div class="apply-step-grid">
+                            <div class="form-group">
+                                <label for="experienceLevel">Current Experience Level *</label>
+                                <select id="experienceLevel" name="experienceLevel" required>
+                                    <option value="">Select your experience level</option>
+                                    <option value="beginner">Beginner (0–1 year)</option>
+                                    <option value="intermediate">Intermediate (1–3 years)</option>
+                                    <option value="advanced">Advanced (3+ years)</option>
+                                    <option value="career-changer">Career‑changer (no prior experience but motivated)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="motivation">Why do you want to join this programme? *</label>
+                                <textarea id="motivation" name="motivation" rows="5" required placeholder="Tell us about your motivation, interest in cybersecurity, and how this programme supports your goals..."></textarea>
+                                <small class="field-help">Minimum 50 characters.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startTimeframe">When can you start? *</label>
+                                <select id="startTimeframe" name="startTimeframe" required>
+                                    <option value="">Select your availability</option>
+                                    <option value="immediately">Immediately</option>
+                                    <option value="1-month">Within 1 month</option>
+                                    <option value="3-months">Within 3 months</option>
+                                    <option value="specific-date">On a specific date (please specify)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group hidden" id="startDateRow">
+                                <label for="startDateSpecific">Preferred start date</label>
+                                <input type="date" id="startDateSpecific" name="startDateSpecific">
+                            </div>
+                        </div>
+
+                        <div class="apply-step-actions">
+                            <button type="button" class="btn btn-secondary apply-back" data-step="1">Back</button>
+                            <button type="button" class="btn btn-primary apply-next" data-step="1">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Funding & Sponsorship -->
+                    <div class="apply-step" data-step-index="2" data-step-title="Funding & Sponsorship">
+                        <div class="apply-step-header">
+                            <span class="apply-step-pill">Step 3</span>
+                            <h3>Funding & Sponsorship</h3>
+                            <p>Let us know how you plan to fund your participation and whether any sponsorship is in place or being explored.</p>
+                        </div>
+
+                        <div class="apply-step-grid">
+                            <div class="form-group">
+                                <label for="fundingStatus">Funding Status *</label>
+                                <select id="fundingStatus" name="fundingStatus" required>
+                                    <option value="">How will your participation be funded?</option>
+                                    <option value="self-funded">Self‑funded (I will cover my own training costs)</option>
+                                    <option value="employer-sponsored">Employer‑sponsored</option>
+                                    <option value="other-sponsored">Sponsored by another organisation</option>
+                                    <option value="not-confirmed">Not yet confirmed (I am exploring funding options)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group hidden" id="sponsorshipDetailsRow">
+                                <label for="sponsorshipDetails">Sponsorship Details *</label>
+                                <textarea id="sponsorshipDetails" name="sponsorshipDetails" rows="4" placeholder="Please provide the name of the sponsoring organisation and the primary contact person (if known)."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Affordability Considerations (Optional)</label>
+                                <div class="affordability-grid" role="group" aria-label="Affordability considerations">
+                                    <label class="affordability-option">
+                                        <input type="checkbox" name="affordability" value="payment-plan" data-label="I may require a payment plan">
+                                        <span class="affordability-card">
+                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></span>
+                                            <span class="affordability-text">
+                                                <span class="affordability-title">Payment plan</span>
+                                                <span class="affordability-desc">I may require a payment plan.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+
+                                    <label class="affordability-option">
+                                        <input type="checkbox" name="affordability" value="partial-sponsorship" data-label="I may require partial sponsorship">
+                                        <span class="affordability-card">
+                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                                            <span class="affordability-text">
+                                                <span class="affordability-title">Partial sponsorship</span>
+                                                <span class="affordability-desc">I may require partial sponsorship.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+
+                                    <label class="affordability-option">
+                                        <input type="checkbox" name="affordability" value="external-funding" data-label="I am exploring external funding options">
+                                        <span class="affordability-card">
+                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-dollar"></i></span>
+                                            <span class="affordability-text">
+                                                <span class="affordability-title">Exploring funding</span>
+                                                <span class="affordability-desc">I am exploring external funding options.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+
+                                    <label class="affordability-option affordability-option-neutral">
+                                        <input type="checkbox" name="affordability" value="no-concerns" data-label="I have no affordability concerns">
+                                        <span class="affordability-card">
+                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></span>
+                                            <span class="affordability-text">
+                                                <span class="affordability-title">No concerns</span>
+                                                <span class="affordability-desc">I have no affordability concerns.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+
+                                    <label class="affordability-option affordability-option-neutral">
+                                        <input type="checkbox" name="affordability" value="prefer-not-to-say" data-label="Prefer not to say">
+                                        <span class="affordability-card">
+                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-user-shield"></i></span>
+                                            <span class="affordability-text">
+                                                <span class="affordability-title">Prefer not to say</span>
+                                                <span class="affordability-desc">Prefer not to say.</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sponsorshipFile">Sponsorship Documentation (Optional)</label>
+                                <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                                <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation.</small>
+                            </div>
+                        </div>
+
+                        <div class="apply-step-actions">
+                            <button type="button" class="btn btn-secondary apply-back" data-step="2">Back</button>
+                            <button type="button" class="btn btn-primary apply-next" data-step="2">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Review & Submit -->
+                    <div class="apply-step" data-step-index="3" data-step-title="Review & Submit">
+                        <div class="apply-step-header">
+                            <span class="apply-step-pill">Step 4</span>
+                            <h3>Review & Submit</h3>
+                            <p>Please review your responses before submitting. Once submitted, you will receive a confirmation email and details about next steps.</p>
+                        </div>
+
+                        <div class="apply-review-card">
+                            <h4>Your Details</h4>
+                            <div class="apply-review-grid">
+                                <div>
+                                    <span class="review-label">Full Name</span>
+                                    <span class="review-value" id="reviewFullName"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Email</span>
+                                    <span class="review-value" id="reviewEmail"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Phone</span>
+                                    <span class="review-value" id="reviewPhone"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Experience Level</span>
+                                    <span class="review-value" id="reviewExperience"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Start Timeline</span>
+                                    <span class="review-value" id="reviewStart"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Funding Status</span>
+                                    <span class="review-value" id="reviewFunding"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Affordability</span>
+                                    <span class="review-value" id="reviewAffordability"></span>
+                                </div>
+                                <div>
+                                    <span class="review-label">Sponsorship</span>
+                                    <span class="review-value" id="reviewSponsorship"></span>
+                                </div>
+                            </div>
+
+                            <div class="apply-review-motivation">
+                                <span class="review-label">Your Motivation</span>
+                                <p id="reviewMotivation"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <label for="consent">I agree to receive communications about the programme and confirm that I understand the time commitment and participation requirements. *</label>
+                        </div>
+
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="declaration" name="declaration" required>
+                            <label for="declaration">I confirm that the information provided in this application is accurate to the best of my knowledge. *</label>
+                        </div>
+
+                        <div class="apply-step-actions">
+                            <button type="button" class="btn btn-secondary apply-back" data-step="3">Back</button>
+                            <button type="submit" class="btn btn-primary btn-large">Submit Application</button>
+                        </div>
+
+                        <p class="form-note">Your information is secure and will never be shared. We'll review your application and get back to you within 48 hours.</p>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
