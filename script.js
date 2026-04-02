@@ -536,7 +536,7 @@ function showNotification(message, type = 'info') {
         position: 'fixed',
         top: '100px',
         right: '24px',
-        backgroundColor: type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#0FB9C6',
+        backgroundColor: type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#2563EB',
         color: 'white',
         padding: '16px 24px',
         borderRadius: '8px',
@@ -700,7 +700,7 @@ function updateActiveNavLink() {
                         link.style.color = '';
                     }
                 });
-                navLink.style.color = '#0FB9C6';
+                navLink.style.color = '#2563EB';
             }
         }
     });
@@ -795,7 +795,7 @@ skipLink.style.cssText = `
     position: absolute;
     top: -100px;
     left: 0;
-    background: #0FB9C6;
+    background: #2563EB;
     color: white;
     padding: 12px 24px;
     text-decoration: none;
@@ -872,10 +872,10 @@ window.addEventListener('scroll', debouncedUpdateActiveNav);
 // Console Welcome Message
 // ===========================
 
-console.log('%c🔐 NEXT GEN CYBER TALENT', 'color: #0FB9C6; font-size: 24px; font-weight: bold;');
+console.log('%c🔐 NEXT GEN CYBER TALENT', 'color: #2563EB; font-size: 24px; font-weight: bold;');
 console.log('%cWelcome, future cybersecurity professional!', 'color: #0A1624; font-size: 14px;');
 console.log('%cInterested in how this site works? That\'s the spirit we\'re looking for.', 'color: #1E2933; font-size: 12px;');
-console.log('%cApply now: Scroll up and click the Apply button!', 'color: #0FB9C6; font-size: 12px; font-weight: bold;');
+console.log('%cApply now: Scroll up and click the Apply button!', 'color: #2563EB; font-size: 12px; font-weight: bold;');
 
 // ===========================
 // Programme Chatbot
@@ -958,3 +958,65 @@ if (chatbotInput) {
 // ===========================
 
 console.log('✅ All features initialized successfully');
+
+// ===========================
+// Custom Cursor (blue)
+// ===========================
+
+const co = document.getElementById('co');
+const ci = document.getElementById('ci');
+
+if (co && ci) {
+    let mx = 0, my = 0, ox = 0, oy = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mx = e.clientX; 
+        my = e.clientY;
+        ci.style.left = mx + 'px';
+        ci.style.top = my + 'px';
+        spawnTrail(mx, my);
+    });
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function loop() {
+        ox = lerp(ox, mx, 0.12);
+        oy = lerp(oy, my, 0.12);
+        co.style.left = ox + 'px';
+        co.style.top = oy + 'px';
+        requestAnimationFrame(loop);
+    }
+    loop();
+
+    function spawnTrail(x, y) {
+        const d = document.createElement('div');
+        d.className = 'trail';
+        const s = Math.random() * 5 + 3;
+        d.style.cssText = `left:${x}px;top:${y}px;width:${s}px;height:${s}px;opacity:0.5`;
+        document.body.appendChild(d);
+        let op = 0.5;
+        const fade = setInterval(() => {
+            op -= 0.05;
+            d.style.opacity = op;
+            if (op <= 0) {
+                clearInterval(fade);
+                d.remove();
+            }
+        }, 20);
+    }
+
+    document.querySelectorAll('a,button').forEach((el) => {
+        el.addEventListener('mouseenter', () => co.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => co.classList.remove('hovered'));
+    });
+
+    document.addEventListener('mousedown', () => {
+        co.classList.add('clicked');
+        ci.classList.add('clicked');
+    });
+
+    document.addEventListener('mouseup', () => {
+        co.classList.remove('clicked');
+        ci.classList.remove('clicked');
+    });
+}
