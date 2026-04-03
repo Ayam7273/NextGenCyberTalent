@@ -469,7 +469,6 @@ section::before {
   align-items: center;
   padding: 0;
   background: var(--bg);
-  overflow-x: hidden;
   overflow-y: visible;
 }
 
