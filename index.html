@@ -1,931 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCTI - Future-Ready Cybersecurity Training</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon2.png">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GCTI — Global Cyber Talent Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon2.png">
 </head>
+
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <a href="#home">
-                    <img src="img/logo4.png" alt="GCTI Logo" style="width: 200px;">
-                </a>
-            </div>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#programme">Programme</a></li>
-                <li class="nav-item-has-dropdown">
-                    <button class="nav-dropdown-toggle" type="button">
-                        About
-                        <span class="nav-dropdown-caret"><i class="fa-solid fa-angle-down"></i></span>
-                    </button>
-                    <ul class="nav-dropdown">
-                        <li><a href="about.html">About GCTI</a></li>
-                        <li><a href="programme-overview.html">Programme Overview</a></li>
-                    </ul>
-                </li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#learner-pathway">Learner Pathway</a></li>
-                <li><a href="#partners">Partners</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#apply" class="btn btn-primary">Apply</a></li>
-            </ul>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark">
+          <img src="assets/logo-xp.png" alt="GCTI Logo" width="200" height="auto" />
         </div>
-    </nav>
+      </a>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero hero-light">
-        <div class="hero-dots hero-dots-tr" aria-hidden="true"></div>
-        <div class="hero-dots hero-dots-bl" aria-hidden="true"></div>
-        <div class="container hero-container">
-            <div class="hero-grid">
-                <div class="hero-visual">
-                    <div class="hero-visual-inner">
-                        <div class="hero-orbit-glow" aria-hidden="true"></div>
-                        <div class="hero-orbit hero-orbit--outer" aria-hidden="true">
-                            <div class="hero-orbit-track hero-orbit-track--cw">
-                                <div class="hero-orbit-ring"></div>
-                                <div class="hero-orbit-spoke" style="--a: 0deg"><span class="hero-orbit-dot"></span></div>
-                                <div class="hero-orbit-spoke" style="--a: 120deg"><span class="hero-orbit-dot"></span></div>
-                                <div class="hero-orbit-spoke" style="--a: 240deg"><span class="hero-orbit-dot"></span></div>
-                            </div>
-                        </div>
-                        <div class="hero-orbit hero-orbit--inner" aria-hidden="true">
-                            <div class="hero-orbit-track hero-orbit-track--ccw">
-                                <div class="hero-orbit-ring"></div>
-                                <div class="hero-orbit-spoke" style="--a: 60deg"><span class="hero-orbit-dot"></span></div>
-                                <div class="hero-orbit-spoke" style="--a: 180deg"><span class="hero-orbit-dot"></span></div>
-                            </div>
-                        </div>
-                        <img 
-                            src="img/hero-img.png"
-                            alt="Student testimonials - The course was great and intuitive, I enjoyed the cybersecurity course, Absolutely amazing training"
-                            class="hero-testimonial-img"
-                        >
-                        <div class="hero-floating-testimonials" aria-hidden="true">
-                            <div class="hero-tcard hero-tcard--1">
-                                <p class="hero-tcard-quote">“The course was great and intuitive.”</p>
-                                <p class="hero-tcard-meta"><span class="hero-tcard-name">Alex M.</span> <span class="hero-tcard-role">Learner</span></p>
-                            </div>
-                            <div class="hero-tcard hero-tcard--2">
-                                <p class="hero-tcard-quote">“Absolutely amazing training.”</p>
-                                <p class="hero-tcard-meta"><span class="hero-tcard-name">Jordan K.</span> <span class="hero-tcard-role">Learner</span></p>
-                            </div>
-                            <div class="hero-tcard hero-tcard--3">
-                                <p class="hero-tcard-quote">“I enjoyed the cybersecurity course.”</p>
-                                <p class="hero-tcard-meta"><span class="hero-tcard-name">Sam R.</span> <span class="hero-tcard-role">Learner</span></p>
-                            </div>
-                        </div>
-                        <div class="hero-stat-cards" aria-hidden="true">
-                            <div class="hero-stat-card hero-stat-card--tr">
-                                <span class="hero-stat-badge" aria-hidden="true">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-                                </span>
-                                <p class="hero-stat-title">Certificate earned</p>
-                                <p class="hero-stat-sub">Network Security</p>
-                            </div>
-                            <div class="hero-stat-card hero-stat-card--bl">
-                                <p class="hero-stat-title">Module 7 of 10</p>
-                                <p class="hero-stat-sub">Penetration Testing Basics</p>
-                                <div class="hero-stat-progress" role="presentation">
-                                    <div class="hero-stat-progress-fill"></div>
-                                </div>
-                                <p class="hero-stat-pct">72%</p>
-                            </div>
-                            <div class="hero-stat-card hero-stat-card--br">
-                                <p class="hero-stat-live"><span class="hero-stat-live-dot" aria-hidden="true"></span> LIVE NOW · Threat Analysis Lab</p>
-                                <p class="hero-stat-sub">128 learners attending</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        <span class="hero-title-rotating-wrap"><span class="hero-title-rotating" id="heroRotatingWord" aria-live="polite">Future-Driven</span></span> <span class="hero-title-underline">Cybersecurity</span> Training
-                    </h1>
-                    <p class="hero-subtitle">
-                        Master the skills that matter. Build a career-ready foundation in cybersecurity 
-                        with hands-on labs, real-world projects, and mentorship from industry experts. 
-                        Transform your potential into a thriving career.
-                    </p>
-                    <button class="btn btn-hero-cta" onclick="openApplyModal()">
-                        Apply Now
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="programme.html" class="nav-link">Programme</a>
+        <a href="employers.html" class="nav-link">For Employers</a>
+        <a href="policies.html" class="nav-link">Policies</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
 
-    <!-- Problem Section (Inspired by Worktella) -->
-    <section class="problem-section">
-        <div class="container">
-            <div class="section-badge">The Challenge</div>
-            <h2 class="section-title">Breaking Into Cybersecurity?<br>You're Not Alone</h2>
-            <p class="section-subtitle">Thousands face the same challenges every day. We're here to change that.</p>
-            
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-icon" style="background: #FFF3E0;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#FF9800" stroke-width="2" stroke-linejoin="round"/>
-                            <path d="M2 17L12 22L22 17" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 12L12 17L22 12" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Theory Over Practice</h3>
-                    <p>You've watched countless tutorials and earned certificates, but when it's time to apply for jobs, you realize you lack real, hands-on experience that employers demand.</p>
-                </div>
-                
-                <div class="problem-card">
-                    <div class="problem-icon" style="background: #E3F2FD;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="#2196F3" stroke-width="2"/>
-                            <path d="M9 9L15 15M15 9L9 15" stroke="#2196F3" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h3>Generic Training</h3>
-                    <p>One-size-fits-all courses don't account for your unique background, learning pace, or career goals. You need personalized guidance and mentorship, not just video lectures.</p>
-                </div>
-                
-                <div class="problem-card">
-                    <div class="problem-icon" style="background: #F3E5F5;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect x="3" y="7" width="18" height="13" rx="2" stroke="#9C27B0" stroke-width="2"/>
-                            <rect x="8" y="4" width="8" height="4" rx="1" stroke="#9C27B0" stroke-width="2"/>
-                            <path d="M16 7V6C16 5.44772 15.5523 5 15 5H9C8.44772 5 8 5.44772 8 6V7" stroke="#9C27B0" stroke-width="2"/>
-                            <path d="M3 12H21" stroke="#9C27B0" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h3>Job Market Disconnect</h3>
-                    <p>Traditional programs teach outdated skills or ignore what employers actually need. You graduate without the practical experience or portfolio to land your first role.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Programme Section -->
-    <section id="programme" class="programme-section">
-        <div class="container">
-            <div class="section-badge">About the Programme</div>
-            <h2 class="section-title">Building <span class="gradient-text">Work-Ready</span> Cybersecurity Professionals</h2>
-            <p class="section-subtitle">Global Cyber Talent Initiative is a 12‑month, industry‑aligned cybersecurity development programme. It prepares participants for real organisational roles, combining structured learning, hands-on labs, projects, and professional standards expected in live environments.</p>
-            
-            <div class="programme-content">
-                <div class="programme-main">
-                    <div class="programme-hero-card">
-                        <div class="programme-tag">Designed for Employers</div>
-                        <h3>Continuous Assessment, Measurable Outcomes</h3>
-                        <p>The programme ensures organisations can engage talent with confidence. Participants progress through a clearly defined curriculum that mirrors workplace realities.</p>
-                        
-                        <div class="skill-tags">
-                            <span class="skill-tag">Hands-on labs & scenario-based learning</span>
-                            <span class="skill-tag">Continuous assessment & performance tracking</span>
-                            <span class="skill-tag">Real-world projects with mentoring</span>
-                            <span class="skill-tag">Clear, measurable progress milestones</span>
-                        </div>
-                    </div>
-
-                    <div class="programme-features">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                    <path d="M16 4L4 10L16 16L28 10L16 4Z" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
-                                    <path d="M4 22L16 28L28 22" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M4 16L16 22L28 16" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div class="feature-content">
-                                <h4>Structured Learning</h4>
-                                <p>Learning is active, measurable, and outcome‑driven. Unlike short courses or purely theoretical training, learners are continuously assessed across technical capability, reliability, communication, and security mindset.</p>
-                            </div>
-                        </div>
-
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                    <path d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z" stroke="#2563EB" stroke-width="2.5"/>
-                                    <path d="M16 10V16L20 20" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="feature-content">
-                                <h4>Performance-Based Talent Framework</h4>
-                                <p>Learners are ranked within a structured framework. These tiers reflect demonstrated capability and readiness—not potential promises. Employers can engage talent at the level that matches their risk appetite and business needs.</p>
-                            </div>
-                        </div>
-
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                    <rect x="6" y="10" width="20" height="16" rx="2" stroke="#2563EB" stroke-width="2.5"/>
-                                    <path d="M12 10V8C12 5.79086 13.7909 4 16 4C18.2091 4 20 5.79086 20 8V10" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
-                                    <circle cx="16" cy="18" r="2" fill="#2563EB"/>
-                                </svg>
-                            </div>
-                            <div class="feature-content">
-                                <h4>What Employers Can Expect</h4>
-                                <p>A clearly structured 12‑month programme with defined milestones; practical, work‑relevant skills; ongoing assessment rather than one‑off certification; transparent performance differentiation; and talent that understands professional standards, not just tools.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="programme-sidebar">
-                    <div class="info-card framework-card">
-                        <h4 class="framework-title">Performance Tiers</h4>
-                        <div class="framework-tier tier-platinum">
-                            <span class="tier-name">Platinum</span>
-                            <span class="tier-desc">Consistently high performers. Strong technical execution, dependable delivery, and clear professional judgement. Ready for complex responsibilities.</span>
-                        </div>
-                        <div class="framework-tier tier-gold">
-                            <span class="tier-name">Gold</span>
-                            <span class="tier-desc">Highly capable and reliable. Performs strongly across most domains with minimal supervision.</span>
-                        </div>
-                        <div class="framework-tier tier-silver">
-                            <span class="tier-name">Silver</span>
-                            <span class="tier-desc">Solid foundational capability. Demonstrates growing confidence and benefits from guided exposure.</span>
-                        </div>
-                        <div class="framework-tier tier-bronze">
-                            <span class="tier-name">Bronze</span>
-                            <span class="tier-desc">Early‑stage learners. Actively developing core skills within a structured, supervised environment.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works-section">
-        <div class="container">
-            <div class="section-badge">How It Works</div>
-            <h2 class="section-title">Building <span class="gradient-text">Work-Ready</span> Cybersecurity Professionals</h2>
-            <p class="section-subtitle">Global Cyber Talent Initiative is a 12‑month, industry‑aligned cybersecurity development programme. It prepares participants for real organisational roles.</p>
-            
-            <div class="how-it-works-grid">
-                <div class="how-block">
-                    <div class="how-block-number">1</div>
-                    <h3>About the Programme</h3>
-                    <p>Global Cyber Talent Initiative is a 12‑month, industry-aligned cybersecurity development programme. It prepares participants for real organisational roles, combining structured learning, hands-on labs, projects, and professional standards expected in live environments. Designed for employers, the programme ensures continuous assessment, measurable outcomes, and confidence that learners are ready for workplace responsibilities.</p>
-                    <ul class="how-highlights">
-                        <li>Hands-on labs and scenario-based learning</li>
-                        <li>Continuous assessment and performance tracking</li>
-                        <li>Real-world projects with professional mentoring</li>
-                        <li>Clear, measurable progress milestones</li>
-                    </ul>
-                </div>
-
-                <div class="how-block">
-                    <div class="how-block-number">2</div>
-                    <h3>Performance-Based Talent Framework</h3>
-                    <p>Learners are ranked in a structured framework reflecting capability and readiness:</p>
-                    <ul class="how-highlights">
-                        <li><strong class="tier-platinum">Platinum</strong> – High performers, strong technical execution, reliable, ready for complex tasks.</li>
-                        <li><strong class="tier-gold">Gold</strong> – Capable and reliable, performs strongly with minimal supervision.</li>
-                        <li><strong class="tier-silver">Silver</strong> – Solid foundation, growing confidence, guided exposure.</li>
-                        <li><strong class="tier-bronze">Bronze</strong> – Early-stage learners developing core skills in a structured environment.</li>
-                    </ul>
-                    <p>This tiered system allows employers to engage talent at the level that fits operational needs, reducing recruitment risk.</p>
-                </div>
-
-                <div class="how-block">
-                    <div class="how-block-number">3</div>
-                    <h3>The 12-Month Journey</h3>
-                    <p>Four phases with checkpoints, evidence capture, and performance review:</p>
-                    <ul class="how-highlights">
-                        <li><strong>Foundation Phase</strong> – Core cybersecurity concepts, systems thinking, and professional expectations.</li>
-                        <li><strong>Applied Skills Phase</strong> – Hands-on labs and real-world scenario exercises.</li>
-                        <li><strong>Project & Collaboration Phase</strong> – Team projects, incident response, and documentation practice.</li>
-                        <li><strong>Professional Readiness Phase</strong> – Workplace behaviours, ethics, reporting, and employer-facing delivery.</li>
-                    </ul>
-                </div>
-
-                <div class="how-block">
-                    <div class="how-block-number">4</div>
-                    <h3>Assessment & Accountability</h3>
-                    <p>Learners are evaluated on:</p>
-                    <ul class="how-highlights">
-                        <li>Technical execution and problem-solving</li>
-                        <li>Consistency, reliability, and follow-through</li>
-                        <li>Communication and documentation</li>
-                        <li>Security mindset and ethical judgement</li>
-                    </ul>
-                    <p>Continuous assessment ensures that progression is earned, visible, and measurable.</p>
-                </div>
-
-                <div class="how-block">
-                    <div class="how-block-number">5</div>
-                    <h3>How Employers Engage</h3>
-                    <p>Employers can:</p>
-                    <ul class="how-highlights">
-                        <li>Access ranked talent suited to organisational needs</li>
-                        <li>Offer short-term projects, placements, or supervised exposure</li>
-                        <li>Observe performance before hiring</li>
-                        <li>Make informed decisions with evidence-based selection</li>
-                    </ul>
-                    <p>Engagement is flexible, structured, and risk-aware.</p>
-                </div>
-
-                <div class="how-block">
-                    <div class="how-block-number">6</div>
-                    <h3>What Employers Can Expect</h3>
-                    <ul class="how-highlights">
-                        <li>Clearly structured 12-month programme with defined milestones</li>
-                        <li>Practical, work-relevant skills</li>
-                        <li>Transparent performance differentiation</li>
-                        <li>Talent ready for real environments, not protected classrooms</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="cta-box">
-                <h3>Ready to Begin Your Journey?</h3>
-                <p>Join the Global Cyber Talent Initiative and prepare for real cybersecurity roles</p>
-                <button class="btn btn-primary btn-large" onclick="openApplyModal()">Start Your Application</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Learner Pathway Section -->
-    <section id="learner-pathway" class="learner-pathway-section">
-        <div class="container">
-            <div class="section-badge">Learner Pathway</div>
-            <h2 class="section-title">Your Roadmap to <span class="gradient-text">Cybersecurity Mastery</span></h2>
-            <p class="section-subtitle">A clearly designed progression through the 12‑month programme—from foundation to professional readiness.</p>
-            
-            <div class="pathway pathway-simple">
-                <div class="pathway-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">Phase 1</div>
-                        <h3>Foundation Phase</h3>
-                        <div class="stage-duration">Core concepts</div>
-                    </div>
-                    <div class="stage-content">
-                        <p class="stage-description">Core cybersecurity concepts, systems thinking, and professional expectations.</p>
-                    </div>
-                </div>
-                <div class="pathway-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">Phase 2</div>
-                        <h3>Applied Skills Phase</h3>
-                        <div class="stage-duration">Hands-on</div>
-                    </div>
-                    <div class="stage-content">
-                        <p class="stage-description">Hands-on labs and real-world scenario exercises.</p>
-                    </div>
-                </div>
-                <div class="pathway-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">Phase 3</div>
-                        <h3>Project & Collaboration Phase</h3>
-                        <div class="stage-duration">Team work</div>
-                    </div>
-                    <div class="stage-content">
-                        <p class="stage-description">Team projects, incident response, and documentation practice.</p>
-                    </div>
-                </div>
-                <div class="pathway-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">Phase 4</div>
-                        <h3>Professional Readiness Phase</h3>
-                        <div class="stage-duration">Employer-facing</div>
-                    </div>
-                    <div class="stage-content">
-                        <p class="stage-description">Workplace behaviours, ethics, reporting, and employer-facing delivery. Each phase includes checkpoints, evidence capture, and performance review.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partners Section -->
-    <section id="partners" class="partners-section">
-        <div class="container">
-            <div class="section-badge">Trusted Partners</div>
-            <h2 class="section-title">Recognized by Industry Leaders</h2>
-            <p class="section-subtitle">Our graduates work at the world's most respected companies and organizations</p>
-            
-            <div class="partners-grid">
-                <div class="partner-logo">
-                    <img src="img/Microsoft_logo.svg" alt="Microsoft Logo" style="height:40px;" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="img/Google_2015_logo.svg" alt="Google Logo" style="height:40px;" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="img/Amazon_Web_Services_Logo.svg" alt="AWS Logo" style="height:40px;" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="img/Cisco-Logo.png" alt="Cisco Logo" style="height:40px;" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="img/IBM_logo.svg" alt="IBM Logo" style="height:40px;" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="img/oracle.svg" alt="Oracle Logo" style="height:40px" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="section-badge">Get In Touch</div>
-                    <h2>Have Questions?<br>We're Here to Help</h2>
-                    <p>Whether you're unsure if this program is right for you, need clarification on the curriculum, or want to discuss payment options, reach out. Our team responds within 24 hours.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M3 8L10.89 13.26C11.54 13.67 12.46 13.67 13.11 13.26L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <strong>Email Us</strong>
-                                <p>enquiries@globalcybertalent.com</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <strong>Call Us</strong>
-                                <p>44-(123)-456-7890</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M17.6569 16.6569C16.7202 17.5935 14.7616 19.5521 13.4138 20.8999C12.6327 21.681 11.3677 21.6814 10.5866 20.9003C9.26234 19.576 7.34159 17.6553 6.34315 16.6569C3.21895 13.5327 3.21895 8.46734 6.34315 5.34315C9.46734 2.21895 14.5327 2.21895 17.6569 5.34315C20.781 8.46734 20.781 13.5327 17.6569 16.6569Z" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="12" cy="11" r="3" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <strong>Visit Us</strong>
-                                <p>123 Main Street, Anytown, UK</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label for="contactName">Full Name</label>
-                            <input type="text" id="contactName" name="name" required placeholder="John Doe">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="contactEmail">Email Address</label>
-                            <input type="email" id="contactEmail" name="email" required placeholder="john@example.com">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="contactMessage">Message</label>
-                            <textarea id="contactMessage" name="message" rows="5" required placeholder="Tell us how we can help..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-large" >Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Apply Section (CTA) -->
-    <section id="apply" class="apply-cta-section">
-        <div class="container">
-            <div class="apply-cta-content">
-                <h2>Your Cybersecurity Career Starts Here</h2>
-                <p>Stop wondering what if. Start building your future today. Applications are open for our next cohort.</p>
-                <button class="btn btn-primary btn-large" onclick="openApplyModal()">
-                    <span style="color: #fff;">Apply Now</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" color="#fff">
-                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <p class="apply-note">Application will be reviewed within 48 hours</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">GLOBAL CYBER TALENT INITIATIVE</div>
-                    <p>Industry-aligned development programme preparing early-career professionals for real cybersecurity roles.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
-                                <path d="M196.3 512L103.4 512L103.4 212.9L196.3 212.9L196.3 512zM149.8 172.1C120.1 172.1 96 147.5 96 117.8C96 103.5 101.7 89.9 111.8 79.8C121.9 69.7 135.6 64 149.8 64C164 64 177.7 69.7 187.8 79.8C197.9 89.9 203.6 103.6 203.6 117.8C203.6 147.5 179.5 172.1 149.8 172.1zM543.9 512L451.2 512L451.2 366.4C451.2 331.7 450.5 287.2 402.9 287.2C354.6 287.2 347.2 324.9 347.2 363.9L347.2 512L254.4 512L254.4 212.9L343.5 212.9L343.5 253.7L344.8 253.7C357.2 230.2 387.5 205.4 432.7 205.4C526.7 205.4 544 267.3 544 347.7L544 512L543.9 512z"/>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="X (Twitter)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
-                                <path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
-                                <path d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"/>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 640 640">
-                                <path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="#programme">Programme</a></li>
-                            <li><a href="#how-it-works">How It Works</a></li>
-                            <li><a href="#learner-pathway">Learner Pathway</a></li>
-                            <li><a href="#partners">Partners</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                            <li><a href="#careers">Careers</a></li>
-                            <li><a href="#blog">Blog</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Legal</h4>
-                        <ul>
-                            <li><a href="privacy.html">Privacy Policy</a></li>
-                            <li><a href="aup.html">Acceptable Use Policy</a></li>
-                            <li><a href="safeguarding.html">Safeguarding</a></li>
-                            <li><a href="code-of-conduct.html">Code of Conduct</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 Global Cyber Talent Initiative (GCTI). All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Apply Modal -->
-    <div class="modal" id="applyModal">
-        <div class="modal-overlay" onclick="closeApplyModal()"></div>
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeApplyModal()" aria-label="Close modal">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6L18 18"/>
-                </svg>
-            </button>
-            
-            <div class="modal-header">
-                <h2>Global Cyber Talent Application Form</h2>
-                <p>Complete this short application so we can understand your readiness, motivation, and fit for the programme.</p>
-            </div>
-
-            <form class="apply-form" id="applyForm">
-                <!-- Progress bar: numbered circles + connecting line -->
-                <div class="apply-progress">
-                    <div class="apply-progress-track">
-                        <div class="apply-progress-line" aria-hidden="true">
-                            <div class="apply-progress-line-fill" id="applyProgressBarFill"></div>
-                        </div>
-                        <div class="apply-progress-steps">
-                            <span class="apply-progress-dot" data-step="0"><span class="apply-progress-num">1</span></span>
-                            <span class="apply-progress-dot" data-step="1"><span class="apply-progress-num">2</span></span>
-                            <span class="apply-progress-dot" data-step="2"><span class="apply-progress-num">3</span></span>
-                            <span class="apply-progress-dot" data-step="3"><span class="apply-progress-num">4</span></span>
-                        </div>
-                    </div>
-                    <p class="apply-progress-label" id="applyProgressLabel" aria-live="polite">Step 1 of 4 — Introduction</p>
-                </div>
-
-                <div class="apply-form-message" id="applyFormMessage" role="alert" aria-live="assertive" hidden></div>
-
-                <div class="apply-steps">
-                    <!-- STEP 1: Introduction & Personal Information -->
-                    <div class="apply-step" data-step-index="0" data-step-title="Programme Introduction & Personal Details">
-                        <div class="apply-step-header">
-                            <span class="apply-step-pill">Step 1</span>
-                            <h3>Programme Introduction</h3>
-                            <p>The Global Cyber Talent Initiative is a high‑quality skills programme designed to develop a diverse, industry‑ready pipeline of future cybersecurity professionals. Please complete all required fields accurately.</p>
-                        </div>
-
-                        <div class="apply-step-grid">
-                            <div class="form-group">
-                                <label for="fullName">Full Name *</label>
-                                <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required placeholder="john@example.com">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="phone">Phone Number (Optional)</label>
-                                <input type="tel" id="phone" name="phone" placeholder="+44 7123 456 789">
-                                <small class="field-help">Include country code if outside the UK.</small>
-                            </div>
-                        </div>
-
-                        <div class="apply-step-actions">
-                            <button type="button" class="btn btn-secondary apply-back" data-step="0" disabled>Back</button>
-                            <button type="button" class="btn btn-primary apply-next" data-step="0">Next</button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: Experience & Motivation -->
-                    <div class="apply-step" data-step-index="1" data-step-title="Experience & Motivation">
-                        <div class="apply-step-header">
-                            <span class="apply-step-pill">Step 2</span>
-                            <h3>Experience & Motivation</h3>
-                            <p>Tell us where you are today and why this programme is the right next step for you.</p>
-                        </div>
-
-                        <div class="apply-step-grid">
-                            <div class="form-group">
-                                <label for="experienceLevel">Current Experience Level *</label>
-                                <select id="experienceLevel" name="experienceLevel" required>
-                                    <option value="">Select your experience level</option>
-                                    <option value="beginner">Beginner (0–1 year)</option>
-                                    <option value="intermediate">Intermediate (1–3 years)</option>
-                                    <option value="advanced">Advanced (3+ years)</option>
-                                    <option value="career-changer">Career‑changer (no prior experience but motivated)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="motivation">Why do you want to join this programme? *</label>
-                                <textarea id="motivation" name="motivation" rows="5" required placeholder="Tell us about your motivation, interest in cybersecurity, and how this programme supports your goals..."></textarea>
-                                <small class="field-help">Minimum 50 characters.</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="startTimeframe">When can you start? *</label>
-                                <select id="startTimeframe" name="startTimeframe" required>
-                                    <option value="">Select your availability</option>
-                                    <option value="immediately">Immediately</option>
-                                    <option value="1-month">Within 1 month</option>
-                                    <option value="3-months">Within 3 months</option>
-                                    <option value="specific-date">On a specific date (please specify)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group hidden" id="startDateRow">
-                                <label for="startDateSpecific">Preferred start date</label>
-                                <input type="date" id="startDateSpecific" name="startDateSpecific">
-                            </div>
-                        </div>
-
-                        <div class="apply-step-actions">
-                            <button type="button" class="btn btn-secondary apply-back" data-step="1">Back</button>
-                            <button type="button" class="btn btn-primary apply-next" data-step="1">Next</button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 3: Funding & Sponsorship -->
-                    <div class="apply-step" data-step-index="2" data-step-title="Funding & Sponsorship">
-                        <div class="apply-step-header">
-                            <span class="apply-step-pill">Step 3</span>
-                            <h3>Funding & Sponsorship</h3>
-                            <p>Let us know how you plan to fund your participation and whether any sponsorship is in place or being explored.</p>
-                        </div>
-
-                        <div class="apply-step-grid">
-                            <div class="form-group">
-                                <label for="fundingStatus">Funding Status *</label>
-                                <select id="fundingStatus" name="fundingStatus" required>
-                                    <option value="">How will your participation be funded?</option>
-                                    <option value="self-funded">Self‑funded (I will cover my own training costs)</option>
-                                    <option value="employer-sponsored">Employer‑sponsored</option>
-                                    <option value="other-sponsored">Sponsored by another organisation</option>
-                                    <option value="not-confirmed">Not yet confirmed (I am exploring funding options)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group hidden" id="sponsorshipDetailsRow">
-                                <label for="sponsorshipDetails">Sponsorship Details *</label>
-                                <textarea id="sponsorshipDetails" name="sponsorshipDetails" rows="4" placeholder="Please provide the name of the sponsoring organisation and the primary contact person (if known)."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Affordability Considerations (Optional)</label>
-                                <div class="affordability-grid" role="group" aria-label="Affordability considerations">
-                                    <label class="affordability-option">
-                                        <input type="checkbox" name="affordability" value="payment-plan" data-label="I may require a payment plan">
-                                        <span class="affordability-card">
-                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></span>
-                                            <span class="affordability-text">
-                                                <span class="affordability-title">Payment plan</span>
-                                                <span class="affordability-desc">I may require a payment plan.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-
-                                    <label class="affordability-option">
-                                        <input type="checkbox" name="affordability" value="partial-sponsorship" data-label="I may require partial sponsorship">
-                                        <span class="affordability-card">
-                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-dollar"></i></span>
-                                            <span class="affordability-text">
-                                                <span class="affordability-title">Partial sponsorship</span>
-                                                <span class="affordability-desc">I may require partial sponsorship.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-
-                                    <label class="affordability-option">
-                                        <input type="checkbox" name="affordability" value="external-funding" data-label="I am exploring external funding options">
-                                        <span class="affordability-card">
-                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-dollar"></i></span>
-                                            <span class="affordability-text">
-                                                <span class="affordability-title">Exploring funding</span>
-                                                <span class="affordability-desc">I am exploring external funding options.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-
-                                    <label class="affordability-option affordability-option-neutral">
-                                        <input type="checkbox" name="affordability" value="no-concerns" data-label="I have no affordability concerns">
-                                        <span class="affordability-card">
-                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></span>
-                                            <span class="affordability-text">
-                                                <span class="affordability-title">No concerns</span>
-                                                <span class="affordability-desc">I have no affordability concerns.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-
-                                    <label class="affordability-option affordability-option-neutral">
-                                        <input type="checkbox" name="affordability" value="prefer-not-to-say" data-label="Prefer not to say">
-                                        <span class="affordability-card">
-                                            <span class="affordability-icon" aria-hidden="true"><i class="fa-solid fa-user-shield"></i></span>
-                                            <span class="affordability-text">
-                                                <span class="affordability-title">Prefer not to say</span>
-                                                <span class="affordability-desc">Prefer not to say.</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="sponsorshipFile">Sponsorship Documentation (Optional)</label>
-                                <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-                                <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation.</small>
-                            </div>
-                        </div>
-
-                        <div class="apply-step-actions">
-                            <button type="button" class="btn btn-secondary apply-back" data-step="2">Back</button>
-                            <button type="button" class="btn btn-primary apply-next" data-step="2">Next</button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 4: Review & Submit -->
-                    <div class="apply-step" data-step-index="3" data-step-title="Review & Submit">
-                        <div class="apply-step-header">
-                            <span class="apply-step-pill">Step 4</span>
-                            <h3>Review & Submit</h3>
-                            <p>Please review your responses before submitting. Once submitted, you will receive a confirmation email and details about next steps.</p>
-                        </div>
-
-                        <div class="apply-review-card">
-                            <h4>Your Details</h4>
-                            <div class="apply-review-grid">
-                                <div>
-                                    <span class="review-label">Full Name</span>
-                                    <span class="review-value" id="reviewFullName"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Email</span>
-                                    <span class="review-value" id="reviewEmail"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Phone</span>
-                                    <span class="review-value" id="reviewPhone"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Experience Level</span>
-                                    <span class="review-value" id="reviewExperience"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Start Timeline</span>
-                                    <span class="review-value" id="reviewStart"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Funding Status</span>
-                                    <span class="review-value" id="reviewFunding"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Affordability</span>
-                                    <span class="review-value" id="reviewAffordability"></span>
-                                </div>
-                                <div>
-                                    <span class="review-label">Sponsorship</span>
-                                    <span class="review-value" id="reviewSponsorship"></span>
-                                </div>
-                            </div>
-
-                            <div class="apply-review-motivation">
-                                <span class="review-label">Your Motivation</span>
-                                <p id="reviewMotivation"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="consent" name="consent" required>
-                            <label for="consent">I agree to receive communications about the programme and confirm that I understand the time commitment and participation requirements. *</label>
-                        </div>
-
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="declaration" name="declaration" required>
-                            <label for="declaration">I confirm that the information provided in this application is accurate to the best of my knowledge. *</label>
-                        </div>
-
-                        <div class="apply-step-actions">
-                            <button type="button" class="btn btn-secondary apply-back" data-step="3">Back</button>
-                            <button type="submit" class="btn btn-primary btn-large">Submit Application</button>
-                        </div>
-
-                        <p class="form-note">Your information is secure and will never be shared. We'll review your application and get back to you within 48 hours.</p>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Chatbot Widget -->
-    <div class="chatbot-widget" id="chatbotWidget">
-        <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open programme chatbot">
-            <svg class="chatbot-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
+      <div class="nav-actions">
+        <a href="#" class="btn-nav-apply" data-open-apply-modal>Apply Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
         </button>
-        <div class="chatbot-panel" id="chatbotPanel">
-            <div class="chatbot-header">
-                <h3>Programme Assistant</h3>
-                <button class="chatbot-close" id="chatbotClose" aria-label="Close chatbot">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="chatbot-messages" id="chatbotMessages">
-                <div class="chatbot-message bot">
-                    <p>Hi! I'm here to help with questions about the Global Cyber Talent Initiative. Ask me about the programme, duration, how to apply, or what you'll learn.</p>
-                </div>
-            </div>
-            <div class="chatbot-input-area">
-                <input type="text" id="chatbotInput" placeholder="Ask about the programme..." maxlength="200" aria-label="Type your question">
-                <button class="chatbot-send" id="chatbotSend" aria-label="Send message">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Custom Cursor -->
-    <div class="c-outer" id="co"></div>
-    <div class="c-inner" id="ci"></div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="about.html" class="mobile-link">About</a>
+        <a href="programme.html" class="mobile-link">Programme</a>
+        <a href="employers.html" class="mobile-link">For Employers</a>
+        <a href="policies.html" class="mobile-link">Policies</a>
+        <a href="contact.html" class="mobile-link">Contact</a>
+        <a href="#" class="btn-mobile-apply" data-open-apply-modal>Apply Now</a>
+      </div>
+    </div>
+  </nav>
 
-    <script src="script.js"></script>
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-bg-grid"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-inner">
+        <div class="hero-content reveal">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            12-Month Industry-Aligned Programme
+          </div>
+          <h1 class="hero-title">
+            Future-Driven<br />
+            <span class="title-accent">Cybersecurity</span><br />
+            Training
+          </h1>
+          <p class="hero-subtitle">
+            Master the skills that matter. Build a career-ready foundation in cybersecurity with hands-on labs,
+            real-world projects, and mentorship from industry experts.
+          </p>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-num">12</span>
+              <span class="stat-label">Month Programme</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-num">4</span>
+              <span class="stat-label">Performance Tiers</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-num">6+</span>
+              <span class="stat-label">Recognised Partners</span>
+            </div>
+          </div>
+
+          <div class="hero-cta">
+            <a href="#" class="btn-primary" data-open-apply-modal>
+              Apply to Programme
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a href="programme.html" class="btn-ghost">Explore Programme</a>
+          </div>
+
+        </div>
+        <div class="hero-visual reveal-right">
+          <div class="hero-card-stack">
+            <div class="hero-img-placeholder">
+              <img src="assets/hero-img-pro.png" alt="Cybersecurity professional" />
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll-hint">
+        <span>Scroll to explore</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- PARTNERS TICKER -->
+    <section class="partners-section">
+      <p class="partners-label">Recognised by leading organisations</p>
+      <div class="partners-track-wrapper">
+        <div class="partners-track">
+          <div class="partner-item">
+            <img src="assets/Microsoft_logo.svg" alt="Microsoft" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Google_2015_logo.svg" alt="Google" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Amazon_Web_Services_Logo.svg" alt="AWS" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Cisco-Logo.png" alt="Cisco" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/IBM_logo.svg" alt="IBM" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/oracle.svg" alt="Oracle" />
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="partner-item">
+            <img src="assets/Microsoft_logo.svg" alt="Microsoft" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Google_2015_logo.svg" alt="Google" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Amazon_Web_Services_Logo.svg" alt="AWS" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Cisco-Logo.png" alt="Cisco" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/IBM_logo.svg" alt="IBM" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/oracle.svg" alt="Oracle" />
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="partner-item">
+            <img src="assets/Microsoft_logo.svg" alt="Microsoft" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Google_2015_logo.svg" alt="Google" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Amazon_Web_Services_Logo.svg" alt="AWS" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/Cisco-Logo.png" alt="Cisco" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/IBM_logo.svg" alt="IBM" />
+          </div>
+          <div class="partner-item">
+            <img src="assets/oracle.svg" alt="Oracle" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE CHALLENGE -->
+    <section class="challenge-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">The Problem</span>
+          <h2 class="section-title">Breaking Into Cybersecurity<br /><span class="title-accent">Shouldn't Be This
+              Hard</span></h2>
+        </div>
+        <div class="challenge-grid">
+          <div class="challenge-card reveal" style="--delay:0.1s">
+            <div class="challenge-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#1A6CF8" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M2 17L12 22L22 17" stroke="#1A6CF8" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+                <path d="M2 12L12 17L22 12" stroke="#1A6CF8" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3>Theory Over Practice</h3>
+            <p>Many learners watch tutorials and earn certificates, but lack real hands-on experience that employers
+              actually demand when hiring.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.2s">
+            <div class="challenge-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#1A6CF8" stroke-width="2"></rect>
+                <path d="M9 9L15 15M15 9L9 15" stroke="#1A6CF8" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <h3>Generic Training</h3>
+            <p>One-size-fits-all courses ignore unique backgrounds, pace, and goals. Personalised mentorship is needed —
+              not just video lectures.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.3s">
+            <div class="challenge-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="7" width="18" height="13" rx="2" stroke="#1A6CF8" stroke-width="2"></rect>
+                <rect x="8" y="4" width="8" height="4" rx="1" stroke="#1A6CF8" stroke-width="2"></rect>
+                <path d="M16 7V6C16 5.44772 15.5523 5 15 5H9C8.44772 5 8 5.44772 8 6V7" stroke="#1A6CF8"
+                  stroke-width="2"></path>
+                <path d="M3 12H21" stroke="#1A6CF8" stroke-width="2"></path>
+              </svg>
+            </div>
+            <h3>Job Market Disconnect</h3>
+            <p>Traditional programmes teach outdated skills. Graduates leave without practical experience or a portfolio
+              to land their first role.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMME OVERVIEW -->
+    <section class="programme-section">
+      <div class="container">
+        <div class="programme-layout">
+          <div class="programme-text reveal">
+            <span class="section-tag">The Solution</span>
+            <h2 class="section-title">A 12-Month Journey<br />From Foundation to <span class="title-accent">Professional
+                Ready</span></h2>
+            <p class="section-body">GCTI is an industry-aligned cybersecurity development programme that prepares
+              participants for real organisational roles — combining structured learning, hands-on labs, and
+              professional standards expected in live environments.</p>
+            <a href="programme.html" class="btn-primary">
+              View Full Programme
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+          <div class="phases-list">
+            <div class="phase-item reveal" style="--delay:0.05s">
+              <div class="phase-num">01</div>
+              <div class="phase-info">
+                <h4>Foundation Phase</h4>
+                <p>Months 1–3 · Core concepts, systems thinking, professional expectations</p>
+              </div>
+            </div>
+            <div class="phase-item reveal" style="--delay:0.15s">
+              <div class="phase-num">02</div>
+              <div class="phase-info">
+                <h4>Applied Skills Phase</h4>
+                <p>Months 4–6 · Hands-on labs and real-world scenario exercises</p>
+              </div>
+            </div>
+            <div class="phase-item reveal" style="--delay:0.25s">
+              <div class="phase-num">03</div>
+              <div class="phase-info">
+                <h4>Project & Collaboration Phase</h4>
+                <p>Months 7–9 · Team projects, incident response, documentation</p>
+              </div>
+            </div>
+            <div class="phase-item reveal" style="--delay:0.35s">
+              <div class="phase-num">04</div>
+              <div class="phase-info">
+                <h4>Professional Readiness Phase</h4>
+                <p>Months 10–12 · Ethics, reporting, employer-facing delivery</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE TIERS -->
+    <section class="tiers-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Performance Framework</span>
+          <h2 class="section-title">Transparent <span class="title-accent">Talent Ranking</span></h2>
+          <p class="section-subtitle">A tiered system so employers can engage talent at the right readiness level</p>
+        </div>
+        <div class="tiers-grid">
+          <div class="tier-card tier-platinum reveal" style="--delay:0.1s">
+            <h3>Platinum</h3>
+            <p>Consistently high performers. Strong technical execution, dependable delivery, and clear professional
+              judgement. Ready for complex responsibilities.</p>
+            <div class="tier-tag">Elite</div>
+          </div>
+          <div class="tier-card tier-gold reveal" style="--delay:0.2s">
+            <h3>Gold</h3>
+            <p>Highly capable and reliable. Performs strongly across most domains with minimal supervision needed.</p>
+            <div class="tier-tag">Advanced</div>
+          </div>
+          <div class="tier-card tier-silver reveal" style="--delay:0.3s">
+
+            <h3>Silver</h3>
+            <p>Solid foundational capability. Demonstrates growing confidence and benefits from guided exposure to real
+              environments.</p>
+            <div class="tier-tag">Developing</div>
+          </div>
+          <div class="tier-card tier-bronze reveal" style="--delay:0.4s">
+            <h3>Bronze</h3>
+            <p>Early-stage learners. Actively developing core skills within a structured, supervised environment.</p>
+            <div class="tier-tag">Foundation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOR EMPLOYERS STRIP -->
+    <section class="employers-strip">
+      <div class="container">
+        <div class="strip-layout">
+          <div class="strip-text reveal">
+            <span class="section-tag light">For Employers</span>
+            <h2 class="section-title light">Access Pre-Assessed,<br /><span class="title-accent-light">Work-Ready
+                Talent</span></h2>
+            <p class="section-body light">Observe performance before hiring. Reduce recruitment risk with evidence-based
+              talent selection.</p>
+            <a href="employers.html" class="btn-outline-light">
+              Learn More
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+          <div class="strip-features reveal-right">
+            <div class="strip-feature">
+              <div class="strip-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 2L13 8L19 9L14.5 13.5L15.5 19.5L10 17L4.5 19.5L5.5 13.5L1 9L7 8Z" stroke="white"
+                    stroke-width="1.5" fill="none" />
+                </svg>
+              </div>
+              <p>Ranked talent matched to your organisational needs</p>
+            </div>
+            <div class="strip-feature">
+              <div class="strip-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="8" stroke="white" stroke-width="1.5" />
+                  <path d="M7 10L9 12L13 8" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <p>Short-term projects, placements, or supervised exposure</p>
+            </div>
+            <div class="strip-feature">
+              <div class="strip-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="4" width="16" height="12" rx="2" stroke="white" stroke-width="1.5" />
+                  <path d="M2 8H18" stroke="white" stroke-width="1.5" />
+                </svg>
+              </div>
+              <p>Evidence-based selection — observe before committing</p>
+            </div>
+            <div class="strip-feature">
+              <div class="strip-feature-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10C4 6.686 6.686 4 10 4V4C13.314 4 16 6.686 16 10V12H4V10Z" stroke="white"
+                    stroke-width="1.5" />
+                  <rect x="6" y="12" width="8" height="4" rx="1" stroke="white" stroke-width="1.5" />
+                </svg>
+              </div>
+              <p>Reduce recruitment risk through transparent performance data</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSESSMENT AREAS -->
+    <section class="assessment-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">How We Measure</span>
+          <h2 class="section-title">Four Dimensions of<br /><span class="title-accent">Assessment</span></h2>
+        </div>
+        <div class="assessment-grid">
+          <div class="assessment-card reveal" style="--delay:0.1s">
+            <div class="assessment-num">01</div>
+            <h3>Technical Execution</h3>
+            <p>Problem-solving ability, tool proficiency, and technical accuracy in real security tasks and scenarios.
+            </p>
+          </div>
+          <div class="assessment-card reveal" style="--delay:0.2s">
+            <div class="assessment-num">02</div>
+            <h3>Reliability</h3>
+            <p>Consistency, follow-through, and dependability in completing assignments and long-form projects.</p>
+          </div>
+          <div class="assessment-card reveal" style="--delay:0.3s">
+            <div class="assessment-num">03</div>
+            <h3>Communication</h3>
+            <p>Clear documentation, effective reporting, and professional interaction with peers and stakeholders.</p>
+          </div>
+          <div class="assessment-card reveal" style="--delay:0.4s">
+            <div class="assessment-num">04</div>
+            <h3>Security Mindset</h3>
+            <p>Ethical judgement, risk awareness, and professional security thinking in all decisions and actions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Learner Voices</span>
+          <h2 class="section-title">What Our <span class="title-accent">Learners Say</span></h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card reveal" style="--delay:0.1s">
+            <div class="quote-mark">"</div>
+            <p>The course was great and intuitive. The structure made it easy to follow along and the hands-on labs gave
+              me real confidence.</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">AM</div>
+              <div>
+                <strong>Alex M.</strong>
+                <span>GCTI Learner</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal featured-testimonial" style="--delay:0.2s">
+            <div class="quote-mark">"</div>
+            <p>Absolutely amazing training. I went from having no professional experience to landing a placement — the
+              mentorship made all the difference.</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JK</div>
+              <div>
+                <strong>Jordan K.</strong>
+                <span>GCTI Learner</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal" style="--delay:0.3s">
+            <div class="quote-mark">"</div>
+            <p>I enjoyed the cybersecurity course. The tiered system kept me motivated and the real-world scenarios were
+              incredibly relevant.</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">SR</div>
+              <div>
+                <strong>Sam R.</strong>
+                <span>GCTI Learner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="cta-bg-grid"></div>
+      <div class="cta-orb"></div>
+      <div class="container">
+        <div class="cta-inner reveal">
+          <h2 class="cta-title">Ready to Transform<br />Your <span class="title-accent">Cyber Career?</span></h2>
+          <p class="cta-body">Join GCTI's next cohort. No previous professional experience required — just commitment
+            and drive.</p>
+          <div class="cta-actions">
+            <a href="#" class="btn-primary large" data-open-apply-modal>
+              Apply Now
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a href="about.html" class="btn-ghost large">Learn About GCTI</a>
+          </div>
+          <div class="cta-perks">
+            <span>✓ Industry-aligned curriculum</span>
+            <span>✓ Mentorship included</span>
+            <span>✓ Employer connections</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-mark">
+              <img src="assets/arrow-nw.svg">
+            </div>
+            <span class="logo-text">GCTI</span>
+          </a>
+          <p class="footer-tagline">Global Cyber Talent Initiative — bridging the gap between learning and industry.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <img src="assets/logo-fb-simple 2.svg" alt="Facebook" />
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <img src="assets/logo-instagram 2.svg" alt="Instagram" />
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <img src="assets/logo-twitter 2.svg" alt="Twitter" />
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Programme</h4>
+          <a href="programme.html">Programme Overview</a>
+          <a href="programme.html#phases">Four Phases</a>
+          <a href="programme.html#assessment">Assessment Framework</a>
+          <a href="programme.html#tiers">Performance Tiers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Organisation</h4>
+          <a href="about.html">About GCTI</a>
+          <a href="employers.html">For Employers</a>
+          <a href="#" data-open-apply-modal>Apply Now</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="policies.html#privacy">Privacy Policy</a>
+          <a href="policies.html#aup">Acceptable Use</a>
+          <a href="policies.html#safeguarding">Safeguarding</a>
+          <a href="policies.html#conduct">Code of Conduct</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:enquiries@globalcybertalent.com">enquiries@globalcybertalent.com</a>
+          <a href="mailto:applications@globalcybertalent.com">applications@globalcybertalent.com</a>
+          <a href="mailto:sponsor@globalcybertalent.com">sponsor@globalcybertalent.com</a>
+          <p class="footer-address">123 Main Street, Anytown, UK</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Global Cyber Talent Initiative. All rights reserved.</p>
+        <p class="footer-domain">globalcybertalent.org</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
+
 </html>

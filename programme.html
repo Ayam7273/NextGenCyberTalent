@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programme Overview — GCTI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon2.png">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark">
+          <img src="assets/logo-xp.png" alt="GCTI Logo" width="200" height="auto" />
+        </div>
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="programme.html" class="nav-link active">Programme</a>
+        <a href="employers.html" class="nav-link">For Employers</a>
+        <a href="policies.html" class="nav-link">Policies</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#" class="btn-nav-apply" data-open-apply-modal>Apply Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="about.html" class="mobile-link">About</a>
+        <a href="programme.html" class="mobile-link">Programme</a>
+        <a href="employers.html" class="mobile-link">For Employers</a>
+        <a href="policies.html" class="mobile-link">Policies</a>
+        <a href="contact.html" class="mobile-link">Contact</a>
+        <a href="#" class="btn-mobile-apply" data-open-apply-modal>Apply Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-inner">
+          <span class="section-tag reveal">Programme</span>
+          <h1 class="reveal">A Comprehensive<br/><span class="title-accent">12-Month Journey</span></h1>
+          <p class="reveal">From foundation to professional readiness — each phase includes checkpoints, evidence capture, and performance review to ensure continuous development and measurable outcomes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHASES ACCORDION -->
+    <section id="phases" style="padding: 100px 0; background: var(--dark);">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">The Curriculum</span>
+          <h2 class="section-title">Four <span class="title-accent">Programme Phases</span></h2>
+        </div>
+
+        <div class="programme-phases">
+
+          <div class="programme-phase open reveal" style="--delay:0.05s">
+            <div class="phase-header">
+              <div class="phase-number">01</div>
+              <div class="phase-meta">
+                <h3>Foundation Phase</h3>
+                <span class="phase-duration">Months 1–3</span>
+              </div>
+              <div class="phase-expand-icon">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-body-inner">
+                <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">Build a solid understanding of cybersecurity fundamentals. By the end of this phase, participants will have a clear foundation and be prepared to apply concepts in practical scenarios.</p>
+                <div class="phase-skills">
+                  <div class="skill-pill"><span class="skill-bullet"></span>Fundamental cybersecurity principles and terminology</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Systems thinking and security architecture</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Professional standards and workplace expectations</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Basic threat landscape and attack vectors</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Introduction to security frameworks and compliance</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Foundational network and systems knowledge</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="programme-phase reveal" style="--delay:0.1s">
+            <div class="phase-header">
+              <div class="phase-number">02</div>
+              <div class="phase-meta">
+                <h3>Applied Skills Phase</h3>
+                <span class="phase-duration">Months 4–6</span>
+              </div>
+              <div class="phase-expand-icon">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-body-inner">
+                <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">All labs are scenario-based, simulating real organisational environments to ensure practical, applicable skill development that employers recognise.</p>
+                <div class="phase-skills">
+                  <div class="skill-pill"><span class="skill-bullet"></span>Practical security tool usage and configuration</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Vulnerability assessment basics</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Penetration testing fundamentals</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Incident detection and initial response</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Security monitoring and log analysis</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Network security fundamentals</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="programme-phase reveal" style="--delay:0.15s">
+            <div class="phase-header">
+              <div class="phase-number">03</div>
+              <div class="phase-meta">
+                <h3>Project & Collaboration Phase</h3>
+                <span class="phase-duration">Months 7–9</span>
+              </div>
+              <div class="phase-expand-icon">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-body-inner">
+                <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">Projects are designed to mirror actual workplace scenarios, preparing participants for collaborative security work in professional environments.</p>
+                <div class="phase-skills">
+                  <div class="skill-pill"><span class="skill-bullet"></span>Team-based security projects</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Incident response exercises and simulations</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Documentation and reporting practices</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Communication with stakeholders</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Project management in security contexts</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Cross-functional collaboration</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="programme-phase reveal" style="--delay:0.2s">
+            <div class="phase-header">
+              <div class="phase-number">04</div>
+              <div class="phase-meta">
+                <h3>Professional Readiness Phase</h3>
+                <span class="phase-duration">Months 10–12</span>
+              </div>
+              <div class="phase-expand-icon">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-body-inner">
+                <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.7; margin-bottom:20px;">During this phase, participants may engage with employer partners through supervised projects, placements, or short-term assignments.</p>
+                <div class="phase-skills">
+                  <div class="skill-pill"><span class="skill-bullet"></span>Workplace behaviours and professional ethics</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Advanced reporting and documentation</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Employer-facing delivery and presentation</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Portfolio development and evidence compilation</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Career readiness and interview preparation</div>
+                  <div class="skill-pill"><span class="skill-bullet"></span>Employer placement opportunities</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSESSMENT FRAMEWORK -->
+    <section id="assessment" style="padding: 100px 0; background: var(--dark-2);">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">How You're Evaluated</span>
+          <h2 class="section-title">Assessment &<br/><span class="title-accent">Performance Framework</span></h2>
+          <p class="section-subtitle">Participants are continuously assessed across four key domains throughout the programme.</p>
+        </div>
+        <div class="assessment-full-grid">
+          <div class="assessment-full-card reveal" style="--delay:0.1s">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+              <div class="challenge-icon" style="margin-bottom:0; flex-shrink:0;">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 11L8.5 14.5L17 7" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Technical Execution</h3>
+            </div>
+            <p>Problem-solving ability, tool proficiency, and technical accuracy in security tasks. Assessed through practical labs, scenario exercises, and real-world projects.</p>
+          </div>
+          <div class="assessment-full-card reveal" style="--delay:0.15s">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+              <div class="challenge-icon" style="margin-bottom:0; flex-shrink:0;">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="var(--blue)" stroke-width="1.8"/><path d="M11 7V11L14 13" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Reliability</h3>
+            </div>
+            <p>Consistency, follow-through, and dependability in completing assignments and projects on time. Reliability is as important as raw technical skill to employers.</p>
+          </div>
+          <div class="assessment-full-card reveal" style="--delay:0.2s">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+              <div class="challenge-icon" style="margin-bottom:0; flex-shrink:0;">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 7h14M4 11h10M4 15h7" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Communication</h3>
+            </div>
+            <p>Clear documentation, effective reporting, and professional interaction with peers and stakeholders. Security professionals must communicate findings clearly.</p>
+          </div>
+          <div class="assessment-full-card reveal" style="--delay:0.25s">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+              <div class="challenge-icon" style="margin-bottom:0; flex-shrink:0;">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3L13.5 8.5H19L14.5 12L16.5 17.5L11 14L5.5 17.5L7.5 12L3 8.5H8.5Z" stroke="var(--blue)" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Security Mindset</h3>
+            </div>
+            <p>Ethical judgement, risk awareness, and professional security thinking in all decisions and actions. A principled security mindset underpins all great cybersecurity work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE TIERS -->
+    <section id="tiers" style="padding: 100px 0; background: var(--dark);">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Performance Tiers</span>
+          <h2 class="section-title">Where Do You<br/><span class="title-accent">Stand?</span></h2>
+          <p class="section-subtitle">A transparent ranking system that helps employers engage talent at the right readiness level.</p>
+        </div>
+        <div class="tiers-grid">
+          <div class="tier-card tier-platinum reveal" style="--delay:0.1s">
+            <h3>Platinum</h3>
+            <p>Consistently high performers. Strong technical execution, dependable delivery, and clear professional judgement. Ready for complex responsibilities.</p>
+            <div class="tier-tag">Elite</div>
+          </div>
+          <div class="tier-card tier-gold reveal" style="--delay:0.2s">
+            <h3>Gold</h3>
+            <p>Highly capable and reliable. Performs strongly across most domains with minimal supervision needed in most contexts.</p>
+            <div class="tier-tag">Advanced</div>
+          </div>
+          <div class="tier-card tier-silver reveal" style="--delay:0.3s">
+            <h3>Silver</h3>
+            <p>Solid foundational capability. Demonstrates growing confidence and benefits from guided exposure to real environments.</p>
+            <div class="tier-tag">Developing</div>
+          </div>
+          <div class="tier-card tier-bronze reveal" style="--delay:0.4s">
+            <h3>Bronze</h3>
+            <p>Early-stage learners actively developing core skills within a structured, supervised environment.</p>
+            <div class="tier-tag">Foundation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMME DELIVERY -->
+    <section style="padding: 100px 0; background: var(--dark-2);">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">How It's Delivered</span>
+          <h2 class="section-title">Programme <span class="title-accent">Delivery Methods</span></h2>
+        </div>
+        <div class="challenge-grid">
+          <div class="challenge-card reveal" style="--delay:0.1s">
+            <h3>Structured Learning Modules</h3>
+            <p>Core curriculum delivered through interactive sessions designed to build knowledge progressively and systematically across all four phases.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.2s">
+            <h3>Hands-On Labs</h3>
+            <p>Practical exercises in controlled environments that mirror real organisational scenarios, building genuine hands-on experience that employers value.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.3s">
+            <h3>Real-World Projects</h3>
+            <p>Application of skills in realistic scenarios that go beyond theory. Projects form part of your portfolio and demonstrate your capabilities to employers.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.1s">
+            <h3>Mentorship</h3>
+            <p>Guidance from industry professionals who have navigated the cybersecurity career path and can provide invaluable insight and direction.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.2s">
+            <h3>Peer Collaboration</h3>
+            <p>Learning through teamwork and knowledge sharing. Security professionals rarely work alone — collaborative skills are as important as technical ones.</p>
+          </div>
+          <div class="challenge-card reveal" style="--delay:0.3s">
+            <h3>Continuous Assessment</h3>
+            <p>Ongoing checkpoints and evidence capture throughout every phase ensure progress is visible, meaningful, and aligned with real professional standards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-bg-grid"></div>
+      <div class="cta-orb"></div>
+      <div class="container">
+        <div class="cta-inner reveal">
+          <h2 class="cta-title">Ready to Start Your<br/><span class="title-accent">Journey?</span></h2>
+          <p class="cta-body">Apply to GCTI's next cohort and begin a structured, employer-aligned path into the cybersecurity industry.</p>
+          <div class="cta-actions">
+            <a href="#" class="btn-primary large" data-open-apply-modal>Apply to Programme</a>
+            <a href="employers.html" class="btn-ghost large">I'm an Employer</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-mark">
+              <img src="assets/arrow-nw.svg">
+            </div>
+            <span class="logo-text">GCTI</span>
+          </a>
+          <p class="footer-tagline">Global Cyber Talent Initiative — bridging the gap between learning and industry.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link"><img src="assets/logo-fb-simple 2.svg" alt="Facebook" /></a>
+            <a href="#" class="social-link"><img src="assets/logo-instagram 2.svg" alt="Instagram" /></a>
+            <a href="#" class="social-link"><img src="assets/logo-twitter 2.svg" alt="Twitter" /></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Programme</h4>
+          <a href="programme.html">Programme Overview</a>
+          <a href="programme.html#phases">Four Phases</a>
+          <a href="programme.html#assessment">Assessment Framework</a>
+          <a href="programme.html#tiers">Performance Tiers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Organisation</h4>
+          <a href="about.html">About GCTI</a>
+          <a href="employers.html">For Employers</a>
+          <a href="#" data-open-apply-modal>Apply Now</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="policies.html#privacy">Privacy Policy</a>
+          <a href="policies.html#aup">Acceptable Use</a>
+          <a href="policies.html#safeguarding">Safeguarding</a>
+          <a href="policies.html#conduct">Code of Conduct</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:enquiries@globalcybertalent.com">enquiries@globalcybertalent.com</a>
+          <a href="mailto:applications@globalcybertalent.com">applications@globalcybertalent.com</a>
+          <p class="footer-address">123 Main Street, Anytown, UK</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Global Cyber Talent Initiative. All rights reserved.</p>
+        <p class="footer-domain">globalcybertalent.org</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
