@@ -250,7 +250,7 @@ body::-webkit-scrollbar,
 }
 .nav-link:hover, .nav-link.active {
   color: var(--blue);
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }

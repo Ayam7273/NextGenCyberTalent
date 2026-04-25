@@ -102,19 +102,45 @@ if (window.location.hash && document.querySelector('.policy-tab')) {
 // ── Contact form ──
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
+  const contactEndpoint = 'https://formspree.io/f/xjgjzyrp';
+  contactForm.setAttribute('action', contactEndpoint);
+  contactForm.setAttribute('method', 'POST');
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('.btn-submit');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '✓ Message Sent!';
-    btn.style.background = '#1a7a40';
+    const originalText = btn?.innerHTML || 'Send Message';
+
+    if (!btn) return;
+
     btn.disabled = true;
-    setTimeout(() => {
-      btn.innerHTML = originalText;
-      btn.style.background = '';
-      btn.disabled = false;
+    btn.innerHTML = 'Sending...';
+
+    try {
+      const response = await fetch(contactEndpoint, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error('Formspree rejected the contact form submission.');
+      }
+
+      btn.innerHTML = '✓ Message Sent!';
+      btn.style.background = '#1a7a40';
       contactForm.reset();
-    }, 3000);
+    } catch (error) {
+      console.error(error);
+      btn.innerHTML = 'Try Again';
+      btn.style.background = '#8a1f1f';
+    } finally {
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 2200);
+    }
   });
 }
 
@@ -422,6 +448,10 @@ const applyForm = document.getElementById('applyForm');
 const applyOpenButtons = document.querySelectorAll('[data-open-apply-modal]');
 
 if (applyModal && applyForm) {
+  const applyEndpoint = 'https://formspree.io/f/xgorqakv';
+  applyForm.setAttribute('action', applyEndpoint);
+  applyForm.setAttribute('method', 'POST');
+
   let currentApplyStep = 0;
   const applySteps = Array.from(applyForm.querySelectorAll('.apply-step'));
   const progressDots = Array.from(applyForm.querySelectorAll('.apply-progress-dot'));
@@ -609,7 +639,7 @@ if (applyModal && applyForm) {
     }
   });
 
-  applyForm.addEventListener('submit', (event) => {
+  applyForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!validateStep(currentApplyStep)) return;
 
@@ -622,18 +652,34 @@ if (applyModal && applyForm) {
     }
 
     clearApplyMessage();
-    showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
 
-    setTimeout(() => {
-      applyForm.reset();
-      syncConditionalFields();
-      setApplyStep(0);
-      closeModal();
+    try {
+      const response = await fetch(applyEndpoint, {
+        method: 'POST',
+        body: new FormData(applyForm),
+        headers: { Accept: 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error('Formspree rejected the application form submission.');
+      }
+
+      showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
+      setTimeout(() => {
+        applyForm.reset();
+        syncConditionalFields();
+        setApplyStep(0);
+        closeModal();
+      }, 1600);
+    } catch (error) {
+      console.error(error);
+      showApplyMessage('We could not submit your application right now. Please try again in a moment.');
+    } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalSubmitText;
       }
-    }, 1600);
+    }
   });
 
   syncConditionalFields();
