@@ -330,9 +330,9 @@ const ensureApplyModal = () => {
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="payment-plan" data-label="I may require a payment plan">
                       <span class="affordability-card">
-                        <span class="affordability-icon" aria-hidden="true">PP</span>
+                        
                         <span class="affordability-text">
-                          <span class="affordability-title">Payment plan</span>
+                          
                           <span class="affordability-desc">I may require a payment plan.</span>
                         </span>
                       </span>
@@ -340,9 +340,9 @@ const ensureApplyModal = () => {
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="partial-sponsorship" data-label="I may require partial sponsorship">
                       <span class="affordability-card">
-                        <span class="affordability-icon" aria-hidden="true">PS</span>
+                        
                         <span class="affordability-text">
-                          <span class="affordability-title">Partial sponsorship</span>
+                          
                           <span class="affordability-desc">I may require partial sponsorship.</span>
                         </span>
                       </span>
@@ -350,9 +350,9 @@ const ensureApplyModal = () => {
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="external-funding" data-label="I am exploring external funding options">
                       <span class="affordability-card">
-                        <span class="affordability-icon" aria-hidden="true">EF</span>
+                        
                         <span class="affordability-text">
-                          <span class="affordability-title">Exploring funding</span>
+                          
                           <span class="affordability-desc">I am exploring external funding options.</span>
                         </span>
                       </span>
@@ -360,9 +360,9 @@ const ensureApplyModal = () => {
                     <label class="affordability-option affordability-option-neutral">
                       <input type="checkbox" name="affordability" value="no-concerns" data-label="I have no affordability concerns">
                       <span class="affordability-card">
-                        <span class="affordability-icon" aria-hidden="true">NC</span>
+                        
                         <span class="affordability-text">
-                          <span class="affordability-title">No concerns</span>
+                          
                           <span class="affordability-desc">I have no affordability concerns.</span>
                         </span>
                       </span>
@@ -370,9 +370,9 @@ const ensureApplyModal = () => {
                     <label class="affordability-option affordability-option-neutral">
                       <input type="checkbox" name="affordability" value="prefer-not-to-say" data-label="Prefer not to say">
                       <span class="affordability-card">
-                        <span class="affordability-icon" aria-hidden="true">PN</span>
+                        
                         <span class="affordability-text">
-                          <span class="affordability-title">Prefer not to say</span>
+                          
                           <span class="affordability-desc">Prefer not to say.</span>
                         </span>
                       </span>
@@ -443,7 +443,39 @@ const ensureApplyModal = () => {
   return modal;
 };
 
+const ensureApplySuccessModal = () => {
+  const existing = document.getElementById('applySuccessModal');
+  if (existing) return existing;
+
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div class="modal" id="applySuccessModal" aria-hidden="true">
+      <div class="modal-overlay" onclick="closeApplySuccessModal()"></div>
+      <div class="modal-content apply-success-content" role="dialog" aria-modal="true" aria-labelledby="applySuccessTitle">
+        <button class="modal-close" onclick="closeApplySuccessModal()" aria-label="Close success modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6L18 18"/>
+          </svg>
+        </button>
+
+        <div class="apply-success-badge" aria-hidden="true">✓</div>
+        <div class="apply-success-orbs" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <h3 id="applySuccessTitle">Application Received</h3>
+        <p id="applySuccessText">Thanks! Your application has been submitted successfully.</p>
+        <p class="apply-success-subtext">Our admissions team will review your details and contact you within 48 hours with the next steps.</p>
+      </div>
+    </div>
+  `;
+  const modal = wrapper.firstElementChild;
+  if (modal) document.body.appendChild(modal);
+  return modal;
+};
+
 const applyModal = ensureApplyModal();
+const applySuccessModal = ensureApplySuccessModal();
 const applyForm = document.getElementById('applyForm');
 const applyOpenButtons = document.querySelectorAll('[data-open-apply-modal]');
 
@@ -601,8 +633,27 @@ if (applyModal && applyForm) {
     document.body.style.overflow = '';
   };
 
+  const openApplySuccessModal = (name = 'there') => {
+    const successText = document.getElementById('applySuccessText');
+    if (successText) {
+      successText.textContent = `Thanks ${name}! Your application has been submitted successfully.`;
+    }
+    if (!applySuccessModal) return;
+    applySuccessModal.classList.add('is-open');
+    applySuccessModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeApplySuccessModal = () => {
+    if (!applySuccessModal) return;
+    applySuccessModal.classList.remove('is-open');
+    applySuccessModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
   window.closeApplyModal = closeModal;
   window.openApplyModal = openApplyModal;
+  window.closeApplySuccessModal = closeApplySuccessModal;
 
   applyOpenButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -637,6 +688,9 @@ if (applyModal && applyForm) {
     if (event.key === 'Escape' && applyModal.classList.contains('is-open')) {
       closeModal();
     }
+    if (event.key === 'Escape' && applySuccessModal?.classList.contains('is-open')) {
+      closeApplySuccessModal();
+    }
   });
 
   applyForm.addEventListener('submit', async (event) => {
@@ -665,12 +719,12 @@ if (applyModal && applyForm) {
       }
 
       showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
-      setTimeout(() => {
-        applyForm.reset();
-        syncConditionalFields();
-        setApplyStep(0);
-        closeModal();
-      }, 1600);
+      const applicantName = resolveText('fullName', 'there').split(' ')[0];
+      applyForm.reset();
+      syncConditionalFields();
+      setApplyStep(0);
+      closeModal();
+      openApplySuccessModal(applicantName);
     } catch (error) {
       console.error(error);
       showApplyMessage('We could not submit your application right now. Please try again in a moment.');

@@ -1622,6 +1622,84 @@ body::-webkit-scrollbar,
   max-width: 700px;
 }
 
+.apply-success-content {
+  max-width: 560px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.apply-success-badge {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  margin: 6px auto 18px;
+  border: 1px solid rgba(26,108,248,0.5);
+  color: #fff;
+  background: radial-gradient(circle at 30% 20%, #57a2ff, #1a6cf8 62%, #1249b0 100%);
+  box-shadow: 0 12px 32px rgba(26,108,248,0.35);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 800;
+  animation: successPop 0.48s ease;
+}
+
+.apply-success-orbs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.apply-success-orbs span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+  opacity: 0.7;
+  animation: floatSpark 2s ease-in-out infinite;
+}
+
+.apply-success-orbs span:nth-child(2) { animation-delay: 0.2s; }
+.apply-success-orbs span:nth-child(3) { animation-delay: 0.4s; }
+.apply-success-orbs span:nth-child(4) { animation-delay: 0.6s; }
+
+.apply-success-content h3 {
+  font-family: var(--font-display);
+  color: var(--white);
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.apply-success-content p {
+  color: var(--text-muted);
+}
+
+.apply-success-subtext {
+  max-width: 420px;
+  margin: 0 auto 24px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.apply-success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+@keyframes successPop {
+  0% { transform: scale(0.78); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatSpark {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(-7px); opacity: 1; }
+}
+
 .apply-progress { margin-bottom: 20px; }
 .apply-progress-track { position: relative; margin-bottom: 12px; }
 .apply-progress-line {
@@ -1722,7 +1800,7 @@ body::-webkit-scrollbar,
 
 .apply-step-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
   gap: 16px;
   align-items: start;
 }
@@ -1921,6 +1999,7 @@ body::-webkit-scrollbar,
     max-height: calc(100vh - 64px);
     padding: 26px 20px;
   }
+  .apply-success-actions { flex-direction: column; }
   .apply-step-grid { grid-template-columns: 1fr; }
   .apply-step-grid .form-group:last-child:nth-child(odd) { grid-column: auto; }
   .apply-review-grid { grid-template-columns: 1fr; }
@@ -1940,4 +2019,64 @@ body::-webkit-scrollbar,
   .policy-content { padding: 28px; }
   .contact-form { padding: 24px; }
   .phase-header { grid-template-columns: 60px 1fr auto; gap: 12px; padding: 20px; }
+}
+
+@media (max-width: 200px) {
+  * {
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html { font-size: 12px; }
+  .container, .nav-inner, .hero-inner, .mobile-menu-inner { padding-left: 8px; padding-right: 8px; }
+  .hero-title, .cta-title, .page-hero h1 { font-size: 1.5rem; line-height: 1.15; }
+  .hero-cta, .cta-actions, .apply-step-actions { flex-direction: column; gap: 8px; }
+  .btn-primary, .btn-ghost, .btn-outline-light, .btn-mobile-apply, .btn-submit { width: 100%; justify-content: center; padding: 10px 12px; }
+  .hero-stats, .cta-perks { flex-direction: column; gap: 8px; align-items: stretch; }
+  .challenge-grid,
+  .programme-layout,
+  .tiers-grid,
+  .assessment-grid,
+  .testimonials-grid,
+  .values-grid,
+  .about-layout,
+  .assessment-full-grid,
+  .engagement-grid,
+  .contact-layout,
+  .footer-grid,
+  .apply-step-grid,
+  .apply-review-grid,
+  .affordability-grid,
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .nav-inner {
+    gap: 8px;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+  }
+
+  .section-header {
+    margin-bottom: 24px;
+  }
+
+  .challenge-card,
+  .tier-card,
+  .assessment-card,
+  .testimonial-card,
+  .policy-content,
+  .contact-form {
+    padding: 12px;
+  }
+
+  .modal-content, .contact-form, .policy-content { padding: 12px; margin: 16px 8px; }
 }
