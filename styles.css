@@ -2022,6 +2022,8 @@ body::-webkit-scrollbar,
 }
 
 @media (max-width: 200px) {
+  .hero-title { font-size: clamp(1.9rem, 5vw, 4rem); }
+
   * {
     min-width: 0;
     word-break: break-word;
