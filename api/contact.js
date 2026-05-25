@@ -113,9 +113,9 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: `"GCTI Website" <${process.env.SMTP_USER}>`,
 
-      to: process.env.RECEIVER_EMAIL,
+      to: "afeezalawonde@gmail.com", // CHANGE THIS
 
-      replyTo: email,
+      replyTo: fields.email || process.env.SMTP_USER,
 
       subject: `New Contact Form - ${enquiryLabel}`,
 
