@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
 
-  // ALLOW ONLY POST
+  // ONLY ALLOW POST
   if (req.method !== "POST") {
     return res.status(405).json({
       message: "Method not allowed",
@@ -37,10 +37,19 @@ export default async function handler(req, res) {
       },
     });
 
+    // VERIFY SMTP CONNECTION
+    await transporter.verify();
+
     // ENQUIRY LABEL
     const enquiryLabel = enquiryType || "General Enquiry";
 
-    // EMAIL HTML TEMPLATE
+    // SANITIZE VALUES
+    const safeFirstName = String(firstName).trim();
+    const safeLastName = String(lastName).trim();
+    const safeEmail = String(email).trim();
+    const safeMessage = String(message).trim();
+
+    // EMAIL TEMPLATE
     const html = `
       <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111;">
         
@@ -55,13 +64,14 @@ export default async function handler(req, res) {
             margin-top: 20px;
           "
         >
+
           <tr>
             <td style="border:1px solid #ddd; padding:10px;">
               <strong>First Name</strong>
             </td>
 
             <td style="border:1px solid #ddd; padding:10px;">
-              ${firstName}
+              ${safeFirstName}
             </td>
           </tr>
 
@@ -71,7 +81,7 @@ export default async function handler(req, res) {
             </td>
 
             <td style="border:1px solid #ddd; padding:10px;">
-              ${lastName}
+              ${safeLastName}
             </td>
           </tr>
 
@@ -81,7 +91,7 @@ export default async function handler(req, res) {
             </td>
 
             <td style="border:1px solid #ddd; padding:10px;">
-              ${email}
+              ${safeEmail}
             </td>
           </tr>
 
@@ -101,21 +111,23 @@ export default async function handler(req, res) {
             </td>
 
             <td style="border:1px solid #ddd; padding:10px;">
-              ${message}
+              ${safeMessage}
             </td>
           </tr>
+
         </table>
 
       </div>
     `;
 
-    // SEND EMAIL TO YOU
+    // SEND EMAIL TO ADMIN
     await transporter.sendMail({
+
       from: `"GCTI Website" <${process.env.SMTP_USER}>`,
 
-      to: "afeezalawonde@gmail.com", // CHANGE THIS
+      to: process.env.RECEIVER_EMAIL,
 
-      replyTo: fields.email || process.env.SMTP_USER,
+      replyTo: safeEmail,
 
       subject: `New Contact Form - ${enquiryLabel}`,
 
@@ -124,16 +136,17 @@ export default async function handler(req, res) {
 
     // AUTO RESPONSE TO USER
     await transporter.sendMail({
+
       from: `"GCTI Team" <${process.env.SMTP_USER}>`,
 
-      to: email,
+      to: safeEmail,
 
       subject: "We received your message",
 
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7;">
           
-          <h2>Hello ${firstName},</h2>
+          <h2>Hello ${safeFirstName},</h2>
 
           <p>
             Thank you for contacting the 
@@ -156,6 +169,7 @@ export default async function handler(req, res) {
 
     // SUCCESS RESPONSE
     return res.status(200).json({
+      success: true,
       message: "Message sent successfully",
     });
 
@@ -164,6 +178,7 @@ export default async function handler(req, res) {
     console.error("CONTACT FORM ERROR:", error);
 
     return res.status(500).json({
+      success: false,
       message: "Failed to send message",
       error: error.message,
     });
