@@ -102,7 +102,7 @@ if (window.location.hash && document.querySelector('.policy-tab')) {
 // ── Contact form ──
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  const contactEndpoint = 'https://formspree.io/f/xjgjzyrp';
+  const contactEndpoint = '/api/contact'; // CHANGE THIS TO YOUR ENDPOINT
   contactForm.setAttribute('action', contactEndpoint);
   contactForm.setAttribute('method', 'POST');
 
@@ -202,7 +202,7 @@ const ensureApplyModal = () => {
           <p>Complete this short application so we can understand your readiness, motivation, and fit for the programme.</p>
         </div>
 
-        <form class="apply-form" id="applyForm">
+        <form action="/api/apply" method="POST" enctype="multipart/form-data" id="applyForm">
           <div class="apply-progress">
             <div class="apply-progress-track">
               <div class="apply-progress-line" aria-hidden="true">
@@ -480,7 +480,7 @@ const applyForm = document.getElementById('applyForm');
 const applyOpenButtons = document.querySelectorAll('[data-open-apply-modal]');
 
 if (applyModal && applyForm) {
-  const applyEndpoint = 'https://formspree.io/f/xgorqakv';
+  const applyEndpoint = '/api/apply';
   applyForm.setAttribute('action', applyEndpoint);
   applyForm.setAttribute('method', 'POST');
 
