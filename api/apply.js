@@ -161,7 +161,7 @@ export default async function handler(req, res) {
       // SEND EMAIL
       const info = await transporter.sendMail({
         from: `"GCTI Application Portal" <${process.env.SMTP_USER}>`,
-        to: "afeezalawonde@gmail.com", // CHANGE THIS
+        to: "gctinitiative@gmail.com", // CHANGE THIS
         replyTo: fields.email || process.env.SMTP_USER,
         subject: "New GCTI Application Submission",
         html,
