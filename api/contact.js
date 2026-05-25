@@ -2,9 +2,10 @@ import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
 
-  // ONLY ALLOW POST
+  // ONLY ALLOW POST REQUESTS
   if (req.method !== "POST") {
     return res.status(405).json({
+      success: false,
       message: "Method not allowed",
     });
   }
@@ -23,11 +24,12 @@ export default async function handler(req, res) {
     // VALIDATION
     if (!firstName || !lastName || !email || !message) {
       return res.status(400).json({
-        message: "Please fill all required fields",
+        success: false,
+        message: "Please complete all required fields",
       });
     }
 
-    // CREATE SMTP TRANSPORTER
+    // CREATE MAIL TRANSPORTER
     const transporter = nodemailer.createTransport({
       service: "gmail",
 
@@ -37,31 +39,29 @@ export default async function handler(req, res) {
       },
     });
 
-    // VERIFY SMTP CONNECTION
+    // VERIFY SMTP
     await transporter.verify();
 
-    // ENQUIRY LABEL
-    const enquiryLabel = enquiryType || "General Enquiry";
-
-    // SANITIZE VALUES
+    // SAFE VALUES
     const safeFirstName = String(firstName).trim();
     const safeLastName = String(lastName).trim();
     const safeEmail = String(email).trim();
     const safeMessage = String(message).trim();
+    const safeEnquiry = enquiryType || "General Enquiry";
 
-    // EMAIL TEMPLATE
-    const html = `
-      <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111;">
-        
+    // ADMIN EMAIL TEMPLATE
+    const adminHtml = `
+      <div style="font-family: Arial, sans-serif; line-height:1.7; color:#111;">
+
         <h2 style="color:#0b5d3b;">
-          New Contact Form Message
+          New Website Contact Message
         </h2>
 
         <table 
           style="
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
           "
         >
 
@@ -87,7 +87,7 @@ export default async function handler(req, res) {
 
           <tr>
             <td style="border:1px solid #ddd; padding:10px;">
-              <strong>Email</strong>
+              <strong>Email Address</strong>
             </td>
 
             <td style="border:1px solid #ddd; padding:10px;">
@@ -101,7 +101,7 @@ export default async function handler(req, res) {
             </td>
 
             <td style="border:1px solid #ddd; padding:10px;">
-              ${enquiryLabel}
+              ${safeEnquiry}
             </td>
           </tr>
 
@@ -129,23 +129,23 @@ export default async function handler(req, res) {
 
       replyTo: safeEmail,
 
-      subject: `New Contact Form - ${enquiryLabel}`,
+      subject: `New Contact Form - ${safeEnquiry}`,
 
-      html,
+      html: adminHtml,
     });
 
-    // AUTO RESPONSE TO USER
+    // AUTO RESPONSE EMAIL
     await transporter.sendMail({
 
       from: `"GCTI Team" <${process.env.SMTP_USER}>`,
 
       to: safeEmail,
 
-      subject: "We received your message",
+      subject: "We Received Your Message",
 
       html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.7;">
-          
+        <div style="font-family: Arial, sans-serif; line-height:1.7;">
+
           <h2>Hello ${safeFirstName},</h2>
 
           <p>
@@ -154,12 +154,18 @@ export default async function handler(req, res) {
           </p>
 
           <p>
-            We have received your message and 
-            our team will respond as soon as possible.
+            We have successfully received your message.
           </p>
 
           <p>
-            Kind regards,<br>
+            Our team will review your enquiry and 
+            get back to you as soon as possible.
+          </p>
+
+          <br>
+
+          <p>
+            Best regards,<br>
             GCTI Team
           </p>
 

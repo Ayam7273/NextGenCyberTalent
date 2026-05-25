@@ -100,46 +100,61 @@ if (window.location.hash && document.querySelector('.policy-tab')) {
 }
 
 // ── Contact form ──
-const contactForm = document.getElementById('contactForm');
+const contactForm = document.getElementById("contactForm");
+
 if (contactForm) {
-  const contactEndpoint = '/api/contact'; // CHANGE THIS TO YOUR ENDPOINT
-  contactForm.setAttribute('action', contactEndpoint);
-  contactForm.setAttribute('method', 'POST');
 
-  contactForm.addEventListener('submit', async (e) => {
+  contactForm.addEventListener("submit", async (e) => {
+
     e.preventDefault();
-    const btn = contactForm.querySelector('.btn-submit');
-    const originalText = btn?.innerHTML || 'Send Message';
 
-    if (!btn) return;
+    const submitBtn = contactForm.querySelector(".btn-submit");
 
-    btn.disabled = true;
-    btn.innerHTML = 'Sending...';
+    const originalText = submitBtn.innerHTML;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "Sending...";
 
     try {
-      const response = await fetch(contactEndpoint, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { Accept: 'application/json' }
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          firstName: contactForm.firstName.value,
+          lastName: contactForm.lastName.value,
+          email: contactForm.email.value,
+          enquiryType: contactForm.enquiryType.value,
+          message: contactForm.message.value,
+        }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Formspree rejected the contact form submission.');
+        throw new Error(data.message || "Failed to send");
       }
 
-      btn.innerHTML = '✓ Message Sent!';
-      btn.style.background = '#1a7a40';
+      submitBtn.innerHTML = "✓ Message Sent";
+
       contactForm.reset();
+
     } catch (error) {
+
       console.error(error);
-      btn.innerHTML = 'Try Again';
-      btn.style.background = '#8a1f1f';
+
+      submitBtn.innerHTML = "Failed. Try Again";
+
     } finally {
+
       setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-        btn.disabled = false;
-      }, 2200);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }, 2500);
     }
   });
 }
