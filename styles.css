@@ -555,13 +555,15 @@ body::-webkit-scrollbar,
 .partners-label {
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
   letter-spacing: 0.12em;
-  color: var(--text);
   text-transform: uppercase;
   margin-bottom: 20px;
   padding: 0 24px;
+  color: var(--blue);
+  font-size: 0.7rem;
+  font-weight: 700;
 }
+
 .partners-track-wrapper { overflow: hidden; }
 .partners-track {
   display: flex;
