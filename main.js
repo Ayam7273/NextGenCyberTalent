@@ -397,7 +397,7 @@ const ensureApplyModal = () => {
 
                 <div class="form-group">
                   <label for="sponsorshipFile">Sponsorship Documentation <em>*</em></label>
-                  <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                  <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
                   <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation.</small>
                 </div>
               </div>
@@ -630,6 +630,17 @@ if (applyModal && applyForm) {
       motivation?.focus();
       return false;
     }
+
+    // Require sponsorship document before leaving Step 3
+if (stepIndex === 2) {
+  const sponsorshipFile = document.getElementById("sponsorshipFile");
+
+  if (!sponsorshipFile || sponsorshipFile.files.length === 0) {
+    showApplyMessage("Please upload your sponsorship document before continuing.");
+    sponsorshipFile.focus();
+    return false;
+  }
+}
 
     return true;
   };
