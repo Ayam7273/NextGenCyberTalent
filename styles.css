@@ -24,6 +24,7 @@
   --gold: #F0B429;
   --silver: #A8B8CC;
   --bronze: #C07A3A;
+  --red: rgb(250, 52, 52);
 
   --radius: 12px;
   --radius-lg: 20px;
@@ -37,6 +38,11 @@
 
   --nav-height: 72px;
   --container: 1200px;
+}
+
+em { 
+  font-style: normal; 
+  color: var(--red); 
 }
 
 /* --- RESET --- */
@@ -1823,7 +1829,7 @@ body::-webkit-scrollbar,
 }
 
 .field-help {
-  color: var(--text-faint);
+  color: var(--red);
   font-size: 0.76rem;
   margin-top: 2px;
 }
