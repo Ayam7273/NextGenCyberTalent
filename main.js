@@ -245,18 +245,18 @@ const ensureApplyModal = () => {
 
               <div class="apply-step-grid">
                 <div class="form-group">
-                  <label for="fullName">Full Name *</label>
+                  <label for="fullName">Full Name <em>*</em></label>
                   <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
                 </div>
 
                 <div class="form-group">
-                  <label for="email">Email Address *</label>
+                  <label for="email">Email Address <em>*</em></label>
                   <input type="email" id="email" name="email" required placeholder="john@example.com">
                 </div>
 
                 <div class="form-group">
-                  <label for="phone">Phone Number (Optional)</label>
-                  <input type="tel" id="phone" name="phone" placeholder="+44 7123 456 789">
+                  <label for="phone">Phone Number <em>*</em></label>
+                  <input type="tel" id="phone" name="phone" required placeholder="+44 7123 456 789">
                   <small class="field-help">Include country code if outside the UK.</small>
                 </div>
               </div>
@@ -276,7 +276,7 @@ const ensureApplyModal = () => {
 
               <div class="apply-step-grid">
                 <div class="form-group">
-                  <label for="experienceLevel">Current Experience Level *</label>
+                  <label for="experienceLevel">Current Experience Level <em>*</em></label>
                   <select id="experienceLevel" name="experienceLevel" required>
                     <option value="">Select your experience level</option>
                     <option value="beginner">Beginner (0-1 year)</option>
@@ -287,13 +287,13 @@ const ensureApplyModal = () => {
                 </div>
 
                 <div class="form-group">
-                  <label for="motivation">Why do you want to join this programme? *</label>
+                  <label for="motivation">Why do you want to join this programme? <em>*</em></label>
                   <textarea id="motivation" name="motivation" rows="5" required placeholder="Tell us about your motivation, interest in cybersecurity, and how this programme supports your goals..."></textarea>
                   <small class="field-help">Minimum 50 characters.</small>
                 </div>
 
                 <div class="form-group">
-                  <label for="startTimeframe">When can you start? *</label>
+                  <label for="startTimeframe">When can you start? <em>*</em></label>
                   <select id="startTimeframe" name="startTimeframe" required>
                     <option value="">Select your availability</option>
                     <option value="immediately">Immediately</option>
@@ -324,7 +324,7 @@ const ensureApplyModal = () => {
 
               <div class="apply-step-grid">
                 <div class="form-group">
-                  <label for="fundingStatus">Funding Status *</label>
+                  <label for="fundingStatus">Funding Status <em>*</em></label>
                   <select id="fundingStatus" name="fundingStatus" required>
                     <option value="">How will your participation be funded?</option>
                     <option value="self-funded">Self-funded (I will cover my own training costs)</option>
@@ -335,12 +335,12 @@ const ensureApplyModal = () => {
                 </div>
 
                 <div class="form-group hidden" id="sponsorshipDetailsRow">
-                  <label for="sponsorshipDetails">Sponsorship Details *</label>
+                  <label for="sponsorshipDetails">Sponsorship Details <em>*</em></label>
                   <textarea id="sponsorshipDetails" name="sponsorshipDetails" rows="4" placeholder="Please provide the name of the sponsoring organisation and the primary contact person (if known)."></textarea>
                 </div>
 
                 <div class="form-group">
-                  <label>Affordability Considerations (Optional)</label>
+                  <label>Affordability Considerations <em>*</em></label>
                   <div class="affordability-grid" role="group" aria-label="Affordability considerations">
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="payment-plan" data-label="I may require a payment plan">
@@ -396,7 +396,7 @@ const ensureApplyModal = () => {
                 </div>
 
                 <div class="form-group">
-                  <label for="sponsorshipFile">Sponsorship Documentation (Optional)</label>
+                  <label for="sponsorshipFile">Sponsorship Documentation <em>*</em></label>
                   <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                   <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation.</small>
                 </div>
