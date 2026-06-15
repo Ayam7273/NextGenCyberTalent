@@ -88,6 +88,12 @@
         default: { text: "I'm not sure I understood that — here are some things I can help you with:", options: ["About the programme", "Job guarantee", "Curriculum", "Fees & funding", "Speak to someone"] }
     };
 
+    const CONTACT = {
+        whatsapp: { url: "http://wa.me/+2348054641763", display: "+2348054641763" },
+        email: { url: "mailto:gctinitiative@gmail.com", display: "gctinitiative@gmail.com" },
+        phone: { url: "tel:+2348054641763", display: "+2348054641763" }
+    };
+
     function handleUserMsg(text) {
         if (text === "Back to main menu") {
             lastIntent = null;
@@ -97,6 +103,21 @@
         if (text === "Apply now") {
             window.open("https://www.globalcybertalent.org/contact.html", "_blank");
             addMsg("Great! I'm redirecting you to our application page.", "bot");
+            return;
+        }
+        if (text === "WhatsApp") {
+            window.open(CONTACT.whatsapp.url, "_blank");
+            addMsg(`Opening WhatsApp. You can also reach us at ${CONTACT.whatsapp.display}.`, "bot");
+            return;
+        }
+        if (text === "Email") {
+            window.open(CONTACT.email.url, "_blank");
+            addMsg(`Opening your email client. You can also write to us at ${CONTACT.email.display}.`, "bot");
+            return;
+        }
+        if (text === "Phone call") {
+            window.location.href = CONTACT.phone.url;
+            addMsg(`Call us at ${CONTACT.phone.display}.`, "bot");
             return;
         }
 
