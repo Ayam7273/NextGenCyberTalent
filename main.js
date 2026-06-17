@@ -126,10 +126,12 @@ const response = await fetch("/api/contact", {
 
       const data = await response.json();
 
-console.log(data);
+console.log("API Response:", data);
 
 if (!response.ok) {
-  throw new Error(data.message || JSON.stringify(data));
+  throw new Error(
+    data.error || data.message || "Failed to send"
+  );
 }
 
       submitBtn.innerHTML = "✓ Message Sent";
