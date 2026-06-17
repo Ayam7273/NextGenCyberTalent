@@ -117,11 +117,23 @@ if (contactForm) {
 
     try {
 
-      const formData = new FormData(contactForm);
-
-const response = await fetch("/api/contact", {
+     const response = await fetch("/api/contact", {
   method: "POST",
-  body: formData,
+
+  headers: {
+    "Content-Type": "application/json",
+  },
+
+  body: JSON.stringify({
+    firstName: contactForm.firstName.value,
+    lastName: contactForm.lastName.value,
+    email: contactForm.email.value,
+    enquiryType: contactForm.enquiryType.value,
+    message: contactForm.message.value,
+
+    // reCAPTCHA token
+    "g-recaptcha-response": grecaptcha.getResponse(),
+  }),
 });
 
       const data = await response.json();
