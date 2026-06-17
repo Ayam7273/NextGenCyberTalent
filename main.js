@@ -117,21 +117,12 @@ if (contactForm) {
 
     try {
 
-      const response = await fetch("/api/contact", {
-        method: "POST",
+      const formData = new FormData(contactForm);
 
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          firstName: contactForm.firstName.value,
-          lastName: contactForm.lastName.value,
-          email: contactForm.email.value,
-          enquiryType: contactForm.enquiryType.value,
-          message: contactForm.message.value,
-        }),
-      });
+const response = await fetch("/api/contact", {
+  method: "POST",
+  body: formData,
+});
 
       const data = await response.json();
 
