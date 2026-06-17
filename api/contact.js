@@ -19,6 +19,7 @@ export default async function handler(req, res) {
       email,
       enquiryType,
       message,
+      "g-recaptcha-response": captcha,
     } = req.body;
 
     // VALIDATION
@@ -120,33 +121,35 @@ export default async function handler(req, res) {
       </div>
     `;
 
-    const captcha = req.body["g-recaptcha-response"];
-
-    if (!captcha) {
-      return res.status(400).json({
+ // VERIFY GOOGLE reCAPTCHA
+if (!captcha) {
+  return res.status(400).json({
+    success: false,
     message: "Please complete the reCAPTCHA.",
   });
 }
 
-const verifyURL =
-  "https://www.google.com/recaptcha/api/siteverify";
-
-const verifyResponse = await fetch(verifyURL, {
-  method: "POST",
-  headers: {
-    "Content-Type":
-      "application/x-www-form-urlencoded",
-  },
-  body: new URLSearchParams({
-    secret: process.env.RECAPTCHA_SECRET,
-    response: captcha,
-  }),
-});
+const verifyResponse = await fetch(
+  "https://www.google.com/recaptcha/api/siteverify",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      secret: process.env.RECAPTCHA_SECRET,
+      response: captcha,
+    }),
+  }
+);
 
 const verifyData = await verifyResponse.json();
 
 if (!verifyData.success) {
+  console.error("reCAPTCHA Error:", verifyData);
+
   return res.status(400).json({
+    success: false,
     message: "reCAPTCHA verification failed.",
   });
 }
