@@ -746,18 +746,18 @@ body::-webkit-scrollbar,
   padding: 4px 10px;
   border-radius: 40px;
 }
-.tier-platinum { border-top: 2px solid var(--platinum); }
+.tier-platinum { border: 1px solid var(--platinum); }
 .tier-platinum h3 { color: var(--platinum); }
 .tier-platinum .tier-tag { background: rgba(176,200,255,0.1); color: var(--platinum); border: 1px solid rgba(176,200,255,0.25); }
 .tier-platinum:hover { box-shadow: 0 8px 40px rgba(176,200,255,0.1); }
-.tier-gold { border-top: 2px solid var(--gold); }
+.tier-gold { border: 1px solid var(--gold); }
 .tier-gold h3 { color: var(--gold); }
 .tier-gold .tier-tag { background: rgba(240,180,41,0.1); color: var(--gold); border: 1px solid rgba(240,180,41,0.25); }
 .tier-gold:hover { box-shadow: 0 8px 40px rgba(240,180,41,0.1); }
-.tier-silver { border-top: 2px solid var(--silver); }
+.tier-silver { border: 1px solid var(--silver); }
 .tier-silver h3 { color: var(--silver); }
 .tier-silver .tier-tag { background: rgba(168,184,204,0.1); color: var(--silver); border: 1px solid rgba(168,184,204,0.25); }
-.tier-bronze { border-top: 2px solid var(--bronze); }
+.tier-bronze { border: 1px solid var(--bronze); }
 .tier-bronze h3 { color: var(--bronze); }
 .tier-bronze .tier-tag { background: rgba(192,122,58,0.1); color: var(--bronze); border: 1px solid rgba(192,122,58,0.25); }
 
