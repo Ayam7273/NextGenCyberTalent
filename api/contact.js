@@ -120,6 +120,37 @@ export default async function handler(req, res) {
       </div>
     `;
 
+    const captcha = req.body["g-recaptcha-response"];
+
+    if (!captcha) {
+      return res.status(400).json({
+    message: "Please complete the reCAPTCHA.",
+  });
+}
+
+const verifyURL =
+  "https://www.google.com/recaptcha/api/siteverify";
+
+const verifyResponse = await fetch(verifyURL, {
+  method: "POST",
+  headers: {
+    "Content-Type":
+      "application/x-www-form-urlencoded",
+  },
+  body: new URLSearchParams({
+    secret: process.env.RECAPTCHA_SECRET,
+    response: captcha,
+  }),
+});
+
+const verifyData = await verifyResponse.json();
+
+if (!verifyData.success) {
+  return res.status(400).json({
+    message: "reCAPTCHA verification failed.",
+  });
+}
+
     // SEND EMAIL TO ADMIN
     await transporter.sendMail({
 
