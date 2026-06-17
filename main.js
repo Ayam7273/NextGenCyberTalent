@@ -117,7 +117,7 @@ if (contactForm) {
 
     try {
 
-     const response = await fetch("/api/contact", {
+ const response = await fetch("/api/contact", {
   method: "POST",
 
   headers: {
@@ -130,8 +130,6 @@ if (contactForm) {
     email: contactForm.email.value,
     enquiryType: contactForm.enquiryType.value,
     message: contactForm.message.value,
-
-    // reCAPTCHA token
     "g-recaptcha-response": grecaptcha.getResponse(),
   }),
 });
