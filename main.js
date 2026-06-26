@@ -500,281 +500,490 @@ const applyForm = document.getElementById('applyForm');
 const applyOpenButtons = document.querySelectorAll('[data-open-apply-modal]');
 
 if (applyModal && applyForm) {
-  const applyEndpoint = '/api/apply';
-  applyForm.setAttribute('action', applyEndpoint);
-  applyForm.setAttribute('method', 'POST');
+  const applyEndpoint = "/api/apply";
+  applyForm.setAttribute("action", applyEndpoint);
+  applyForm.setAttribute("method", "POST");
 
   let currentApplyStep = 0;
-  const applySteps = Array.from(applyForm.querySelectorAll('.apply-step'));
-  const progressDots = Array.from(applyForm.querySelectorAll('.apply-progress-dot'));
-  const progressFill = document.getElementById('applyProgressBarFill');
-  const progressLabel = document.getElementById('applyProgressLabel');
-  const formMessage = document.getElementById('applyFormMessage');
-  const startTimeframe = document.getElementById('startTimeframe');
-  const startDateRow = document.getElementById('startDateRow');
-  const startDateSpecific = document.getElementById('startDateSpecific');
-  const fundingStatus = document.getElementById('fundingStatus');
-  const sponsorshipDetailsRow = document.getElementById('sponsorshipDetailsRow');
-  const sponsorshipDetails = document.getElementById('sponsorshipDetails');
-  const motivation = document.getElementById('motivation');
+
+  const applySteps = Array.from(
+    applyForm.querySelectorAll(".apply-step")
+  );
+
+  const progressDots = Array.from(
+    applyForm.querySelectorAll(".apply-progress-dot")
+  );
+
+  const progressFill = document.getElementById(
+    "applyProgressBarFill"
+  );
+
+  const progressLabel = document.getElementById(
+    "applyProgressLabel"
+  );
+
+  const formMessage = document.getElementById(
+    "applyFormMessage"
+  );
+
+  const startTimeframe =
+    document.getElementById("startTimeframe");
+
+  const startDateRow =
+    document.getElementById("startDateRow");
+
+  const startDateSpecific =
+    document.getElementById("startDateSpecific");
+
+  const fundingStatus =
+    document.getElementById("fundingStatus");
+
+  const sponsorshipDetailsRow =
+    document.getElementById("sponsorshipDetailsRow");
+
+  const sponsorshipDetails =
+    document.getElementById("sponsorshipDetails");
+
+  const motivation =
+    document.getElementById("motivation");
 
   const reviewTargets = {
-    reviewFullName: document.getElementById('reviewFullName'),
-    reviewEmail: document.getElementById('reviewEmail'),
-    reviewPhone: document.getElementById('reviewPhone'),
-    reviewExperience: document.getElementById('reviewExperience'),
-    reviewStart: document.getElementById('reviewStart'),
-    reviewFunding: document.getElementById('reviewFunding'),
-    reviewAffordability: document.getElementById('reviewAffordability'),
-    reviewSponsorship: document.getElementById('reviewSponsorship'),
-    reviewMotivation: document.getElementById('reviewMotivation')
+    reviewFullName: document.getElementById("reviewFullName"),
+    reviewEmail: document.getElementById("reviewEmail"),
+    reviewPhone: document.getElementById("reviewPhone"),
+    reviewExperience: document.getElementById("reviewExperience"),
+    reviewStart: document.getElementById("reviewStart"),
+    reviewFunding: document.getElementById("reviewFunding"),
+    reviewAffordability: document.getElementById("reviewAffordability"),
+    reviewSponsorship: document.getElementById("reviewSponsorship"),
+    reviewMotivation: document.getElementById("reviewMotivation"),
   };
 
-  const resolveText = (id, fallback = 'Not provided') => {
+  const resolveText = (id, fallback = "Not provided") => {
     const el = document.getElementById(id);
+
     if (!el) return fallback;
-    if (el.tagName === 'SELECT') {
-      return el.options[el.selectedIndex]?.text || fallback;
+
+    if (el.tagName === "SELECT") {
+      return (
+        el.options[el.selectedIndex]?.text ||
+        fallback
+      );
     }
-    return (el.value || '').trim() || fallback;
+
+    return (el.value || "").trim() || fallback;
   };
 
   const showApplyMessage = (message) => {
     if (!formMessage) return;
+
     formMessage.hidden = false;
     formMessage.textContent = message;
   };
 
   const clearApplyMessage = () => {
     if (!formMessage) return;
+
     formMessage.hidden = true;
-    formMessage.textContent = '';
+    formMessage.textContent = "";
   };
 
   const updateProgress = () => {
     const total = applySteps.length;
-    const percentage = total > 1 ? (currentApplyStep / (total - 1)) * 100 : 0;
-    if (progressFill) progressFill.style.width = `${percentage}%`;
+
+    const percentage =
+      total > 1
+        ? (currentApplyStep / (total - 1)) * 100
+        : 0;
+
+    if (progressFill)
+      progressFill.style.width = `${percentage}%`;
 
     progressDots.forEach((dot, index) => {
-      dot.classList.toggle('is-active', index === currentApplyStep);
-      dot.classList.toggle('is-complete', index < currentApplyStep);
+      dot.classList.toggle(
+        "is-active",
+        index === currentApplyStep
+      );
+
+      dot.classList.toggle(
+        "is-complete",
+        index < currentApplyStep
+      );
     });
 
-    const title = applySteps[currentApplyStep]?.dataset.stepTitle || 'Application';
-    if (progressLabel) progressLabel.textContent = `Step ${currentApplyStep + 1} of ${total} - ${title}`;
+    const title =
+      applySteps[currentApplyStep]?.dataset.stepTitle ||
+      "Application";
+
+    if (progressLabel) {
+      progressLabel.textContent = `Step ${
+        currentApplyStep + 1
+      } of ${total} - ${title}`;
+    }
   };
 
   const syncConditionalFields = () => {
-    const startSpecific = startTimeframe?.value === 'specific-date';
-    if (startDateRow) startDateRow.classList.toggle('hidden', !startSpecific);
-    if (startDateSpecific) startDateSpecific.required = startSpecific;
+    const startSpecific =
+      startTimeframe?.value === "specific-date";
 
-    const sponsored = fundingStatus?.value === 'employer-sponsored' || fundingStatus?.value === 'other-sponsored';
-    if (sponsorshipDetailsRow) sponsorshipDetailsRow.classList.toggle('hidden', !sponsored);
-    if (sponsorshipDetails) sponsorshipDetails.required = sponsored;
+    if (startDateRow)
+      startDateRow.classList.toggle(
+        "hidden",
+        !startSpecific
+      );
+
+    if (startDateSpecific)
+      startDateSpecific.required = startSpecific;
+
+    const sponsored =
+      fundingStatus?.value === "employer-sponsored" ||
+      fundingStatus?.value === "other-sponsored";
+
+    if (sponsorshipDetailsRow)
+      sponsorshipDetailsRow.classList.toggle(
+        "hidden",
+        !sponsored
+      );
+
+    if (sponsorshipDetails)
+      sponsorshipDetails.required = sponsored;
   };
 
   const updateReview = () => {
-    if (reviewTargets.reviewFullName) reviewTargets.reviewFullName.textContent = resolveText('fullName');
-    if (reviewTargets.reviewEmail) reviewTargets.reviewEmail.textContent = resolveText('email');
-    if (reviewTargets.reviewPhone) reviewTargets.reviewPhone.textContent = resolveText('phone', 'Not provided');
-    if (reviewTargets.reviewExperience) reviewTargets.reviewExperience.textContent = resolveText('experienceLevel');
-    if (reviewTargets.reviewStart) {
-      const start = resolveText('startTimeframe');
-      const specificDate = resolveText('startDateSpecific', '');
-      reviewTargets.reviewStart.textContent = specificDate ? `${start} (${specificDate})` : start;
-    }
-    if (reviewTargets.reviewFunding) reviewTargets.reviewFunding.textContent = resolveText('fundingStatus');
+    reviewTargets.reviewFullName.textContent =
+      resolveText("fullName");
 
-    const affordability = Array.from(applyForm.querySelectorAll('input[name="affordability"]:checked'))
-      .map((input) => input.dataset.label || input.value);
-    if (reviewTargets.reviewAffordability) {
-      reviewTargets.reviewAffordability.textContent = affordability.length ? affordability.join(', ') : 'None selected';
-    }
+    reviewTargets.reviewEmail.textContent =
+      resolveText("email");
 
-    if (reviewTargets.reviewSponsorship) {
-      reviewTargets.reviewSponsorship.textContent = (sponsorshipDetails?.value || '').trim() || 'Not provided';
-    }
-    if (reviewTargets.reviewMotivation) {
-      reviewTargets.reviewMotivation.textContent = (motivation?.value || '').trim() || 'Not provided';
-    }
+    reviewTargets.reviewPhone.textContent =
+      resolveText("phone", "Not provided");
+
+    reviewTargets.reviewExperience.textContent =
+      resolveText("experienceLevel");
+
+    const start =
+      resolveText("startTimeframe");
+
+    const specificDate =
+      resolveText("startDateSpecific", "");
+
+    reviewTargets.reviewStart.textContent =
+      specificDate
+        ? `${start} (${specificDate})`
+        : start;
+
+    reviewTargets.reviewFunding.textContent =
+      resolveText("fundingStatus");
+
+    const affordability = Array.from(
+      applyForm.querySelectorAll(
+        'input[name="affordability"]:checked'
+      )
+    ).map(
+      (input) => input.dataset.label || input.value
+    );
+
+    reviewTargets.reviewAffordability.textContent =
+      affordability.length
+        ? affordability.join(", ")
+        : "None selected";
+
+    reviewTargets.reviewSponsorship.textContent =
+      sponsorshipDetails?.value.trim() ||
+      "Not provided";
+
+    reviewTargets.reviewMotivation.textContent =
+      motivation?.value.trim() ||
+      "Not provided";
   };
 
   const setApplyStep = (targetStep) => {
-    currentApplyStep = Math.max(0, Math.min(targetStep, applySteps.length - 1));
+    currentApplyStep = Math.max(
+      0,
+      Math.min(targetStep, applySteps.length - 1)
+    );
+
     applySteps.forEach((step, index) => {
-      step.classList.toggle('is-active', index === currentApplyStep);
+      step.classList.toggle(
+        "is-active",
+        index === currentApplyStep
+      );
     });
-    if (currentApplyStep === applySteps.length - 1) {
+
+    if (
+      currentApplyStep ===
+      applySteps.length - 1
+    ) {
       updateReview();
     }
+
     updateProgress();
     clearApplyMessage();
   };
 
   const validateStep = (stepIndex) => {
     const step = applySteps[stepIndex];
+
     if (!step) return true;
-    const fields = Array.from(step.querySelectorAll('input, select, textarea')).filter((field) => {
-      if (field.type === 'button' || field.type === 'submit') return false;
+
+    const fields = Array.from(
+      step.querySelectorAll(
+        "input, select, textarea"
+      )
+    ).filter((field) => {
+      if (
+        field.type === "button" ||
+        field.type === "submit"
+      )
+        return false;
+
       return field.offsetParent !== null;
     });
 
     for (const field of fields) {
       if (!field.checkValidity()) {
         field.reportValidity();
-        showApplyMessage('Please complete all required fields before continuing.');
+
+        showApplyMessage(
+          "Please complete all required fields before continuing."
+        );
+
         return false;
       }
     }
 
-    const motivationValue = (motivation?.value || '').trim();
-    if (stepIndex === 1 && motivationValue.length < 50) {
-      showApplyMessage('Your motivation response must be at least 50 characters.');
-      motivation?.focus();
+    const motivationValue =
+      (motivation?.value || "").trim();
+
+    if (
+      stepIndex === 1 &&
+      motivationValue.length < 50
+    ) {
+      showApplyMessage(
+        "Your motivation response must be at least 50 characters."
+      );
+
+      motivation.focus();
+
       return false;
     }
 
-    // Require sponsorship document before leaving Step 3
-if (stepIndex === 2) {
-  const fundingStatus = document.querySelector(
-    'input[name="fundingStatus"]:checked'
-  )?.value;
+    // OPTIONAL sponsorship document
+    if (stepIndex === 2) {
+      const sponsorshipFile =
+        document.getElementById(
+          "sponsorshipFile"
+        );
 
-  const sponsorshipFile = document.getElementById("sponsorshipFile");
+      const sponsored =
+        fundingStatus?.value ===
+          "employer-sponsored" ||
+        fundingStatus?.value ===
+          "other-sponsored";
 
-  if (
-    fundingStatus === "Sponsored" &&
-    sponsorshipFile.files.length === 0
-  ) {
-    showApplyMessage(
-      "Please upload your sponsorship document."
-    );
-    sponsorshipFile.focus();
-    return false;
-  }
-}
+      if (
+        sponsored &&
+        sponsorshipFile &&
+        sponsorshipFile.files.length === 0
+      ) {
+        console.log(
+          "Continuing without sponsorship document."
+        );
+      }
+    }
 
-return true;
+    return true;
   };
 
   const openApplyModal = () => {
-    applyModal.classList.add('is-open');
-    applyModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    applyModal.classList.add("is-open");
+    applyModal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body.style.overflow = "hidden";
+
     syncConditionalFields();
     setApplyStep(0);
   };
 
   const closeModal = () => {
-    applyModal.classList.remove('is-open');
-    applyModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    applyModal.classList.remove("is-open");
+    applyModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body.style.overflow = "";
   };
 
-  const openApplySuccessModal = (name = 'there') => {
-    const successText = document.getElementById('applySuccessText');
+  const openApplySuccessModal = (
+    name = "there"
+  ) => {
+    const successText =
+      document.getElementById(
+        "applySuccessText"
+      );
+
     if (successText) {
       successText.textContent = `Thanks ${name}! Your application has been submitted successfully.`;
     }
+
     if (!applySuccessModal) return;
-    applySuccessModal.classList.add('is-open');
-    applySuccessModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+
+    applySuccessModal.classList.add(
+      "is-open"
+    );
+
+    applySuccessModal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body.style.overflow = "hidden";
   };
 
   const closeApplySuccessModal = () => {
     if (!applySuccessModal) return;
-    applySuccessModal.classList.remove('is-open');
-    applySuccessModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+
+    applySuccessModal.classList.remove(
+      "is-open"
+    );
+
+    applySuccessModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body.style.overflow = "";
   };
 
   window.closeApplyModal = closeModal;
   window.openApplyModal = openApplyModal;
-  window.closeApplySuccessModal = closeApplySuccessModal;
+  window.closeApplySuccessModal =
+    closeApplySuccessModal;
 
   applyOpenButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
+    button.addEventListener("click", (event) => {
       event.preventDefault();
+
       openApplyModal();
-      mobileMenu?.classList.remove('open');
-      hamburger?.classList.remove('open');
+
+      mobileMenu?.classList.remove("open");
+      hamburger?.classList.remove("open");
     });
   });
 
-  applyForm.querySelectorAll('.apply-next').forEach((button) => {
-    button.addEventListener('click', () => {
-      if (!validateStep(currentApplyStep)) return;
-      setApplyStep(currentApplyStep + 1);
-    });
-  });
+  applyForm
+    .querySelectorAll(".apply-next")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        if (!validateStep(currentApplyStep))
+          return;
 
-  applyForm.querySelectorAll('.apply-back').forEach((button) => {
-    button.addEventListener('click', () => setApplyStep(currentApplyStep - 1));
-  });
-
-  startTimeframe?.addEventListener('change', syncConditionalFields);
-  fundingStatus?.addEventListener('change', syncConditionalFields);
-
-  applyModal.addEventListener('click', (event) => {
-    if (event.target === applyModal) {
-      closeModal();
-    }
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && applyModal.classList.contains('is-open')) {
-      closeModal();
-    }
-    if (event.key === 'Escape' && applySuccessModal?.classList.contains('is-open')) {
-      closeApplySuccessModal();
-    }
-  });
-
-  applyForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (!validateStep(currentApplyStep)) return;
-
-    const submitBtn = applyForm.querySelector('button[type="submit"]');
-    const originalSubmitText = submitBtn?.textContent || 'Submit Application';
-
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-    }
-
-    clearApplyMessage();
-
-    try {
-      const response = await fetch(applyEndpoint, {
-        method: 'POST',
-        body: new FormData(applyForm),
-        headers: { Accept: 'application/json' }
+        setApplyStep(currentApplyStep + 1);
       });
+    });
 
-      if (!response.ok) {
-        throw new Error('Formspree rejected the application form submission.');
+  applyForm
+    .querySelectorAll(".apply-back")
+    .forEach((button) => {
+      button.addEventListener("click", () =>
+        setApplyStep(currentApplyStep - 1)
+      );
+    });
+
+  startTimeframe?.addEventListener(
+    "change",
+    syncConditionalFields
+  );
+
+  fundingStatus?.addEventListener(
+    "change",
+    syncConditionalFields
+  );
+
+  applyForm.addEventListener(
+    "submit",
+    async (event) => {
+      event.preventDefault();
+
+      if (!validateStep(currentApplyStep))
+        return;
+
+      const submitBtn =
+        applyForm.querySelector(
+          'button[type="submit"]'
+        );
+
+      const originalSubmitText =
+        submitBtn?.textContent ||
+        "Submit Application";
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
       }
 
-      showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
-      const applicantName = resolveText('fullName', 'there').split(' ')[0];
-      applyForm.reset();
-      syncConditionalFields();
-      setApplyStep(0);
-      closeModal();
-      openApplySuccessModal(applicantName);
-    } catch (error) {
-      console.error(error);
-      showApplyMessage('We could not submit your application right now. Please try again in a moment.');
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalSubmitText;
+      clearApplyMessage();
+
+      try {
+        const response = await fetch(
+          applyEndpoint,
+          {
+            method: "POST",
+            body: new FormData(applyForm),
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.error ||
+              data.message ||
+              "Submission failed"
+          );
+        }
+
+        const applicantName = resolveText(
+          "fullName",
+          "there"
+        ).split(" ")[0];
+
+        applyForm.reset();
+
+        syncConditionalFields();
+
+        setApplyStep(0);
+
+        closeModal();
+
+        openApplySuccessModal(
+          applicantName
+        );
+      } catch (error) {
+        console.error(
+          "APPLICATION ERROR:",
+          error
+        );
+
+        showApplyMessage(
+          error.message ||
+            "We could not submit your application right now. Please try again."
+        );
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent =
+            originalSubmitText;
+        }
       }
     }
-  });
+  );
 
   syncConditionalFields();
   setApplyStep(0);
