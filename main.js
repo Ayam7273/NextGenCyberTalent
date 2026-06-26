@@ -754,9 +754,11 @@ return true;
         headers: { Accept: 'application/json' }
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Formspree rejected the application form submission.');
-      }
+      throw new Error(data.error || data.message || "Application submission failed.");
+    }
 
       showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
       const applicantName = resolveText('fullName', 'there').split(' ')[0];
@@ -765,10 +767,10 @@ return true;
       setApplyStep(0);
       closeModal();
       openApplySuccessModal(applicantName);
-    } catch (error) {
-      console.error(error);
-      showApplyMessage('We could not submit your application right now. Please try again in a moment.');
-    } finally {
+    }  catch (error) {
+  console.error("APPLICATION ERROR:", error);
+  showApplyMessage(error.message);
+} finally {
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalSubmitText;
