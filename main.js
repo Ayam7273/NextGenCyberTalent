@@ -103,59 +103,47 @@ if (window.location.hash && document.querySelector('.policy-tab')) {
 const contactForm = document.getElementById("contactForm");
 
 if (contactForm) {
-
   contactForm.addEventListener("submit", async (e) => {
-
     e.preventDefault();
-
     const submitBtn = contactForm.querySelector(".btn-submit");
-
     const originalText = submitBtn.innerHTML;
 
     submitBtn.disabled = true;
     submitBtn.innerHTML = "Sending...";
 
     try {
-
- const response = await fetch("/api/contact", {
-  method: "POST",
-
-  headers: {
-    "Content-Type": "application/json",
-  },
-
-  body: JSON.stringify({
-    firstName: contactForm.firstName.value,
-    lastName: contactForm.lastName.value,
-    email: contactForm.email.value,
-    enquiryType: contactForm.enquiryType.value,
-    message: contactForm.message.value,
-    "g-recaptcha-response": grecaptcha.getResponse(),
-  }),
-});
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: contactForm.firstName.value,
+          lastName: contactForm.lastName.value,
+          email: contactForm.email.value,
+          enquiryType: contactForm.enquiryType.value,
+          message: contactForm.message.value,
+          "g-recaptcha-response": grecaptcha.getResponse(),
+        }),
+      });
 
       const data = await response.json();
+      console.log("API Response:", data);
 
-console.log("API Response:", data);
-
-if (!response.ok) {
-  throw new Error(
-    data.error || data.message || "Failed to send"
-  );
-}
+      if (!response.ok) {
+        throw new Error(
+          data.error || data.message || "Failed to send"
+        );
+      }
 
       submitBtn.innerHTML = "✓ Message Sent";
-
       contactForm.reset();
-
-    } catch (error) {
-
+    } 
+    catch (error) {
       console.error(error);
-
       submitBtn.innerHTML = "Failed. Try Again";
-
-    } finally {
-
+    } 
+    finally {
       setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
@@ -350,9 +338,7 @@ const ensureApplyModal = () => {
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="payment-plan" data-label="I may require a payment plan">
                       <span class="affordability-card">
-                        
                         <span class="affordability-text">
-                          
                           <span class="affordability-desc">I may require a payment plan.</span>
                         </span>
                       </span>
@@ -360,9 +346,7 @@ const ensureApplyModal = () => {
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="partial-sponsorship" data-label="I may require partial sponsorship">
                       <span class="affordability-card">
-                        
                         <span class="affordability-text">
-                          
                           <span class="affordability-desc">I may require partial sponsorship.</span>
                         </span>
                       </span>
@@ -370,9 +354,7 @@ const ensureApplyModal = () => {
                     <label class="affordability-option">
                       <input type="checkbox" name="affordability" value="external-funding" data-label="I am exploring external funding options">
                       <span class="affordability-card">
-                        
                         <span class="affordability-text">
-                          
                           <span class="affordability-desc">I am exploring external funding options.</span>
                         </span>
                       </span>
@@ -380,9 +362,7 @@ const ensureApplyModal = () => {
                     <label class="affordability-option affordability-option-neutral">
                       <input type="checkbox" name="affordability" value="no-concerns" data-label="I have no affordability concerns">
                       <span class="affordability-card">
-                        
                         <span class="affordability-text">
-                          
                           <span class="affordability-desc">I have no affordability concerns.</span>
                         </span>
                       </span>
@@ -390,9 +370,7 @@ const ensureApplyModal = () => {
                     <label class="affordability-option affordability-option-neutral">
                       <input type="checkbox" name="affordability" value="prefer-not-to-say" data-label="Prefer not to say">
                       <span class="affordability-card">
-                        
                         <span class="affordability-text">
-                          
                           <span class="affordability-desc">Prefer not to say.</span>
                         </span>
                       </span>
@@ -401,9 +379,9 @@ const ensureApplyModal = () => {
                 </div>
 
                 <div class="form-group">
-                  <label for="sponsorshipFile">Sponsorship Documentation <em>*</em></label>
-                  <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
-                  <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation.</small>
+                  <label for="sponsorshipFile">Sponsorship Documentation</label>
+                  <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                  <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation (Optional).</small>
                 </div>
               </div>
 
@@ -636,17 +614,6 @@ if (applyModal && applyForm) {
       return false;
     }
 
-    // Require sponsorship document before leaving Step 3
-if (stepIndex === 2) {
-  const sponsorshipFile = document.getElementById("sponsorshipFile");
-
-  if (!sponsorshipFile || sponsorshipFile.files.length === 0) {
-    showApplyMessage("Please upload your sponsorship document before continuing.");
-    sponsorshipFile.focus();
-    return false;
-  }
-}
-
     return true;
   };
 
@@ -739,26 +706,25 @@ if (stepIndex === 2) {
     clearApplyMessage();
 
     try {
+      const formData = new FormData(applyForm);
       const response = await fetch(applyEndpoint, {
         method: 'POST',
-        body: new FormData(applyForm),
-        headers: { Accept: 'application/json' }
+        body: formData
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Formspree rejected the application form submission.');
+        throw new Error(data.error || data.message || 'Failed to submit application.');
       }
 
-      showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
-      const applicantName = resolveText('fullName', 'there').split(' ')[0];
-      applyForm.reset();
-      syncConditionalFields();
-      setApplyStep(0);
       closeModal();
-      openApplySuccessModal(applicantName);
-    } catch (error) {
+      openApplySuccessModal(formData.get('fullName') || 'there');
+      applyForm.reset();
+    } 
+    catch (error) {
       console.error(error);
-      showApplyMessage('We could not submit your application right now. Please try again in a moment.');
+      showApplyMessage(error.message || 'An error occurred. Please try again.');
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -766,7 +732,4 @@ if (stepIndex === 2) {
       }
     }
   });
-
-  syncConditionalFields();
-  setApplyStep(0);
 }
