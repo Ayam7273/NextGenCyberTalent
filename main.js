@@ -138,12 +138,10 @@ if (contactForm) {
 
       submitBtn.innerHTML = "✓ Message Sent";
       contactForm.reset();
-    } 
-    catch (error) {
+    } catch (error) {
       console.error(error);
       submitBtn.innerHTML = "Failed. Try Again";
-    } 
-    finally {
+    } finally {
       setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
@@ -706,7 +704,19 @@ if (applyModal && applyForm) {
     clearApplyMessage();
 
     try {
+      // ── FIXED: Safely drop empty file element from FormData payload generation ──
+      const fileInput = document.getElementById('sponsorshipFile');
+      if (fileInput && fileInput.files.length === 0) {
+        fileInput.removeAttribute('name');
+      }
+
       const formData = new FormData(applyForm);
+
+      // Restore attribute layout completely right after generation
+      if (fileInput) {
+        fileInput.setAttribute('name', 'sponsorshipFile');
+      }
+
       const response = await fetch(applyEndpoint, {
         method: 'POST',
         body: formData
@@ -721,8 +731,7 @@ if (applyModal && applyForm) {
       closeModal();
       openApplySuccessModal(formData.get('fullName') || 'there');
       applyForm.reset();
-    } 
-    catch (error) {
+    } catch (error) {
       console.error(error);
       showApplyMessage(error.message || 'An error occurred. Please try again.');
     } finally {

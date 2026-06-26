@@ -16,17 +16,18 @@ export default async function handler(req, res) {
     });
   }
 
-  // PARSE FORM DATA
+  // PARSE FORM DATA WITH COMPLETE EMPTY-FILE ALLOWANCE RULES
   const form = formidable({
     multiples: false,
     keepExtensions: true,
     maxFileSize: 10 * 1024 * 1024, // 10MB
+    allowEmptyFiles: true,         // FIX: Stop form parsing failure if empty boundaries are passed
+    minFileSize: 0,                // FIX: Support 0-byte structural arguments
   });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.error("FORM ERROR:", err);
-      
       return res.status(500).json({
         message: "Form parsing failed",
       });
@@ -50,13 +51,13 @@ export default async function handler(req, res) {
       // VERIFY SMTP CONNECTION
       await transporter.verify();
 
-      // Helper function to extract fields cleanly regardless of Formidable version
+      // Clean string parser to peel out single elements nested in arrays safely
       const getFieldValue = (field) => {
         if (!field) return "";
         return Array.isArray(field) ? field[0] : field;
       };
 
-      // FILE ATTACHMENT (MADE ROBUST FOR OPTIONAL UPLOADS)
+      // FILE ATTACHMENT WITH EXPANDED SAFEGUARDS FOR OPTIONAL UPLOADS
       let attachments = [];
 
       if (files.sponsorshipFile) {
@@ -64,8 +65,8 @@ export default async function handler(req, res) {
           ? files.sponsorshipFile[0]
           : files.sponsorshipFile;
 
-        // Ensure the file block has a valid size and path before attempting to read it
-        if (file && (file.filepath || file.path) && file.size > 0) {
+        // Check path configurations, sizes, and verify it's not a dummy blank entry before embedding
+        if (file && (file.filepath || file.path) && file.size > 0 && file.originalFilename !== "") {
           attachments.push({
             filename: file.originalFilename || file.newFilename || "attachment",
             content: fs.createReadStream(file.filepath || file.path),
@@ -73,7 +74,7 @@ export default async function handler(req, res) {
         }
       }
 
-      // HANDLE AFFORDABILITY CHECKBOXES Safely
+      // HANDLE AFFORDABILITY CHECKBOXES
       let affordabilityValues = [];
       const incomingAffordability = fields.affordability;
       if (incomingAffordability) {
