@@ -756,9 +756,15 @@ return true;
 
       const data = await response.json();
 
-      if (!response.ok) {
-      throw new Error(data.error || data.message || "Application submission failed.");
-    }
+if (!response.ok) {
+  console.error("SERVER RESPONSE:", data);
+
+  throw new Error(
+    data.message ||
+    data.error ||
+    JSON.stringify(data)
+  );
+}
 
       showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
       const applicantName = resolveText('fullName', 'there').split(' ')[0];
@@ -767,10 +773,14 @@ return true;
       setApplyStep(0);
       closeModal();
       openApplySuccessModal(applicantName);
-    }  catch (error) {
+    } 
+    
+    catch (error) {
   console.error("APPLICATION ERROR:", error);
   showApplyMessage(error.message);
-} finally {
+} 
+
+    finally {
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalSubmitText;
