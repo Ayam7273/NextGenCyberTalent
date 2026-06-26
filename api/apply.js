@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { formidable } from "formidable";
+import formidable from "formidable";
 import fs from "fs";
 
 export const config = {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   }
 
   // PARSE FORM DATA
-  const form = new formidable.IncomingForm({
+  const form = formidable({
     multiples: false,
     keepExtensions: true,
     maxFileSize: 10 * 1024 * 1024, // 10MB
@@ -25,14 +25,12 @@ export default async function handler(req, res) {
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
-  console.error("FORM ERROR:", err);
+      console.error("FORM ERROR:", err);
 
-  return res.status(500).json({
-    success: false,
-    message: err.message,
-    error: err,
-  });
-}
+      return res.status(500).json({
+        message: "Form parsing failed",
+      });
+    }
 
     try {
       // SMTP TRANSPORT

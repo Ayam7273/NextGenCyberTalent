@@ -401,8 +401,8 @@ const ensureApplyModal = () => {
                 </div>
 
                 <div class="form-group">
-                  <label for="sponsorshipFile">Sponsorship Documentation (Optional)</label>
-                  <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                  <label for="sponsorshipFile">Sponsorship Documentation <em>*</em></label>
+                  <input type="file" id="sponsorshipFile" name="sponsorshipFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
                   <small class="field-help">Upload up to 1 file (PDF or DOCX) if you already have sponsorship confirmation or supporting documentation.</small>
                 </div>
               </div>
@@ -638,25 +638,16 @@ if (applyModal && applyForm) {
 
     // Require sponsorship document before leaving Step 3
 if (stepIndex === 2) {
-  const fundingStatus = document.querySelector(
-    'input[name="fundingStatus"]:checked'
-  )?.value;
-
   const sponsorshipFile = document.getElementById("sponsorshipFile");
 
-  if (
-    fundingStatus === "Sponsored" &&
-    sponsorshipFile.files.length === 0
-  ) {
-    showApplyMessage(
-      "Please upload your sponsorship document."
-    );
+  if (!sponsorshipFile || sponsorshipFile.files.length === 0) {
+    showApplyMessage("Please upload your sponsorship document before continuing.");
     sponsorshipFile.focus();
     return false;
   }
 }
 
-return true;
+    return true;
   };
 
   const openApplyModal = () => {
@@ -754,17 +745,9 @@ return true;
         headers: { Accept: 'application/json' }
       });
 
-      const data = await response.json();
-
-if (!response.ok) {
-  console.error("SERVER RESPONSE:", data);
-
-  throw new Error(
-    data.message ||
-    data.error ||
-    JSON.stringify(data)
-  );
-}
+      if (!response.ok) {
+        throw new Error('Formspree rejected the application form submission.');
+      }
 
       showApplyMessage('Application submitted successfully. We will get back to you within 48 hours.');
       const applicantName = resolveText('fullName', 'there').split(' ')[0];
@@ -773,14 +756,10 @@ if (!response.ok) {
       setApplyStep(0);
       closeModal();
       openApplySuccessModal(applicantName);
-    } 
-    
-    catch (error) {
-  console.error("APPLICATION ERROR:", error);
-  showApplyMessage(error.message);
-} 
-
-    finally {
+    } catch (error) {
+      console.error(error);
+      showApplyMessage('We could not submit your application right now. Please try again in a moment.');
+    } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalSubmitText;
