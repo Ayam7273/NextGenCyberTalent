@@ -587,9 +587,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .partner-item:hover { opacity: 0.8; }
 .partner-item img {
-  height: 28px;
+  max-height: 80px;
   width: auto;
-  
   object-fit: contain;
 }
 .partner-item span {
