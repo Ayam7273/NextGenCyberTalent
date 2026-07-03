@@ -92,7 +92,7 @@ export default async function handler(req, res) {
       // ── 1. BRANDED ADMIN NOTIFICATION HTML TEMPLATE ──
       const adminHtml = `
         <div style="font-family: Arial, sans-serif; line-height:1.6; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #0f766e; padding: 24px; text-align: center;">
+          <div style="background-color: #0F4EC4; padding: 24px; text-align: center;">
             <h2 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.5px;">
               Global Cyber Talent Initiative
             </h2>
@@ -156,7 +156,7 @@ export default async function handler(req, res) {
       // ── 2. BRANDED CANDIDATE AUTO-RESPONSE HTML TEMPLATE (TAILORED CONTENT) ──
       const autoResponseHtml = `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #0f766e; padding: 32px 24px; text-align: center;">
+          <div style="background-color: #0F4EC4; padding: 32px 24px; text-align: center;">
             <h2 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 600; letter-spacing: 0.5px;">
               Global Cyber Talent Initiative
             </h2>
@@ -174,19 +174,19 @@ export default async function handler(req, res) {
               We have received your application for the September 2026 cohort and our team will be in touch within 48 hours with the next steps.
             </p>
 
-            <div style="margin: 24px 0; padding: 16px; background-color: #f8fafc; border-radius: 6px; border-left: 3px solid #0f766e;">
-              <h4 style="margin: 0 0 8px 0; color: #0f766e; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">In the meantime, here is what you should know:</h4>
+            <div style="margin: 24px 0; padding: 16px; background-color: #f8fafc; border-radius: 6px; border-left: 3px solid #0F4EC4;">
+              <h4 style="margin: 0 0 8px 0; color: #0F4EC4; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">In the meantime, here is what you should know:</h4>
               <p style="margin: 0; font-size: 14px; color: #334155;">
                 The September 2026 cohort is a 12-month, structured cybersecurity development programme. You will move through four phases — Foundation, Applied Skills, Project and Collaboration, and Professional Readiness — and graduate with a performance tier that connects you directly to employers looking to hire.
               </p>
             </div>
             
-            <p style="font-size: 15px; color: #334155; font-weight: 600; color: #0f766e;">
+            <p style="font-size: 15px; color: #334155; font-weight: 600; color: #0F4EC4;">
               No prior experience is required. You made the right decision applying.
             </p>
 
             <p style="font-size: 14px; color: #64748b; margin-top: 24px;">
-              If you have any questions before we get back to you, reply to this email or reach us at <a href="mailto:applications@globalcybertalent.com" style="color: #0f766e; text-decoration: none; font-weight: 600;">applications@globalcybertalent.com</a>
+              If you have any questions before we get back to you, reply to this email or reach us at <a href="mailto:applications@globalcybertalent.com" style="color: #0F4EC4; text-decoration: none; font-weight: 600;">applications@globalcybertalent.com</a>
             </p>
             
             <p style="font-size: 15px; color: #334155; margin-top: 28px; margin-bottom: 0;">
@@ -196,7 +196,7 @@ export default async function handler(req, res) {
             <p style="font-size: 15px; color: #0f172a; margin-top: 20px; margin-bottom: 0; line-height: 1.4;">
               <strong>The GCTI Team</strong><br>
               <span style="color: #64748b; font-size: 14px;">Global Cyber Talent Initiative</span><br>
-              <a href="https://www.globalcybertalent.org" style="color: #0f766e; text-decoration: none; font-size: 14px;">www.globalcybertalent.org</a>
+              <a href="https://www.globalcybertalent.org" style="color: #0F4EC4; text-decoration: none; font-size: 14px;">www.globalcybertalent.org</a>
             </p>
           </div>
 
