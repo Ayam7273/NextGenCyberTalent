@@ -79,7 +79,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  font-weight: 700;
+  /* font-weight: 700; */
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--blue);
