@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Global Cyber Talent Blog</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/x-icon" href="/assets/favicon2.png">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="/index.html" class="nav-logo">
+        <div class="logo-mark">
+          <img src="/assets/gcti-logo.webp" alt="Global Cyber Talent Logo" width="200" height="133" />
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">Home</a>
+        <a href="/about.html" class="nav-link">About</a>
+        <a href="/programme.html" class="nav-link">Programme</a>
+        <a href="/employers.html" class="nav-link">For Employers</a>
+        <a href="/policies.html" class="nav-link">Policies</a>
+        <a href="/blog" class="nav-link">Blog</a>
+        <a href="/contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <a href="/index.html" class="mobile-link">Home</a>
+        <a href="/about.html" class="mobile-link">About</a>
+        <a href="/programme.html" class="mobile-link">Programme</a>
+        <a href="/employers.html" class="mobile-link">For Employers</a>
+        <a href="/policies.html" class="mobile-link">Policies</a>
+        <a href="/blog" class="mobile-link">Blog</a>
+        <a href="/contact.html" class="mobile-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="admin-main">
+    <!-- Login View -->
+    <section id="loginView" class="admin-section">
+      <div class="container">
+        <div class="admin-login-wrap">
+          <div class="contact-form admin-login-form">
+            <span class="section-tag">Admin</span>
+            <h3>Blog Dashboard</h3>
+            <p class="admin-login-desc">Sign in to manage blog posts.</p>
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" name="email" placeholder="admin@example.com" required autocomplete="email" />
+              </div>
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password" placeholder="Your password" required autocomplete="current-password" />
+              </div>
+              <p id="loginError" class="admin-error hidden"></p>
+              <button type="submit" class="btn-submit">Sign In</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard View -->
+    <section id="dashboardView" class="admin-section hidden">
+      <div class="container">
+        <div class="admin-header">
+          <div>
+            <span class="section-tag">Admin</span>
+            <h1 class="admin-title">Blog Posts</h1>
+          </div>
+          <div class="admin-header-actions">
+            <button type="button" class="btn-primary" id="newPostBtn">+ New post</button>
+            <button type="button" class="btn-secondary" id="logoutBtn">Log out</button>
+          </div>
+        </div>
+
+        <p id="dashboardError" class="admin-error hidden"></p>
+
+        <div id="dashboardLoading" class="blog-state">
+          <div class="blog-spinner"></div>
+          <p>Loading posts…</p>
+        </div>
+
+        <div class="admin-table-wrap hidden" id="tableWrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Last updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="postsTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="dashboardEmpty" class="blog-state hidden">
+          <p>No posts yet. Create your first post.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Post Editor Modal -->
+  <div class="modal" id="postModal" aria-hidden="true">
+    <div class="modal-overlay" id="postModalOverlay"></div>
+    <div class="modal-content admin-modal-content">
+      <button type="button" class="modal-close" id="postModalClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal-header">
+        <h2 id="postModalTitle">New Post</h2>
+      </div>
+      <form id="postForm">
+        <input type="hidden" id="postId" value="" />
+        <div class="form-group">
+          <label for="postTitleInput">Title</label>
+          <input type="text" id="postTitleInput" required placeholder="Post title" />
+        </div>
+        <div class="form-group">
+          <label for="postSlugInput">Slug</label>
+          <input type="text" id="postSlugInput" required placeholder="my-post-slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" title="Lowercase letters, numbers, and hyphens only" />
+        </div>
+        <div class="form-group">
+          <label for="postExcerptInput">Excerpt</label>
+          <textarea id="postExcerptInput" rows="3" placeholder="Short summary for the listing page"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="postCoverInput">Cover image URL</label>
+          <input type="url" id="postCoverInput" placeholder="https://example.com/image.jpg" />
+        </div>
+        <div class="form-group">
+          <label for="postContentInput">Content (HTML)</label>
+          <textarea id="postContentInput" rows="10" required placeholder="<p>Your post content…</p>"></textarea>
+        </div>
+        <div class="form-checkbox">
+          <input type="checkbox" id="postPublishedInput" />
+          <label for="postPublishedInput">Published</label>
+        </div>
+        <p id="postFormError" class="admin-error hidden"></p>
+        <div class="apply-step-actions">
+          <button type="button" class="btn-secondary" id="postCancelBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/main.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config.js"></script>
+  <script>
+    const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+    const loginView = document.getElementById('loginView');
+    const dashboardView = document.getElementById('dashboardView');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const dashboardError = document.getElementById('dashboardError');
+    const dashboardLoading = document.getElementById('dashboardLoading');
+    const tableWrap = document.getElementById('tableWrap');
+    const dashboardEmpty = document.getElementById('dashboardEmpty');
+    const postsTableBody = document.getElementById('postsTableBody');
+    const postModal = document.getElementById('postModal');
+    const postForm = document.getElementById('postForm');
+    const postFormError = document.getElementById('postFormError');
+
+    let posts = [];
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatDate(dateStr) {
+      return new Date(dateStr).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function showView(session) {
+      if (session) {
+        loginView.classList.add('hidden');
+        dashboardView.classList.remove('hidden');
+        loadAllPosts();
+      } else {
+        loginView.classList.remove('hidden');
+        dashboardView.classList.add('hidden');
+      }
+    }
+
+    function showDashboardState(state) {
+      dashboardLoading.classList.toggle('hidden', state !== 'loading');
+      tableWrap.classList.toggle('hidden', state !== 'table');
+      dashboardEmpty.classList.toggle('hidden', state !== 'empty');
+    }
+
+    function showInlineError(el, message) {
+      if (message) {
+        el.textContent = message;
+        el.classList.remove('hidden');
+      } else {
+        el.textContent = '';
+        el.classList.add('hidden');
+      }
+    }
+
+    function openModal(editingPost) {
+      postForm.reset();
+      showInlineError(postFormError, '');
+
+      if (editingPost) {
+        document.getElementById('postModalTitle').textContent = 'Edit Post';
+        document.getElementById('postId').value = editingPost.id;
+        document.getElementById('postTitleInput').value = editingPost.title;
+        document.getElementById('postSlugInput').value = editingPost.slug;
+        document.getElementById('postExcerptInput').value = editingPost.excerpt || '';
+        document.getElementById('postCoverInput').value = editingPost.cover_image_url || '';
+        document.getElementById('postContentInput').value = editingPost.content;
+        document.getElementById('postPublishedInput').checked = editingPost.published;
+      } else {
+        document.getElementById('postModalTitle').textContent = 'New Post';
+        document.getElementById('postId').value = '';
+      }
+
+      postModal.classList.add('is-open');
+      postModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      postModal.classList.remove('is-open');
+      postModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function renderPostsTable() {
+      postsTableBody.innerHTML = '';
+
+      posts.forEach(post => {
+        const tr = document.createElement('tr');
+
+        const titleTd = document.createElement('td');
+        titleTd.textContent = post.title;
+
+        const statusTd = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = 'admin-badge ' + (post.published ? 'admin-badge-published' : 'admin-badge-draft');
+        badge.textContent = post.published ? 'Published' : 'Draft';
+        statusTd.appendChild(badge);
+
+        const dateTd = document.createElement('td');
+        dateTd.textContent = formatDate(post.updated_at);
+
+        const actionsTd = document.createElement('td');
+        actionsTd.className = 'admin-actions-cell';
+
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'btn-secondary admin-btn-sm';
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', () => openModal(post));
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'btn-secondary admin-btn-sm admin-btn-danger';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', () => deletePost(post));
+
+        actionsTd.appendChild(editBtn);
+        actionsTd.appendChild(deleteBtn);
+
+        tr.appendChild(titleTd);
+        tr.appendChild(statusTd);
+        tr.appendChild(dateTd);
+        tr.appendChild(actionsTd);
+        postsTableBody.appendChild(tr);
+      });
+    }
+
+    async function loadAllPosts() {
+      showInlineError(dashboardError, '');
+      showDashboardState('loading');
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        showDashboardState('empty');
+        showInlineError(dashboardError, error.message);
+        return;
+      }
+
+      posts = data || [];
+
+      if (posts.length === 0) {
+        showDashboardState('empty');
+      } else {
+        renderPostsTable();
+        showDashboardState('table');
+      }
+    }
+
+    async function deletePost(post) {
+      if (!confirm('Delete "' + post.title + '"? This cannot be undone.')) return;
+
+      showInlineError(dashboardError, '');
+
+      const { error } = await supabaseClient
+        .from('posts')
+        .delete()
+        .eq('id', post.id);
+
+      if (error) {
+        showInlineError(dashboardError, error.message);
+        return;
+      }
+
+      await loadAllPosts();
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      showInlineError(loginError, '');
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        showInlineError(loginError, error.message);
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await supabaseClient.auth.signOut();
+    });
+
+    document.getElementById('newPostBtn').addEventListener('click', () => openModal(null));
+
+    document.getElementById('postModalClose').addEventListener('click', closeModal);
+    document.getElementById('postModalOverlay').addEventListener('click', closeModal);
+    document.getElementById('postCancelBtn').addEventListener('click', closeModal);
+
+    document.getElementById('postTitleInput').addEventListener('input', (e) => {
+      const slugInput = document.getElementById('postSlugInput');
+      if (!document.getElementById('postId').value && !slugInput.dataset.manual) {
+        slugInput.value = e.target.value
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '');
+      }
+    });
+
+    document.getElementById('postSlugInput').addEventListener('input', () => {
+      document.getElementById('postSlugInput').dataset.manual = 'true';
+    });
+
+    postForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      showInlineError(postFormError, '');
+
+      const id = document.getElementById('postId').value;
+      const title = document.getElementById('postTitleInput').value.trim();
+      const slug = document.getElementById('postSlugInput').value.trim();
+      const excerpt = document.getElementById('postExcerptInput').value.trim();
+      const cover_image_url = document.getElementById('postCoverInput').value.trim() || null;
+      const content = document.getElementById('postContentInput').value;
+      const published = document.getElementById('postPublishedInput').checked;
+
+      if (!SLUG_PATTERN.test(slug)) {
+        showInlineError(postFormError, 'Slug must contain only lowercase letters, numbers, and hyphens.');
+        return;
+      }
+
+      const payload = { title, slug, excerpt: excerpt || null, cover_image_url, content, published };
+
+      let error;
+      if (id) {
+        ({ error } = await supabaseClient.from('posts').update(payload).eq('id', id));
+      } else {
+        ({ error } = await supabaseClient.from('posts').insert(payload));
+      }
+
+      if (error) {
+        showInlineError(postFormError, error.message);
+        return;
+      }
+
+      closeModal();
+      await loadAllPosts();
+    });
+
+    supabaseClient.auth.getSession().then(({ data: { session } }) => {
+      showView(session);
+    });
+
+    supabaseClient.auth.onAuthStateChange((_event, session) => {
+      showView(session);
+      if (!session) {
+        loginForm.reset();
+        showInlineError(loginError, '');
+      }
+    });
+  </script>
+</body>
+</html>
