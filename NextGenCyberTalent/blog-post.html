@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W7RN9W7007"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W7RN9W7007');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog Post | Global Cyber Talent</title>
+  <meta name="description" content="Read the latest from the Global Cyber Talent Initiative blog.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700&display=swap">
+    <link rel="stylesheet" href="/styles.css" />
+  </noscript>
+
+  <link rel="icon" type="image/x-icon" href="/assets/favicon2.png">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark">
+          <img src="assets/gcti-logo.webp" alt="Global Cyber Talent Logo" width="200" height="133" />
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="programme.html" class="nav-link">Programme</a>
+        <a href="employers.html" class="nav-link">For Employers</a>
+        <a href="policies.html" class="nav-link">Policies</a>
+        <a href="/blog" class="nav-link active">Blog</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#" class="btn-nav-apply" data-open-apply-modal>Apply Now</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="about.html" class="mobile-link">About</a>
+        <a href="programme.html" class="mobile-link">Programme</a>
+        <a href="employers.html" class="mobile-link">For Employers</a>
+        <a href="policies.html" class="mobile-link">Policies</a>
+        <a href="/blog" class="mobile-link">Blog</a>
+        <a href="contact.html" class="mobile-link">Contact</a>
+        <a href="#" class="btn-mobile-apply" data-open-apply-modal>Apply Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="blog-post-section">
+      <div class="container">
+        <a href="/blog" class="blog-back-link">← Back to Blog</a>
+
+        <div id="postLoading" class="blog-state">
+          <div class="blog-spinner"></div>
+          <p>Loading post…</p>
+        </div>
+
+        <div id="postNotFound" class="blog-state hidden">
+          <h2>Post not found</h2>
+          <p>The post you're looking for doesn't exist or may have been removed.</p>
+          <a href="/blog" class="btn-primary" style="margin-top: 20px;">View all posts</a>
+        </div>
+
+        <article id="postArticle" class="blog-post-article hidden">
+          <header class="blog-post-header">
+            <h1 id="postTitle"></h1>
+            <time id="postDate" class="blog-post-date"></time>
+          </header>
+          <img id="postCover" class="blog-post-cover hidden" alt="" />
+          <div id="postContent" class="blog-post-content"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <div class="logo-mark">
+              <img src="assets/arrow-nw.svg" width="24" height="24" alt="">
+            </div>
+            <span class="logo-text">GCTI</span>
+          </a>
+          <p class="footer-tagline">Global Cyber Talent Initiative — bridging the gap between learning and industry.</p>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/share/1ENVP3yC36/?mibextid=wwXIfr" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <img src="assets/logo-fb-simple 2.svg" alt="Facebook" width="24" height="24" />
+            </a>
+            <a href="https://www.instagram.com/gcti_hq?utm_source=qr" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <img src="assets/logo-instagram 2.svg" alt="Instagram" width="24" height="24" />
+            </a>
+            <a href="https://x.com/gcti_hq?s=11" class="social-link" aria-label="X" target="_blank" rel="noopener noreferrer">
+              <img src="assets/logo-twitter 2.svg" alt="X" width="24" height="24" />
+            </a>
+            <a href="https://www.linkedin.com/company/global-cyber-talent-initiative/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <img src="assets/logo-linkedin.svg" alt="LinkedIn" width="24" height="24" />
+            </a>
+            <a href="https://www.tiktok.com/@gcti_hub?_r=1&_t=ZS-97EOUJNZGLp" class="social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+              <img src="assets/logo-tiktok.svg" alt="TikTok" width="24" height="24" />
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Programme</h4>
+          <a href="programme.html">Programme Overview</a>
+          <a href="programme.html#phases">Four Phases</a>
+          <a href="programme.html#tiers">Performance Tiers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Organisation</h4>
+          <a href="about.html">About GCTI</a>
+          <a href="employers.html">For Employers</a>
+          <a href="/blog">Blog</a>
+          <a href="#" data-open-apply-modal>Apply Now</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="policies.html#privacy">Privacy Policy</a>
+          <a href="policies.html#aup">Acceptable Use</a>
+          <a href="policies.html#safeguarding">Safeguarding</a>
+          <a href="policies.html#conduct">Code of Conduct</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:enquiries@globalcybertalent.com">enquiries@globalcybertalent.com</a>
+          <a href="mailto:applications@globalcybertalent.com">applications@globalcybertalent.com</a>
+          <p class="footer-address">10, Esomo Close Off Toyin Street Opebi, Ikeja, Lagos, Nigeria.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Global Cyber Talent Initiative. All rights reserved.</p>
+        <p class="footer-domain">globalcybertalent.org</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="chatbot.css">
+  <script src="chatbot.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config.js"></script>
+  <script>
+    function formatDate(dateStr) {
+      return new Date(dateStr).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    function showState(state) {
+      document.getElementById('postLoading').classList.toggle('hidden', state !== 'loading');
+      document.getElementById('postNotFound').classList.toggle('hidden', state !== 'notfound');
+      document.getElementById('postArticle').classList.toggle('hidden', state !== 'post');
+    }
+
+    async function loadPost() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+
+      if (!slug) {
+        showState('notfound');
+        return;
+      }
+
+      showState('loading');
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('title, slug, content, cover_image_url, created_at')
+        .eq('slug', slug)
+        .eq('published', true)
+        .maybeSingle();
+
+      if (error || !data) {
+        showState('notfound');
+        return;
+      }
+
+      document.title = data.title + ' | Global Cyber Talent';
+
+      document.getElementById('postTitle').textContent = data.title;
+
+      const dateEl = document.getElementById('postDate');
+      dateEl.dateTime = data.created_at;
+      dateEl.textContent = formatDate(data.created_at);
+
+      const coverEl = document.getElementById('postCover');
+      if (data.cover_image_url) {
+        coverEl.src = data.cover_image_url;
+        coverEl.alt = data.title;
+        coverEl.classList.remove('hidden');
+      } else {
+        coverEl.classList.add('hidden');
+      }
+
+      document.getElementById('postContent').innerHTML = data.content;
+
+      showState('post');
+    }
+
+    loadPost();
+  </script>
+</body>
+</html>
