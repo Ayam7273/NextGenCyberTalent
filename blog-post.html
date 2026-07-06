@@ -92,6 +92,16 @@
         </article>
       </div>
     </section>
+
+    <section class="next-blogs-section" id="nextBlogs" style="display:none;">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Keep Reading</span>
+          <h2 class="section-title">Next Blogs</h2>
+        </div>
+        <div class="blog-grid" id="nextBlogsGrid"></div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -163,6 +173,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/config.js"></script>
   <script>
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
     function formatDate(dateStr) {
       return new Date(dateStr).toLocaleDateString('en-GB', {
         day: 'numeric',
@@ -220,6 +237,61 @@
       document.getElementById('postContent').innerHTML = data.content;
 
       showState('post');
+      loadNextBlogs(slug);
+    }
+
+    async function loadNextBlogs(currentSlug) {
+      try {
+        const { data: nextPosts, error } = await supabaseClient
+          .from('posts')
+          .select('title, slug, excerpt, created_at')
+          .eq('published', true)
+          .neq('slug', currentSlug)
+          .order('created_at', { ascending: false })
+          .limit(3);
+
+        if (error || !nextPosts || nextPosts.length === 0) return;
+
+        const grid = document.getElementById('nextBlogsGrid');
+        grid.innerHTML = '';
+
+        nextPosts.forEach(post => {
+          const card = document.createElement('a');
+          card.href = '/blog-post.html?slug=' + encodeURIComponent(post.slug);
+          card.className = 'blog-card reveal';
+
+          const title = document.createElement('h3');
+          title.textContent = post.title;
+
+          const date = document.createElement('time');
+          date.className = 'blog-card-date';
+          date.dateTime = post.created_at;
+          date.textContent = formatDate(post.created_at);
+
+          const readMore = document.createElement('span');
+          readMore.className = 'blog-card-link';
+          readMore.textContent = 'Read more';
+
+          card.appendChild(title);
+          card.appendChild(date);
+          if (post.excerpt) {
+            const excerpt = document.createElement('p');
+            excerpt.textContent = post.excerpt;
+            card.appendChild(excerpt);
+          }
+          card.appendChild(readMore);
+          grid.appendChild(card);
+        });
+
+        const section = document.getElementById('nextBlogs');
+        section.style.display = '';
+
+        document.querySelectorAll('#nextBlogsGrid .reveal').forEach(el => {
+          requestAnimationFrame(() => el.classList.add('visible'));
+        });
+      } catch (_) {
+        /* fail silently */
+      }
     }
 
     loadPost();

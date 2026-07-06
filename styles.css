@@ -2074,6 +2074,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: var(--dark);
 }
 
+.next-blogs-section {
+  padding-bottom: 120px;
+}
+
 .blog-back-link {
   display: inline-flex;
   align-items: center;
