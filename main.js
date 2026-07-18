@@ -763,8 +763,8 @@ applyForm.addEventListener('submit', async (event) => {
       choiceModal.classList.remove('is-open');
 
       if (paymentRoute === 'gateway') {
-        // Redirect right into your external merchant portal (Replace with actual payment URL)
-        window.location.href = "https://your-payment-gateway.com/checkout?email=" + encodeURIComponent(formData.get('email'));
+        // Redirect right into your external merchant portal
+        window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk" + encodeURIComponent(formData.get('email'));
       } else {
         // If sponsored, show standard elegant success message window
         openApplySuccessModal(formData.get('fullName') || 'there');

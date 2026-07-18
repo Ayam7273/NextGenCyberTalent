@@ -161,7 +161,7 @@ export default async function handler(req, res) {
       if (paymentRoute === "sponsor") {
         ctaButtonHtml = `
           <div style="margin: 28px 0; text-align: center;">
-            <a href="https://your-payment-gateway.com/checkout?email=${encodeURIComponent(userEmail)}" 
+            <a href="https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk=${encodeURIComponent(userEmail)}" 
                style="background-color: #0F4EC4; color: #ffffff; padding: 14px 28px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block; font-size: 15px;">
               Forward to Sponsor / Process Payment
             </a>
