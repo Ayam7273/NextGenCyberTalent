@@ -762,14 +762,14 @@ applyForm.addEventListener('submit', async (event) => {
       closeModal();
       choiceModal.classList.remove('is-open');
 
-      if (paymentRoute === 'gateway') {
-        // Redirect right into your external merchant portal
-        window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk" + encodeURIComponent(formData.get('email'));
-      } else {
-        // If sponsored, show standard elegant success message window
-        openApplySuccessModal(formData.get('fullName') || 'there');
-        applyForm.reset();
-      }
+    if (paymentRoute === 'gateway') {
+  // Redirect right into your external merchant portal with the proper query parameter syntax
+  window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk?email=" + encodeURIComponent(formData.get('email'));
+} else {
+  // If sponsored, show standard elegant success message window
+  openApplySuccessModal(formData.get('fullName') || 'there');
+  applyForm.reset();
+}
 
     } catch (error) {
       console.error(error);
