@@ -153,6 +153,22 @@ export default async function handler(req, res) {
         </div>
       `;
 
+     // Extract the payment routing selection safe and clean
+      const paymentRoute = getFieldValue(fields.paymentRoute) || "gateway";
+
+      // ── NEW: Conditional CTA Block for Sponsor Route ──
+      let ctaButtonHtml = "";
+      if (paymentRoute === "sponsor") {
+        ctaButtonHtml = `
+          <div style="margin: 28px 0; text-align: center;">
+            <a href="https://your-payment-gateway.com/checkout?email=${encodeURIComponent(userEmail)}" 
+               style="background-color: #0F4EC4; color: #ffffff; padding: 14px 28px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block; font-size: 15px;">
+              Forward to Sponsor / Process Payment
+            </a>
+          </div>
+        `;
+      }
+
       // ── 2. BRANDED CANDIDATE AUTO-RESPONSE HTML TEMPLATE (TAILORED CONTENT) ──
       const autoResponseHtml = `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
@@ -173,6 +189,8 @@ export default async function handler(req, res) {
             <p style="font-size: 15px; color: #334155;">
               We have received your application for the September 2026 cohort and our team will be in touch within 48 hours with the next steps.
             </p>
+
+            ${ctaButtonHtml}
 
             <div style="margin: 24px 0; padding: 16px; background-color: #f8fafc; border-radius: 6px; border-left: 3px solid #0F4EC4;">
               <h4 style="margin: 0 0 8px 0; color: #0F4EC4; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">In the meantime, here is what you should know:</h4>
