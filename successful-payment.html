@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - Global Cyber Talent Initiative</title>
+    <style>
+        :root {
+            --primary: #0F4EC4;
+            --primary-dark: #0b3fa3;
+            --success: #10b981;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .success-container {
+            background: #ffffff;
+            max-width: 550px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .brand-header {
+            background-color: var(--primary);
+            padding: 32px 24px;
+            color: #ffffff;
+        }
+
+        .brand-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .brand-header p {
+            color: #ccfbf1;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-body {
+            padding: 40px 32px;
+        }
+
+        .success-icon-box {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            background-color: #ecfdf5;
+            color: var(--success);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+
+        .success-icon-box::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 2px dashed #a7f3d0;
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .message {
+            font-size: 15px;
+            color: #334155;
+            margin-bottom: 24px;
+        }
+
+        .details-card {
+            background-color: var(--bg-light);
+            border-left: 4px solid var(--primary);
+            border-radius: 6px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 32px;
+        }
+
+        .details-card h4 {
+            color: var(--primary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .details-card p {
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .btn-home {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 14px 28px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-home:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .support-text {
+            margin-top: 24px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        .support-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .brand-footer {
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-container">
+        <div class="brand-header">
+            <h2>Global Cyber Talent Initiative</h2>
+            <p>Enrollment Completed</p>
+        </div>
+
+        <div class="content-body">
+            <div class="success-icon-box" aria-hidden="true">✓</div>
+            
+            <h1>Payment Confirmed!</h1>
+            <p class="message">Thank you for finalizing your registration fee. Your seat for the upcoming cohort has been successfully locked in.</p>
+
+            <div class="details-card">
+                <h4>What happens next?</h4>
+                <p>An official onboarding receipt has been dispatched to your email address. Our cohort admissions office will follow up directly within 48 hours providing authentication access keys into the learning platform alongside orientation schedules.</p>
+            </div>
+
+            <a href="https://www.globalcybertalent.org" class="btn-home">Return to Homepage</a>
+
+            <p class="support-text">
+                Encountering issues? Contact us at <a href="mailto:applications@globalcybertalent.com">applications@globalcybertalent.com</a>
+            </p>
+        </div>
+
+        <div class="brand-footer">
+            © 2026 Global Cyber Talent Initiative. All rights reserved.
+        </div>
+    </div>
+
+</body>
+</html>
