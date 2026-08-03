@@ -123,7 +123,7 @@ if (contactForm) {
           email: contactForm.email.value,
           enquiryType: contactForm.enquiryType.value,
           message: contactForm.message.value,
-          "g-recaptcha-response": grecaptcha.getResponse(),
+          "g-recaptcha-response": typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : "",
         }),
       });
 
@@ -158,7 +158,7 @@ const numObserver = new IntersectionObserver((entries) => {
     const el = entry.target;
     const raw = el.textContent.replace(/[^0-9]/g, '');
     if (!raw) return;
-    const target = parseInt(raw);
+    const target = parseInt(raw, 10);
     const suffix = el.textContent.replace(raw, '');
     let start = 0;
     const duration = 1200;
@@ -470,8 +470,34 @@ const ensureApplySuccessModal = () => {
   return modal;
 };
 
+const ensureChoiceModal = () => {
+  const existing = document.getElementById('paymentChoiceModal');
+  if (existing) return existing;
+
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div class="modal" id="paymentChoiceModal" aria-hidden="true">
+      <div class="modal-overlay"></div>
+      <div class="modal-content text-center" role="dialog" aria-modal="true" style="max-width: 450px; padding: 32px;">
+        <h3 style="margin-bottom: 12px; font-size: 20px;">Secure Your Seat</h3>
+        <p style="color: #64748b; font-size: 14px; margin-bottom: 24px;">
+          Your application details are saved! How would you like to proceed with your enrollment fee?
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <button id="btnPayNow" class="btn btn-primary" style="width: 100%; padding: 12px;">Continue to Make Payment</button>
+          <button id="btnHasSponsor" class="btn btn-secondary" style="width: 100%; padding: 12px; background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1;">I Have a Sponsor</button>
+        </div>
+      </div>
+    </div>
+  `;
+  const modal = wrapper.firstElementChild;
+  if (modal) document.body.appendChild(modal);
+  return modal;
+};
+
 const applyModal = ensureApplyModal();
 const applySuccessModal = ensureApplySuccessModal();
+const choiceModal = ensureChoiceModal();
 const applyForm = document.getElementById('applyForm');
 const applyOpenButtons = document.querySelectorAll('[data-open-apply-modal]');
 
@@ -689,111 +715,81 @@ if (applyModal && applyForm) {
     }
   });
 
-  // ── NEW: Ensure Choice Modal Exists ──
-const ensureChoiceModal = () => {
-  const existing = document.getElementById('paymentChoiceModal');
-  if (existing) return existing;
+  applyForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!validateStep(currentApplyStep)) return;
 
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = `
-    <div class="modal" id="paymentChoiceModal" aria-hidden="true">
-      <div class="modal-overlay"></div>
-      <div class="modal-content text-center" role="dialog" aria-modal="true" style="max-width: 450px; padding: 32px;">
-        <h3 style="margin-bottom: 12px; font-size: 20px;">Secure Your Seat</h3>
-        <p style="color: #64748b; font-size: 14px; margin-bottom: 24px;">
-          Your application details are saved! How would you like to proceed with your enrollment fee?
-        </p>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <button id="btnPayNow" class="btn btn-primary" style="width: 100%; padding: 12px;">Continue to Make Payment</button>
-          <button id="btnHasSponsor" class="btn btn-secondary" style="width: 100%; padding: 12px; background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1;">I Have a Sponsor</button>
-        </div>
-      </div>
-    </div>
-  `;
-  const modal = wrapper.firstElementChild;
-  if (modal) document.body.appendChild(modal);
-  return modal;
-};
+    const submitBtn = applyForm.querySelector('button[type="submit"]');
+    const originalSubmitText = submitBtn?.textContent || 'Submit Application';
 
-const choiceModal = ensureChoiceModal();
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+    }
 
-// Replace your existing applyForm 'submit' event listener with this:
-applyForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  if (!validateStep(currentApplyStep)) return;
+    clearApplyMessage();
 
-  const submitBtn = applyForm.querySelector('button[type="submit"]');
-  const originalSubmitText = submitBtn?.textContent || 'Submit Application';
+    async function submitApplicationPayload(paymentRoute) {
+      try {
+        const fileInput = document.getElementById('sponsorshipFile');
+        if (fileInput && fileInput.files.length === 0) {
+          fileInput.removeAttribute('name');
+        }
 
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-  }
+        const formData = new FormData(applyForm);
+        formData.append('paymentRoute', paymentRoute);
 
-  clearApplyMessage();
+        if (fileInput) {
+          fileInput.setAttribute('name', 'sponsorshipFile');
+        }
 
-  // Helper function to handle payload configuration and shipping off to Next.js API
-  async function submitApplicationPayload(paymentRoute) {
-    try {
-      const fileInput = document.getElementById('sponsorshipFile');
-      if (fileInput && fileInput.files.length === 0) {
-        fileInput.removeAttribute('name');
-      }
+        const response = await fetch(applyEndpoint, {
+          method: 'POST',
+          body: formData
+        });
 
-      const formData = new FormData(applyForm);
-      // Append the selection so apply.js knows which email variant to drop
-      formData.append('paymentRoute', paymentRoute);
+        const data = await response.json();
 
-      if (fileInput) {
-        fileInput.setAttribute('name', 'sponsorshipFile');
-      }
+        if (!response.ok) {
+          throw new Error(data.error || data.message || 'Failed to submit application.');
+        }
 
-      const response = await fetch(applyEndpoint, {
-        method: 'POST',
-        body: formData
-      });
+        closeModal();
+        choiceModal.classList.remove('is-open');
 
-      const data = await response.json();
+        if (paymentRoute === 'gateway') {
+          window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk?email=" + encodeURIComponent(formData.get('email'));
+        } else {
+          openApplySuccessModal(formData.get('fullName') || 'there');
+          applyForm.reset();
+        }
 
-      if (!response.ok) {
-        throw new Error(data.error || data.message || 'Failed to submit application.');
-      }
-
-      closeModal();
-      choiceModal.classList.remove('is-open');
-
-    if (paymentRoute === 'gateway') {
-  // Redirect right into your external merchant portal with the proper query parameter syntax
-  window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk?email=" + encodeURIComponent(formData.get('email'));
-} else {
-  // If sponsored, show standard elegant success message window
-  openApplySuccessModal(formData.get('fullName') || 'there');
-  applyForm.reset();
-}
-
-    } catch (error) {
-      console.error(error);
-      showApplyMessage(error.message || 'An error occurred. Please try again.');
-      choiceModal.classList.remove('is-open');
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalSubmitText;
+      } catch (error) {
+        console.error(error);
+        showApplyMessage(error.message || 'An error occurred. Please try again.');
+        choiceModal.classList.remove('is-open');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalSubmitText;
+        }
       }
     }
-  }
 
-  // Intercept normal processing flow to show choice selections layout
-  choiceModal.classList.add('is-open');
+    choiceModal.classList.add('is-open');
 
-  // Handle Choice 1: Gateway redirect
-  document.getElementById('btnPayNow').onclick = function() {
-    submitApplicationPayload('gateway');
-  };
+    const btnPayNow = document.getElementById('btnPayNow');
+    if (btnPayNow) {
+      btnPayNow.onclick = function() {
+        submitApplicationPayload('gateway');
+      };
+    }
 
-  // Handle Choice 2: Sponsor autoresponse
-  document.getElementById('btnHasSponsor').onclick = function() {
-    submitApplicationPayload('sponsor');
-  };
-});
+    const btnHasSponsor = document.getElementById('btnHasSponsor');
+    if (btnHasSponsor) {
+      btnHasSponsor.onclick = function() {
+        submitApplicationPayload('sponsor');
+      };
+    }
+  });
 }
