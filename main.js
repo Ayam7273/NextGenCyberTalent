@@ -755,7 +755,7 @@ if (applyModal && applyForm) {
         }
 
         if (typeof gtag === 'function') {
-          gtag('event', 'application_submitted', {
+          gtag('event', 'application_completed', {
             event_category: 'Engagement',
             event_label: 'Application Form Submission',
             experience_level: document.getElementById('experienceLevel')?.value || 'unknown',
