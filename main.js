@@ -754,6 +754,15 @@ if (applyModal && applyForm) {
           throw new Error(data.error || data.message || 'Failed to submit application.');
         }
 
+        if (typeof gtag === 'function') {
+          gtag('event', 'application_submitted', {
+            event_category: 'Engagement',
+            event_label: 'Application Form Submission',
+            experience_level: document.getElementById('experienceLevel')?.value || 'unknown',
+            funding_status: document.getElementById('fundingStatus')?.value || 'unknown'
+          });
+        }
+
         closeModal();
         choiceModal.classList.remove('is-open');
 
