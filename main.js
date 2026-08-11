@@ -7,13 +7,28 @@ const supabase = (typeof supabase !== 'undefined' && supabase.createClient)
   ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
   : null;
 
+// Helper to generate RFC4122 v4 UUID for the Supabase primary key
+function createUuid() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+
+  const bytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256));
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+  return bytes.map((byte, index) => {
+    const hex = byte.toString(16).padStart(2, '0');
+    if ([4, 6, 8, 10].includes(index)) return `-${hex}`;
+    return hex;
+  }).join('');
+}
+
 // Helper to manage persistent application draft ID
 function getOrCreateDraftId() {
   let draftId = localStorage.getItem('app_draft_id');
   if (!draftId) {
-    draftId = (typeof crypto !== 'undefined' && crypto.randomUUID) 
-      ? crypto.randomUUID() 
-      : 'draft-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
+    draftId = createUuid();
     localStorage.setItem('app_draft_id', draftId);
   }
   return draftId;
@@ -50,6 +65,43 @@ async function syncFormProgressToSupabase(stepIndex, formDataObject, isCompleted
     console.error('Supabase sync error:', err);
   }
 }
+
+const APPLICATION_DRAFTS_TABLE = 'application_drafts';
+
+async function fetchFormProgressByStatus(status) {
+  if (!supabase) {
+    console.warn('Supabase client not available for form progress query.');
+    return { data: null, error: new Error('Supabase client not available') };
+  }
+
+  let query = supabase.from(APPLICATION_DRAFTS_TABLE).select('*');
+
+  if (status === 'started') {
+    query = query.gt('current_step', 0);
+  } else if (status === 'abandoned') {
+    query = query.gt('current_step', 0).eq('is_completed', false);
+  } else if (status === 'completed') {
+    query = query.eq('is_completed', true);
+  }
+
+  return query.order('updated_at', { ascending: false });
+}
+
+async function fetchStartedApplications() {
+  return fetchFormProgressByStatus('started');
+}
+
+async function fetchAbandonedApplications() {
+  return fetchFormProgressByStatus('abandoned');
+}
+
+async function fetchCompletedApplications() {
+  return fetchFormProgressByStatus('completed');
+}
+
+window.fetchStartedApplications = fetchStartedApplications;
+window.fetchAbandonedApplications = fetchAbandonedApplications;
+window.fetchCompletedApplications = fetchCompletedApplications;
 
 // ── Navbar scroll effect ──
 const navbar = document.getElementById('navbar');
