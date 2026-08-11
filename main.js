@@ -3,8 +3,9 @@
 // ── Supabase Configuration ──
 const SUPABASE_URL = window.SUPABASE_URL || 'https://lfzkwkpfiouenmtesqek.supabase.co';
 const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxmemt3a3BmaW91ZW5tdGVzcWVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNTI3NjcsImV4cCI6MjA5ODgyODc2N30.SmtIhJqe7siQJSeNUgtQ12A3y9xzKdEch0n3Hh-LzcI';
-const supabase = (typeof supabase !== 'undefined' && supabase.createClient) 
-  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+const supabaseLib = window.supabase;
+const supabase = (supabaseLib && supabaseLib.createClient)
+  ? supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
 
 // Helper to generate RFC4122 v4 UUID for the Supabase primary key
@@ -38,24 +39,29 @@ function getOrCreateDraftId() {
   return draftId;
 }
 
-// Helper to upsert form progress into Supabase
-async function syncFormProgressToSupabase(stepIndex, formDataObject, isCompleted = false) {
-  if (!supabase) return;
-
+// Builds the upsert payload for a draft sync, merging with previously stored
+// draft data in localStorage so partial progress from earlier steps isn't lost.
+function buildDraftSyncPayload(stepIndex, formDataObject, isCompleted) {
   const draftId = getOrCreateDraftId();
-  
-  // Merge with previously stored draft data in localStorage
+
   const localData = JSON.parse(localStorage.getItem('app_form_draft_data') || '{}');
   const mergedData = { ...localData, ...formDataObject };
   localStorage.setItem('app_form_draft_data', JSON.stringify(mergedData));
 
-  const payload = {
+  return {
     id: draftId,
     current_step: stepIndex + 1, // Store as 1-indexed (Step 1, Step 2...)
     is_completed: isCompleted,
     form_data: mergedData,
     updated_at: new Date().toISOString()
   };
+}
+
+// Helper to upsert form progress into Supabase
+async function syncFormProgressToSupabase(stepIndex, formDataObject, isCompleted = false) {
+  if (!supabase) return;
+
+  const payload = buildDraftSyncPayload(stepIndex, formDataObject, isCompleted);
 
   try {
     const { error } = await supabase
@@ -67,6 +73,31 @@ async function syncFormProgressToSupabase(stepIndex, formDataObject, isCompleted
     }
   } catch (err) {
     console.error('Supabase sync error:', err);
+  }
+}
+
+// Best-effort sync for tab-close / navigation-away, where a normal async
+// fetch can be cancelled mid-flight. `keepalive` lets the request outlive
+// the page unload; there's no response to read so failures are silent.
+function syncFormProgressOnUnload(stepIndex, formDataObject, isCompleted = false) {
+  if (!supabase) return;
+
+  const payload = buildDraftSyncPayload(stepIndex, formDataObject, isCompleted);
+
+  try {
+    fetch(`${SUPABASE_URL}/rest/v1/${APPLICATION_DRAFTS_TABLE}`, {
+      method: 'POST',
+      keepalive: true,
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    // Best effort only — page is already unloading.
   }
 }
 
@@ -609,6 +640,8 @@ if (applyModal && applyForm) {
   applyForm.setAttribute('method', 'POST');
 
   let currentApplyStep = 0;
+  let inputSyncTimer = null;
+  const INPUT_SYNC_DEBOUNCE_MS = 1500;
   const applySteps = Array.from(applyForm.querySelectorAll('.apply-step'));
   const progressDots = Array.from(applyForm.querySelectorAll('.apply-progress-dot'));
   const progressFill = document.getElementById('applyProgressBarFill');
@@ -665,6 +698,39 @@ if (applyModal && applyForm) {
     });
 
     return data;
+  };
+
+  const stepHasData = (stepData) => Object.values(stepData).some((value) =>
+    Array.isArray(value) ? value.length > 0 : Boolean(value)
+  );
+
+  // Debounced sync fired on every field input/change so partial progress is
+  // captured even if the user never clicks "Next" (e.g. abandons mid-step).
+  const scheduleInputSync = () => {
+    if (inputSyncTimer) clearTimeout(inputSyncTimer);
+    inputSyncTimer = setTimeout(() => {
+      inputSyncTimer = null;
+      const stepData = getStepData(currentApplyStep);
+      if (stepHasData(stepData)) {
+        syncFormProgressToSupabase(currentApplyStep, stepData, false);
+      }
+    }, INPUT_SYNC_DEBOUNCE_MS);
+  };
+
+  // Cancels any pending debounced sync and syncs immediately — used when the
+  // modal closes or the page unloads, since we can't wait for the debounce.
+  const flushPendingSync = (isCompleted = false, useBeacon = false) => {
+    if (inputSyncTimer) {
+      clearTimeout(inputSyncTimer);
+      inputSyncTimer = null;
+    }
+    const stepData = getStepData(currentApplyStep);
+    if (!isCompleted && !stepHasData(stepData)) return;
+    if (useBeacon) {
+      syncFormProgressOnUnload(currentApplyStep, stepData, isCompleted);
+    } else {
+      syncFormProgressToSupabase(currentApplyStep, stepData, isCompleted);
+    }
   };
 
   const showApplyMessage = (message) => {
@@ -789,6 +855,7 @@ if (applyModal && applyForm) {
     applyModal.classList.remove('is-open');
     applyModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    flushPendingSync(false);
   };
 
   const openApplySuccessModal = (name = 'there') => {
@@ -835,6 +902,15 @@ if (applyModal && applyForm) {
 
   startTimeframe?.addEventListener('change', syncConditionalFields);
   fundingStatus?.addEventListener('change', syncConditionalFields);
+
+  applyForm.addEventListener('input', scheduleInputSync);
+  applyForm.addEventListener('change', scheduleInputSync);
+
+  // Best-effort capture for abrupt tab/browser close while the modal is open.
+  window.addEventListener('pagehide', () => {
+    if (!applyModal.classList.contains('is-open')) return;
+    flushPendingSync(false, true);
+  });
 
   applyModal.addEventListener('click', (event) => {
     if (event.target.classList.contains('modal-overlay')) {
