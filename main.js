@@ -187,6 +187,128 @@ document.querySelectorAll('.nav-link').forEach(link => {
   }
 });
 
+// ── Application funnel tracking (Supabase) ──
+// Fill these in with your project's values (Project Settings → API in Supabase).
+// The anon/public key is safe to expose client-side as long as Row Level Security
+// policies on the table only allow inserts and updates from anon (no select/delete).
+const SUPABASE_URL = 'https://lfzkwkpfiouenmtesqek.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxmemt3a3BmaW91ZW5tdGVzcWVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNTI3NjcsImV4cCI6MjA5ODgyODc2N30.SmtIhJqe7siQJSeNUgtQ12A3y9xzKdEch0n3Hh-LzcI';
+const SUPABASE_TABLE = 'application_drafts'; // change to your actual table name
+
+const supabaseHeaders = {
+  apikey: SUPABASE_ANON_KEY,
+  Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+  'Content-Type': 'application/json',
+};
+
+const TRACKING_ID_STORAGE_KEY = 'gcti_application_tracking_id';
+
+const getStoredTrackingId = () => {
+  try { return sessionStorage.getItem(TRACKING_ID_STORAGE_KEY); } catch { return null; }
+};
+const setStoredTrackingId = (id) => {
+  try { sessionStorage.setItem(TRACKING_ID_STORAGE_KEY, id); } catch { /* ignore */ }
+};
+const clearStoredTrackingId = () => {
+  try { sessionStorage.removeItem(TRACKING_ID_STORAGE_KEY); } catch { /* ignore */ }
+};
+
+let applicationTrackingId = getStoredTrackingId();
+
+// Pulls a snapshot of the current form values into a plain object for form_data (jsonb).
+// File inputs are skipped since binary data can't be stored in jsonb.
+function snapshotApplyFormData(formEl) {
+  if (!formEl) return {};
+  const snapshot = {};
+  const formData = new FormData(formEl);
+  for (const [key, value] of formData.entries()) {
+    if (value instanceof File) continue; // skip sponsorshipFile
+    if (key in snapshot) {
+      snapshot[key] = Array.isArray(snapshot[key]) ? [...snapshot[key], value] : [snapshot[key], value];
+    } else {
+      snapshot[key] = value;
+    }
+  }
+  const fileInput = formEl.querySelector('#sponsorshipFile');
+  snapshot._hasSponsorshipFile = !!(fileInput && fileInput.files && fileInput.files.length > 0);
+  return snapshot;
+}
+
+// Called once, the first time a visitor opens the apply modal in this browser
+// session. Creates the tracking row and remembers its id so every later step
+// update and the final completion patch the *same* row.
+async function startApplicationTracking() {
+  if (applicationTrackingId) return; // already tracking this session
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`, {
+      method: 'POST',
+      headers: { ...supabaseHeaders, Prefer: 'return=representation' },
+      body: JSON.stringify({ current_step: 1, is_completed: false, form_data: {} }),
+    });
+    if (!res.ok) throw new Error(`Tracking insert failed: ${res.status}`);
+    const rows = await res.json();
+    if (rows?.[0]?.id) {
+      applicationTrackingId = rows[0].id;
+      setStoredTrackingId(applicationTrackingId);
+    }
+  } catch (err) {
+    console.error('Application tracking (start) failed:', err);
+  }
+}
+
+// Debounced so rapid step changes / keystrokes don't fire a request each time.
+let applyTrackingDebounce = null;
+function queueApplicationTrackingUpdate(stepNumber, formEl) {
+  if (!applicationTrackingId) return;
+  clearTimeout(applyTrackingDebounce);
+  applyTrackingDebounce = setTimeout(() => {
+    patchApplicationTracking({ current_step: stepNumber, form_data: snapshotApplyFormData(formEl) });
+  }, 500);
+}
+
+// Fires immediately (no debounce) - used for step changes, unload, and completion.
+async function patchApplicationTracking(fields, { keepalive = false } = {}) {
+  if (!applicationTrackingId) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?id=eq.${applicationTrackingId}`, {
+      method: 'PATCH',
+      headers: supabaseHeaders,
+      body: JSON.stringify({ ...fields, updated_at: new Date().toISOString() }),
+      keepalive,
+    });
+  } catch (err) {
+    console.error('Application tracking (update) failed:', err);
+  }
+}
+
+// Marks the row completed and stops tracking this browser session (so a repeat
+// visitor starts a fresh row on their next application rather than re-using this one).
+async function completeApplicationTracking(finalStepNumber, formEl) {
+  if (!applicationTrackingId) return;
+  await patchApplicationTracking({
+    current_step: finalStepNumber,
+    is_completed: true,
+    form_data: snapshotApplyFormData(formEl),
+  });
+  clearStoredTrackingId();
+  applicationTrackingId = null;
+}
+
+// Best-effort flush of the current step/data if the visitor closes the tab or
+// navigates away mid-form. Rows that never reach is_completed = true are, by
+// definition, abandoned - current_step tells you exactly where they dropped off.
+window.addEventListener('pagehide', () => {
+  const formEl = document.getElementById('applyForm');
+  const modalEl = document.getElementById('applyModal');
+  if (!applicationTrackingId || !formEl || !modalEl?.classList.contains('is-open')) return;
+  const stepEl = formEl.querySelector('.apply-step.is-active');
+  const stepNumber = stepEl ? Number(stepEl.dataset.stepIndex) + 1 : undefined;
+  patchApplicationTracking(
+    { ...(stepNumber ? { current_step: stepNumber } : {}), form_data: snapshotApplyFormData(formEl) },
+    { keepalive: true }
+  );
+});
+
 // ── Apply modal multi-step form (all pages) ──
 const ensureApplyModal = () => {
   const existing = document.getElementById('applyModal');
@@ -613,6 +735,7 @@ if (applyModal && applyForm) {
     }
     updateProgress();
     clearApplyMessage();
+    patchApplicationTracking({ current_step: currentApplyStep + 1, form_data: snapshotApplyFormData(applyForm) });
   };
 
   const validateStep = (stepIndex) => {
@@ -647,6 +770,7 @@ if (applyModal && applyForm) {
     document.body.style.overflow = 'hidden';
     syncConditionalFields();
     setApplyStep(0);
+    startApplicationTracking(); // record "started" the first time this session
   };
 
   const closeModal = () => {
@@ -699,6 +823,15 @@ if (applyModal && applyForm) {
 
   startTimeframe?.addEventListener('change', syncConditionalFields);
   fundingStatus?.addEventListener('change', syncConditionalFields);
+
+  // Debounced sync of in-progress field edits, so form_data reflects what a
+  // visitor typed even if they abandon mid-step (before clicking Next).
+  applyForm.addEventListener('input', () => {
+    queueApplicationTrackingUpdate(currentApplyStep + 1, applyForm);
+  });
+  applyForm.addEventListener('change', () => {
+    queueApplicationTrackingUpdate(currentApplyStep + 1, applyForm);
+  });
 
   applyModal.addEventListener('click', (event) => {
     if (event.target === applyModal) {
@@ -765,6 +898,7 @@ if (applyModal && applyForm) {
 
         closeModal();
         choiceModal.classList.remove('is-open');
+        completeApplicationTracking(applySteps.length, applyForm);
 
         if (paymentRoute === 'gateway') {
           window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk?email=" + encodeURIComponent(formData.get('email'));
