@@ -1,5 +1,56 @@
 /* GCTI — main.js */
 
+// ── Supabase Configuration ──
+const SUPABASE_URL = window.SUPABASE_URL || 'https://lfzkwkpfiouenmtesqek.supabase.co';
+const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxmemt3a3BmaW91ZW5tdGVzcWVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNTI3NjcsImV4cCI6MjA5ODgyODc2N30.SmtIhJqe7siQJSeNUgtQ12A3y9xzKdEch0n3Hh-LzcI';
+const supabase = (typeof supabase !== 'undefined' && supabase.createClient) 
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+  : null;
+
+// Helper to manage persistent application draft ID
+function getOrCreateDraftId() {
+  let draftId = localStorage.getItem('app_draft_id');
+  if (!draftId) {
+    draftId = (typeof crypto !== 'undefined' && crypto.randomUUID) 
+      ? crypto.randomUUID() 
+      : 'draft-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
+    localStorage.setItem('app_draft_id', draftId);
+  }
+  return draftId;
+}
+
+// Helper to upsert form progress into Supabase
+async function syncFormProgressToSupabase(stepIndex, formDataObject, isCompleted = false) {
+  if (!supabase) return;
+
+  const draftId = getOrCreateDraftId();
+  
+  // Merge with previously stored draft data in localStorage
+  const localData = JSON.parse(localStorage.getItem('app_form_draft_data') || '{}');
+  const mergedData = { ...localData, ...formDataObject };
+  localStorage.setItem('app_form_draft_data', JSON.stringify(mergedData));
+
+  const payload = {
+    id: draftId,
+    current_step: stepIndex + 1, // Store as 1-indexed (Step 1, Step 2...)
+    is_completed: isCompleted,
+    form_data: mergedData,
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    const { error } = await supabase
+      .from('application_drafts')
+      .upsert(payload, { onConflict: 'id' });
+
+    if (error) {
+      console.warn('Supabase draft sync warning:', error.message);
+    }
+  } catch (err) {
+    console.error('Supabase sync error:', err);
+  }
+}
+
 // ── Navbar scroll effect ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -61,9 +112,7 @@ phases.forEach(phase => {
   if (!header) return;
   header.addEventListener('click', () => {
     const isOpen = phase.classList.contains('open');
-    // Close all
     phases.forEach(p => p.classList.remove('open'));
-    // Toggle clicked
     if (!isOpen) phase.classList.add('open');
   });
 });
@@ -128,12 +177,9 @@ if (contactForm) {
       });
 
       const data = await response.json();
-      console.log("API Response:", data);
 
       if (!response.ok) {
-        throw new Error(
-          data.error || data.message || "Failed to send"
-        );
+        throw new Error(data.error || data.message || "Failed to send");
       }
 
       submitBtn.innerHTML = "✓ Message Sent";
@@ -541,6 +587,30 @@ if (applyModal && applyForm) {
     return (el.value || '').trim() || fallback;
   };
 
+  const getStepData = (stepIndex) => {
+    const step = applySteps[stepIndex];
+    if (!step) return {};
+    const inputs = step.querySelectorAll('input, select, textarea');
+    const data = {};
+
+    inputs.forEach((input) => {
+      if (!input.name || input.type === 'button' || input.type === 'submit') return;
+
+      if (input.type === 'checkbox') {
+        if (!data[input.name]) data[input.name] = [];
+        if (input.checked) {
+          data[input.name].push(input.dataset.label || input.value);
+        }
+      } else if (input.type === 'file') {
+        data[input.name] = input.files[0] ? input.files[0].name : null;
+      } else {
+        data[input.name] = input.value;
+      }
+    });
+
+    return data;
+  };
+
   const showApplyMessage = (message) => {
     if (!formMessage) return;
     formMessage.hidden = false;
@@ -603,16 +673,26 @@ if (applyModal && applyForm) {
     }
   };
 
-  const setApplyStep = (targetStep) => {
+  const setApplyStep = async (targetStep) => {
+    const previousStep = currentApplyStep;
     currentApplyStep = Math.max(0, Math.min(targetStep, applySteps.length - 1));
+    
     applySteps.forEach((step, index) => {
       step.classList.toggle('is-active', index === currentApplyStep);
     });
+
     if (currentApplyStep === applySteps.length - 1) {
       updateReview();
     }
+
     updateProgress();
     clearApplyMessage();
+
+    // Trigger Supabase Upsert whenever advancing forward
+    if (targetStep > previousStep) {
+      const stepData = getStepData(previousStep);
+      await syncFormProgressToSupabase(previousStep, stepData, false);
+    }
   };
 
   const validateStep = (stepIndex) => {
@@ -701,104 +781,57 @@ if (applyModal && applyForm) {
   fundingStatus?.addEventListener('change', syncConditionalFields);
 
   applyModal.addEventListener('click', (event) => {
-    if (event.target === applyModal) {
+    if (event.target.classList.contains('modal-overlay')) {
       closeModal();
     }
   });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && applyModal.classList.contains('is-open')) {
-      closeModal();
-    }
-    if (event.key === 'Escape' && applySuccessModal?.classList.contains('is-open')) {
-      closeApplySuccessModal();
-    }
-  });
+  // ── Form Submission Handler ──
+  applyForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  applyForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
     if (!validateStep(currentApplyStep)) return;
 
     const submitBtn = applyForm.querySelector('button[type="submit"]');
-    const originalSubmitText = submitBtn?.textContent || 'Submit Application';
+    const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Application';
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
+      submitBtn.innerHTML = 'Submitting...';
     }
 
-    clearApplyMessage();
+    const finalStepData = getStepData(currentApplyStep);
+    
+    // Final Supabase update marking completion
+    await syncFormProgressToSupabase(currentApplyStep, finalStepData, true);
 
-    async function submitApplicationPayload(paymentRoute) {
-      try {
-        const fileInput = document.getElementById('sponsorshipFile');
-        if (fileInput && fileInput.files.length === 0) {
-          fileInput.removeAttribute('name');
-        }
+    try {
+      const formData = new FormData(applyForm);
+      const response = await fetch(applyEndpoint, {
+        method: 'POST',
+        body: formData,
+      });
 
-        const formData = new FormData(applyForm);
-        formData.append('paymentRoute', paymentRoute);
-
-        if (fileInput) {
-          fileInput.setAttribute('name', 'sponsorshipFile');
-        }
-
-        const response = await fetch(applyEndpoint, {
-          method: 'POST',
-          body: formData
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || data.message || 'Failed to submit application.');
-        }
-
-        if (typeof gtag === 'function') {
-          gtag('event', 'application_completed', {
-            event_category: 'Engagement',
-            event_label: 'Application Form Submission',
-            experience_level: document.getElementById('experienceLevel')?.value || 'unknown',
-            funding_status: document.getElementById('fundingStatus')?.value || 'unknown'
-          });
-        }
-
-        closeModal();
-        choiceModal.classList.remove('is-open');
-
-        if (paymentRoute === 'gateway') {
-          window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk?email=" + encodeURIComponent(formData.get('email'));
-        } else {
-          openApplySuccessModal(formData.get('fullName') || 'there');
-          applyForm.reset();
-        }
-
-      } catch (error) {
-        console.error(error);
-        showApplyMessage(error.message || 'An error occurred. Please try again.');
-        choiceModal.classList.remove('is-open');
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalSubmitText;
-        }
+      if (!response.ok) {
+        throw new Error('Failed to submit application');
       }
-    }
 
-    choiceModal.classList.add('is-open');
+      // Clear draft ID after successful submission
+      localStorage.removeItem('app_draft_id');
+      localStorage.removeItem('app_form_draft_data');
 
-    const btnPayNow = document.getElementById('btnPayNow');
-    if (btnPayNow) {
-      btnPayNow.onclick = function() {
-        submitApplicationPayload('gateway');
-      };
-    }
-
-    const btnHasSponsor = document.getElementById('btnHasSponsor');
-    if (btnHasSponsor) {
-      btnHasSponsor.onclick = function() {
-        submitApplicationPayload('sponsor');
-      };
+      closeModal();
+      const applicantName = document.getElementById('fullName')?.value || 'there';
+      openApplySuccessModal(applicantName);
+      applyForm.reset();
+    } catch (err) {
+      console.error(err);
+      showApplyMessage('Submission failed. Please check your connection and try again.');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     }
   });
 }
