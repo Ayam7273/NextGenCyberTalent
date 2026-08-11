@@ -1,143 +1,5 @@
 /* GCTI — main.js */
 
-// ── Supabase Configuration ──
-const SUPABASE_URL = window.SUPABASE_URL || 'https://lfzkwkpfiouenmtesqek.supabase.co';
-const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxmemt3a3BmaW91ZW5tdGVzcWVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNTI3NjcsImV4cCI6MjA5ODgyODc2N30.SmtIhJqe7siQJSeNUgtQ12A3y9xzKdEch0n3Hh-LzcI';
-const supabaseLib = window.supabase;
-const supabase = (supabaseLib && supabaseLib.createClient)
-  ? supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
-
-// Helper to generate RFC4122 v4 UUID for the Supabase primary key
-function createUuid() {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-
-  const bytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256));
-  bytes[6] = (bytes[6] & 0x0f) | 0x40;
-  bytes[8] = (bytes[8] & 0x3f) | 0x80;
-
-  return bytes.map((byte, index) => {
-    const hex = byte.toString(16).padStart(2, '0');
-    if ([4, 6, 8, 10].includes(index)) return `-${hex}`;
-    return hex;
-  }).join('');
-}
-
-function isValidUuid(value) {
-  return typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
-}
-
-// Helper to manage persistent application draft ID
-function getOrCreateDraftId() {
-  let draftId = localStorage.getItem('app_draft_id');
-  if (!isValidUuid(draftId)) {
-    draftId = createUuid();
-    localStorage.setItem('app_draft_id', draftId);
-  }
-  return draftId;
-}
-
-// Builds the upsert payload for a draft sync, merging with previously stored
-// draft data in localStorage so partial progress from earlier steps isn't lost.
-function buildDraftSyncPayload(stepIndex, formDataObject, isCompleted) {
-  const draftId = getOrCreateDraftId();
-
-  const localData = JSON.parse(localStorage.getItem('app_form_draft_data') || '{}');
-  const mergedData = { ...localData, ...formDataObject };
-  localStorage.setItem('app_form_draft_data', JSON.stringify(mergedData));
-
-  return {
-    id: draftId,
-    current_step: stepIndex + 1, // Store as 1-indexed (Step 1, Step 2...)
-    is_completed: isCompleted,
-    form_data: mergedData,
-    updated_at: new Date().toISOString()
-  };
-}
-
-// Helper to upsert form progress into Supabase
-async function syncFormProgressToSupabase(stepIndex, formDataObject, isCompleted = false) {
-  if (!supabase) return;
-
-  const payload = buildDraftSyncPayload(stepIndex, formDataObject, isCompleted);
-
-  try {
-    const { error } = await supabase
-      .from('application_drafts')
-      .upsert(payload, { onConflict: 'id' });
-
-    if (error) {
-      console.warn('Supabase draft sync warning:', error.message);
-    }
-  } catch (err) {
-    console.error('Supabase sync error:', err);
-  }
-}
-
-// Best-effort sync for tab-close / navigation-away, where a normal async
-// fetch can be cancelled mid-flight. `keepalive` lets the request outlive
-// the page unload; there's no response to read so failures are silent.
-function syncFormProgressOnUnload(stepIndex, formDataObject, isCompleted = false) {
-  if (!supabase) return;
-
-  const payload = buildDraftSyncPayload(stepIndex, formDataObject, isCompleted);
-
-  try {
-    fetch(`${SUPABASE_URL}/rest/v1/${APPLICATION_DRAFTS_TABLE}`, {
-      method: 'POST',
-      keepalive: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    // Best effort only — page is already unloading.
-  }
-}
-
-const APPLICATION_DRAFTS_TABLE = 'application_drafts';
-
-async function fetchFormProgressByStatus(status) {
-  if (!supabase) {
-    console.warn('Supabase client not available for form progress query.');
-    return { data: null, error: new Error('Supabase client not available') };
-  }
-
-  let query = supabase.from(APPLICATION_DRAFTS_TABLE).select('*');
-
-  if (status === 'started') {
-    query = query.gt('current_step', 0);
-  } else if (status === 'abandoned') {
-    query = query.gt('current_step', 0).eq('is_completed', false);
-  } else if (status === 'completed') {
-    query = query.eq('is_completed', true);
-  }
-
-  return query.order('updated_at', { ascending: false });
-}
-
-async function fetchStartedApplications() {
-  return fetchFormProgressByStatus('started');
-}
-
-async function fetchAbandonedApplications() {
-  return fetchFormProgressByStatus('abandoned');
-}
-
-async function fetchCompletedApplications() {
-  return fetchFormProgressByStatus('completed');
-}
-
-window.fetchStartedApplications = fetchStartedApplications;
-window.fetchAbandonedApplications = fetchAbandonedApplications;
-window.fetchCompletedApplications = fetchCompletedApplications;
-
 // ── Navbar scroll effect ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -199,7 +61,9 @@ phases.forEach(phase => {
   if (!header) return;
   header.addEventListener('click', () => {
     const isOpen = phase.classList.contains('open');
+    // Close all
     phases.forEach(p => p.classList.remove('open'));
+    // Toggle clicked
     if (!isOpen) phase.classList.add('open');
   });
 });
@@ -264,9 +128,12 @@ if (contactForm) {
       });
 
       const data = await response.json();
+      console.log("API Response:", data);
 
       if (!response.ok) {
-        throw new Error(data.error || data.message || "Failed to send");
+        throw new Error(
+          data.error || data.message || "Failed to send"
+        );
       }
 
       submitBtn.innerHTML = "✓ Message Sent";
@@ -640,8 +507,6 @@ if (applyModal && applyForm) {
   applyForm.setAttribute('method', 'POST');
 
   let currentApplyStep = 0;
-  let inputSyncTimer = null;
-  const INPUT_SYNC_DEBOUNCE_MS = 1500;
   const applySteps = Array.from(applyForm.querySelectorAll('.apply-step'));
   const progressDots = Array.from(applyForm.querySelectorAll('.apply-progress-dot'));
   const progressFill = document.getElementById('applyProgressBarFill');
@@ -674,63 +539,6 @@ if (applyModal && applyForm) {
       return el.options[el.selectedIndex]?.text || fallback;
     }
     return (el.value || '').trim() || fallback;
-  };
-
-  const getStepData = (stepIndex) => {
-    const step = applySteps[stepIndex];
-    if (!step) return {};
-    const inputs = step.querySelectorAll('input, select, textarea');
-    const data = {};
-
-    inputs.forEach((input) => {
-      if (!input.name || input.type === 'button' || input.type === 'submit') return;
-
-      if (input.type === 'checkbox') {
-        if (!data[input.name]) data[input.name] = [];
-        if (input.checked) {
-          data[input.name].push(input.dataset.label || input.value);
-        }
-      } else if (input.type === 'file') {
-        data[input.name] = input.files[0] ? input.files[0].name : null;
-      } else {
-        data[input.name] = input.value;
-      }
-    });
-
-    return data;
-  };
-
-  const stepHasData = (stepData) => Object.values(stepData).some((value) =>
-    Array.isArray(value) ? value.length > 0 : Boolean(value)
-  );
-
-  // Debounced sync fired on every field input/change so partial progress is
-  // captured even if the user never clicks "Next" (e.g. abandons mid-step).
-  const scheduleInputSync = () => {
-    if (inputSyncTimer) clearTimeout(inputSyncTimer);
-    inputSyncTimer = setTimeout(() => {
-      inputSyncTimer = null;
-      const stepData = getStepData(currentApplyStep);
-      if (stepHasData(stepData)) {
-        syncFormProgressToSupabase(currentApplyStep, stepData, false);
-      }
-    }, INPUT_SYNC_DEBOUNCE_MS);
-  };
-
-  // Cancels any pending debounced sync and syncs immediately — used when the
-  // modal closes or the page unloads, since we can't wait for the debounce.
-  const flushPendingSync = (isCompleted = false, useBeacon = false) => {
-    if (inputSyncTimer) {
-      clearTimeout(inputSyncTimer);
-      inputSyncTimer = null;
-    }
-    const stepData = getStepData(currentApplyStep);
-    if (!isCompleted && !stepHasData(stepData)) return;
-    if (useBeacon) {
-      syncFormProgressOnUnload(currentApplyStep, stepData, isCompleted);
-    } else {
-      syncFormProgressToSupabase(currentApplyStep, stepData, isCompleted);
-    }
   };
 
   const showApplyMessage = (message) => {
@@ -795,26 +603,16 @@ if (applyModal && applyForm) {
     }
   };
 
-  const setApplyStep = async (targetStep) => {
-    const previousStep = currentApplyStep;
+  const setApplyStep = (targetStep) => {
     currentApplyStep = Math.max(0, Math.min(targetStep, applySteps.length - 1));
-    
     applySteps.forEach((step, index) => {
       step.classList.toggle('is-active', index === currentApplyStep);
     });
-
     if (currentApplyStep === applySteps.length - 1) {
       updateReview();
     }
-
     updateProgress();
     clearApplyMessage();
-
-    // Trigger Supabase Upsert whenever advancing forward
-    if (targetStep > previousStep) {
-      const stepData = getStepData(previousStep);
-      await syncFormProgressToSupabase(previousStep, stepData, false);
-    }
   };
 
   const validateStep = (stepIndex) => {
@@ -855,7 +653,6 @@ if (applyModal && applyForm) {
     applyModal.classList.remove('is-open');
     applyModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    flushPendingSync(false);
   };
 
   const openApplySuccessModal = (name = 'there') => {
@@ -903,67 +700,105 @@ if (applyModal && applyForm) {
   startTimeframe?.addEventListener('change', syncConditionalFields);
   fundingStatus?.addEventListener('change', syncConditionalFields);
 
-  applyForm.addEventListener('input', scheduleInputSync);
-  applyForm.addEventListener('change', scheduleInputSync);
-
-  // Best-effort capture for abrupt tab/browser close while the modal is open.
-  window.addEventListener('pagehide', () => {
-    if (!applyModal.classList.contains('is-open')) return;
-    flushPendingSync(false, true);
-  });
-
   applyModal.addEventListener('click', (event) => {
-    if (event.target.classList.contains('modal-overlay')) {
+    if (event.target === applyModal) {
       closeModal();
     }
   });
 
-  // ── Form Submission Handler ──
-  applyForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && applyModal.classList.contains('is-open')) {
+      closeModal();
+    }
+    if (event.key === 'Escape' && applySuccessModal?.classList.contains('is-open')) {
+      closeApplySuccessModal();
+    }
+  });
 
+  applyForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
     if (!validateStep(currentApplyStep)) return;
 
     const submitBtn = applyForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Application';
+    const originalSubmitText = submitBtn?.textContent || 'Submit Application';
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Submitting...';
+      submitBtn.textContent = 'Submitting...';
     }
 
-    const finalStepData = getStepData(currentApplyStep);
-    
-    // Final Supabase update marking completion
-    await syncFormProgressToSupabase(currentApplyStep, finalStepData, true);
+    clearApplyMessage();
 
-    try {
-      const formData = new FormData(applyForm);
-      const response = await fetch(applyEndpoint, {
-        method: 'POST',
-        body: formData,
-      });
+    async function submitApplicationPayload(paymentRoute) {
+      try {
+        const fileInput = document.getElementById('sponsorshipFile');
+        if (fileInput && fileInput.files.length === 0) {
+          fileInput.removeAttribute('name');
+        }
 
-      if (!response.ok) {
-        throw new Error('Failed to submit application');
+        const formData = new FormData(applyForm);
+        formData.append('paymentRoute', paymentRoute);
+
+        if (fileInput) {
+          fileInput.setAttribute('name', 'sponsorshipFile');
+        }
+
+        const response = await fetch(applyEndpoint, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || data.message || 'Failed to submit application.');
+        }
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'application_completed', {
+            event_category: 'Engagement',
+            event_label: 'Application Form Submission',
+            experience_level: document.getElementById('experienceLevel')?.value || 'unknown',
+            funding_status: document.getElementById('fundingStatus')?.value || 'unknown'
+          });
+        }
+
+        closeModal();
+        choiceModal.classList.remove('is-open');
+
+        if (paymentRoute === 'gateway') {
+          window.location.href = "https://paystack.com/buy/the-global-cyber-talent-intitiative-registration-goegmk?email=" + encodeURIComponent(formData.get('email'));
+        } else {
+          openApplySuccessModal(formData.get('fullName') || 'there');
+          applyForm.reset();
+        }
+
+      } catch (error) {
+        console.error(error);
+        showApplyMessage(error.message || 'An error occurred. Please try again.');
+        choiceModal.classList.remove('is-open');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalSubmitText;
+        }
       }
+    }
 
-      // Clear draft ID after successful submission
-      localStorage.removeItem('app_draft_id');
-      localStorage.removeItem('app_form_draft_data');
+    choiceModal.classList.add('is-open');
 
-      closeModal();
-      const applicantName = document.getElementById('fullName')?.value || 'there';
-      openApplySuccessModal(applicantName);
-      applyForm.reset();
-    } catch (err) {
-      console.error(err);
-      showApplyMessage('Submission failed. Please check your connection and try again.');
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      }
+    const btnPayNow = document.getElementById('btnPayNow');
+    if (btnPayNow) {
+      btnPayNow.onclick = function() {
+        submitApplicationPayload('gateway');
+      };
+    }
+
+    const btnHasSponsor = document.getElementById('btnHasSponsor');
+    if (btnHasSponsor) {
+      btnHasSponsor.onclick = function() {
+        submitApplicationPayload('sponsor');
+      };
     }
   });
 }
