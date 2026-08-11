@@ -24,10 +24,14 @@ function createUuid() {
   }).join('');
 }
 
+function isValidUuid(value) {
+  return typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
 // Helper to manage persistent application draft ID
 function getOrCreateDraftId() {
   let draftId = localStorage.getItem('app_draft_id');
-  if (!draftId) {
+  if (!isValidUuid(draftId)) {
     draftId = createUuid();
     localStorage.setItem('app_draft_id', draftId);
   }
